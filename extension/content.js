@@ -475,26 +475,42 @@
     const topSent   = source.topSentences?.[0];
     const domainDisplay = escHtml(source.domain || source.url || "unknown");
 
+    // PDF badge — shown for government/official PDF documents
+    const pdfBadge = source.isPdf
+      ? `<span class="clarifact-pdf-badge" title="Official document — extracted from PDF${source.pageCount ? ` (${source.pageCount} pages)` : ""}">
+           📄 PDF${source.pageCount ? ` · ${source.pageCount}pp` : ""}
+         </span>`
+      : "";
+
+    // Truncation note — shown when only partial PDF content was forwarded
+    const truncNote = source.isPdf && source.truncated
+      ? `<p class="clarifact-pdf-truncnote">⚠ Only first 5,000 chars shown — document is ${Math.round(source.charCount / 1000)}k chars total.</p>`
+      : "";
+
     return `
-    <div class="clarifact-source-card">
+    <div class="clarifact-source-card${source.isPdf ? " clarifact-source-card-pdf" : ""}">
       <div class="clarifact-source-header">
         <div class="clarifact-source-meta">
           <span class="clarifact-source-domain">${domainDisplay}</span>
-          <span class="clarifact-trust-badge clarifact-trust-${trustCls}" title="Domain trust score">
-            ${trustPct}%
-          </span>
+          <div style="display:flex;align-items:center;gap:5px;">
+            ${pdfBadge}
+            <span class="clarifact-trust-badge clarifact-trust-${trustCls}" title="Domain trust score">
+              ${trustPct}%
+            </span>
+          </div>
         </div>
         <p class="clarifact-source-title">${escHtml(truncateDisplay(source.title || source.searchTitle || "", 70))}</p>
         <span class="clarifact-accordion-icon">▾</span>
       </div>
       <div class="clarifact-source-body">
+        ${truncNote}
         ${topSent ? `
           <p class="clarifact-source-snippet">
             <strong>Best match:</strong> "${escHtml(truncateDisplay(topSent.text, 200))}"
             <span class="clarifact-sim-score">(${Math.round(topSent.similarity * 100)}% match)</span>
           </p>` : ""}
         <a class="clarifact-source-link" href="${escHtml(source.url)}" target="_blank" rel="noopener">
-          Open source ↗
+          ${source.isPdf ? "Open document ↗" : "Open source ↗"}
         </a>
       </div>
     </div>`;

@@ -4,10 +4,10 @@
   "description": "Local proxy backend for Clarifact Chrome extension — Tavily/Wikipedia search, page scraping, and Nvidia Nemotron AI analysis via Amazon Bedrock",
   "main": "server.js",
   "scripts": {
-    "start":     "node server.js",
-    "dev":       "nodemon server.js",
+    "start": "node server.js",
+    "dev": "nodemon server.js",
     "check-aws": "node scripts/check-aws-setup.js",
-    "test":      "jest --runInBand"
+    "test": "jest --runInBand"
   },
   "dependencies": {
     "@aws-sdk/client-bedrock-runtime": "^3.600.0",
@@ -17,7 +17,8 @@
     "express": "^4.19.2",
     "express-rate-limit": "^7.3.1",
     "jsdom": "^24.1.0",
-    "node-fetch": "^2.7.0"
+    "node-fetch": "^2.7.0",
+    "pdf-parse": "^2.4.5"
   },
   "devDependencies": {
     "jest": "^29.7.0",

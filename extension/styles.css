@@ -567,6 +567,11 @@
 }
 #clarifact-sidebar .clarifact-source-card:last-child { border-bottom: none; }
 
+/* PDF source cards get a subtle left accent to indicate official document */
+#clarifact-sidebar .clarifact-source-card-pdf {
+  border-left: 2px solid rgba(55,138,221,0.35);
+}
+
 #clarifact-sidebar .clarifact-source-header {
   padding: 10px 13px;
   cursor: pointer;
@@ -684,6 +689,34 @@
   font-size: 12px;
   color: #6B7280;
   font-style: italic;
+}
+
+/* PDF badge — appears next to trust % on PDF source cards */
+#clarifact-sidebar .clarifact-pdf-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 2px 7px;
+  border-radius: 10px;
+  background: rgba(55,138,221,0.12);
+  color: #B5D4F4;
+  border: 1px solid rgba(55,138,221,0.22);
+  white-space: nowrap;
+}
+
+/* Truncation warning inside PDF source body */
+#clarifact-sidebar .clarifact-pdf-truncnote {
+  font-size: 11px;
+  color: #D4911E;
+  background: rgba(186,117,23,0.08);
+  border: 1px solid rgba(186,117,23,0.18);
+  border-radius: 5px;
+  padding: 4px 9px;
+  margin-bottom: 8px;
+  line-height: 1.5;
 }
 
 /* ── Contradictions ──────────────────────────────────────────────────────── */
