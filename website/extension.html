@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Download ClariFact Extension — AI Fact-Checker for Chrome</title>
+  <meta name="description" content="Download the ClariFact Chrome extension. Select any text on any webpage and get an AI-powered fact-check in seconds — verdict, confidence score, and cited sources." />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    /* ── Extension page layout ───────────────────────────────── */
+    .ex-page  { max-width: 1100px; margin-inline: auto; padding: 0 24px 100px; }
+    .ex-inner { max-width: 720px; }
+
+    .ex-section {
+      padding-block: 64px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .ex-eyebrow {
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.09em; color: #B5D4F4; margin-bottom: 12px;
+    }
+
+    .ex-h2 {
+      font-size: clamp(24px, 3vw, 34px); font-weight: 600;
+      letter-spacing: -0.02em; color: #F0F2F5;
+      margin-bottom: 14px; line-height: 1.2;
+    }
+
+    .ex-lead {
+      font-size: 14.5px; color: #9AA1AC;
+      line-height: 1.7; max-width: 600px;
+    }
+
+    /* ── Hero ────────────────────────────────────────────────── */
+    .ex-hero {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 48px;
+      align-items: start;
+      padding-top: 90px;
+      padding-bottom: 64px;
+    }
+
+    .ex-hero__eyebrow {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.09em; color: #B5D4F4; margin-bottom: 18px;
+    }
+
+    .ex-pulse {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #639922; flex-shrink: 0;
+      animation: ex-pulse 2s ease-in-out infinite;
+    }
+    @keyframes ex-pulse {
+      0%,100%{ opacity:1; transform:scale(1); }
+      50%    { opacity:.45; transform:scale(.7); }
+    }
+
+    .ex-hero__h1 {
+      font-size: clamp(32px, 4.5vw, 48px); font-weight: 600;
+      letter-spacing: -0.03em; color: #F0F2F5;
+      line-height: 1.12; margin-bottom: 16px;
+    }
+
+    .ex-hero__sub {
+      font-size: 15px; color: #9AA1AC;
+      line-height: 1.65; max-width: 520px; margin-bottom: 28px;
+    }
+
+    .ex-hero__actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; }
+
+    .ex-download-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 22px; background: #378ADD; color: #fff;
+      border: 1px solid #378ADD; border-radius: 6px;
+      font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600;
+      text-decoration: none; cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .ex-download-btn:hover { background: #2B70C0; border-color: #2B70C0; color: #fff; }
+
+    .ex-trust-row {
+      display: flex; gap: 18px; flex-wrap: wrap; margin-top: 4px;
+    }
+
+    .ex-trust-item {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 12.5px; color: #6B7280;
+    }
+
+    .ex-trust-icon { color: #639922; }
+
+    /* ── Version card (sticky) ───────────────────────────────── */
+    .ex-version-card {
+      background: #1C2026;
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 10px;
+      padding: 20px;
+      position: sticky;
+      top: 80px;
+    }
+
+    .ex-ver-header {
+      display: flex; align-items: center;
+      justify-content: space-between; margin-bottom: 18px;
+    }
+
+    .ex-ver-label {
+      font-size: 10px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.08em; color: #6B7280;
+    }
+
+    .ex-ver-badge {
+      font-size: 10px; font-weight: 600;
+      padding: 2px 8px; border-radius: 10px;
+      background: rgba(99,153,34,0.12);
+      border: 1px solid rgba(99,153,34,0.25);
+      color: #8BBF3A;
+    }
+
+    .ex-ver-rows { display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px; }
+
+    .ex-ver-row { display: flex; justify-content: space-between; align-items: center; }
+    .ex-ver-key { font-size: 12.5px; color: #6B7280; }
+    .ex-ver-val { font-size: 13px; font-weight: 600; color: #F0F2F5; }
+
+    .ex-ver-browsers {
+      display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 18px;
+    }
+    .ex-ver-br {
+      font-size: 11px; font-weight: 500;
+      padding: 3px 10px; border-radius: 5px;
+      background: #21252C; border: 1px solid rgba(255,255,255,0.08);
+      color: #9AA1AC;
+    }
+
+    .ex-ver-divider { height: 1px; background: rgba(255,255,255,0.07); margin-bottom: 16px; }
+
+    .ex-card-download {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%; padding: 11px 16px;
+      background: #378ADD; color: #fff;
+      border: 1px solid #378ADD; border-radius: 6px;
+      font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600;
+      text-decoration: none; cursor: pointer;
+      transition: background 0.15s;
+    }
+    .ex-card-download:hover { background: #2B70C0; color: #fff; }
+
+    .ex-ver-note {
+      font-size: 11px; color: #6B7280;
+      text-align: center; margin-top: 10px;
+    }
+
+    /* ── Features grid ───────────────────────────────────────── */
+    .ex-feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 14px; margin-top: 32px;
+    }
+
+    .ex-feature-card {
+      background: #1C2026;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px; padding: 20px;
+      transition: border-color 0.18s;
+    }
+    .ex-feature-card:hover { border-color: rgba(255,255,255,0.15); }
+
+    .ex-feature-icon {
+      width: 36px; height: 36px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 14px;
+    }
+
+    .ex-feature-title {
+      font-size: 13.5px; font-weight: 600;
+      color: #F0F2F5; margin-bottom: 6px;
+    }
+
+    .ex-feature-desc {
+      font-size: 12.5px; color: #9AA1AC; line-height: 1.6;
+    }
+
+    /* ── Installation timeline ───────────────────────────────── */
+    .ex-timeline {
+      display: flex; flex-direction: column; gap: 0;
+      margin-top: 36px; position: relative;
+    }
+
+    .ex-timeline::before {
+      content: '';
+      position: absolute;
+      left: 19px; top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, #378ADD 40%, rgba(255,255,255,0.07));
+    }
+
+    .ex-step {
+      display: flex; gap: 20px;
+      padding-bottom: 32px; position: relative;
+    }
+    .ex-step:last-child { padding-bottom: 0; }
+
+    .ex-step__num {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: #378ADD; color: #fff;
+      font-size: 13px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; position: relative; z-index: 1;
+      box-shadow: 0 0 0 4px #14171C;
+    }
+
+    .ex-step__num--done { background: #639922; }
+
+    .ex-step__body { padding-top: 8px; flex: 1; }
+
+    .ex-step__title {
+      font-size: 14px; font-weight: 600;
+      color: #F0F2F5; margin-bottom: 6px;
+    }
+
+    .ex-step__desc {
+      font-size: 13px; color: #9AA1AC; line-height: 1.65;
+    }
+
+    .ex-step__code {
+      display: inline-block; margin-top: 8px;
+      font-family: 'Fira Code', monospace; font-size: 12.5px;
+      background: #21252C; border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 5px; padding: 4px 10px; color: #B5D4F4;
+    }
+
+    .ex-step__tip {
+      margin-top: 10px; padding: 10px 14px;
+      background: rgba(55,138,221,0.08);
+      border: 1px solid rgba(55,138,221,0.2);
+      border-radius: 6px; font-size: 12.5px; color: #9AA1AC;
+      line-height: 1.6;
+    }
+
+    .ex-step__download {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 10px; padding: 7px 14px;
+      background: #378ADD; color: #fff; font-family: 'Inter', sans-serif;
+      font-size: 12.5px; font-weight: 600; border-radius: 5px;
+      text-decoration: none; border: 1px solid #378ADD;
+      transition: background 0.15s;
+    }
+    .ex-step__download:hover { background: #2B70C0; color: #fff; }
+
+    /* ── Permissions table ───────────────────────────────────── */
+    .ex-perms { display: flex; flex-direction: column; gap: 8px; margin-top: 20px; }
+
+    .ex-perm-row {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 10px 13px; background: #1C2026;
+      border: 1px solid rgba(255,255,255,0.07); border-radius: 7px;
+      font-size: 13px;
+    }
+
+    .ex-perm-row code {
+      font-family: 'Fira Code', monospace; font-size: 11.5px;
+      color: #B5D4F4; background: #21252C;
+      border: 1px solid rgba(55,138,221,0.2);
+      border-radius: 4px; padding: 2px 7px;
+      flex-shrink: 0;
+    }
+
+    .ex-perm-desc { color: #9AA1AC; line-height: 1.55; }
+
+    /* ── Privacy panel ───────────────────────────────────────── */
+    .ex-privacy-wrap {
+      background: rgba(99,153,34,0.06);
+      border: 1px solid rgba(99,153,34,0.18);
+      border-radius: 10px; padding: 32px;
+      margin-top: 32px;
+    }
+
+    .ex-privacy-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px; margin-top: 22px;
+    }
+
+    .ex-privacy-item { display: flex; align-items: flex-start; gap: 10px; }
+
+    .ex-privacy-check {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: rgba(99,153,34,0.12);
+      border: 1px solid rgba(99,153,34,0.28);
+      color: #8BBF3A;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 2px;
+    }
+
+    .ex-privacy-text { font-size: 13px; color: #9AA1AC; line-height: 1.55; }
+    .ex-privacy-text strong { color: #F0F2F5; font-weight: 600; }
+
+    /* ── CTA banner ──────────────────────────────────────────── */
+    .ex-cta-banner {
+      background: #1C2026;
+      border: 1px solid rgba(55,138,221,0.2);
+      border-radius: 10px; padding: 36px;
+      text-align: center; margin-top: 32px;
+    }
+
+    .ex-cta-banner h2 {
+      font-size: 22px; font-weight: 600; letter-spacing: -0.02em;
+      color: #F0F2F5; margin-bottom: 10px;
+    }
+
+    .ex-cta-banner p { font-size: 14px; color: #9AA1AC; margin-bottom: 22px; }
+
+    .ex-cta-actions {
+      display: flex; align-items: center;
+      justify-content: center; gap: 10px; flex-wrap: wrap;
+    }
+
+    /* ── Responsive ──────────────────────────────────────────── */
+    @media (max-width: 860px) {
+      .ex-hero { grid-template-columns: 1fr; }
+      .ex-version-card { position: static; }
+    }
+    @media (max-width: 600px) {
+      .ex-feature-grid { grid-template-columns: 1fr; }
+      .ex-privacy-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navigation ───────────────────────────────────────────── -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <svg class="nav-logo-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="28" height="28" rx="6" fill="#111318"/>
+          <path d="M19 9.5C17.5 8 15.8 7.2 14 7.2C10.2 7.2 7.2 10.2 7.2 14C7.2 17.8 10.2 20.8 14 20.8C15.8 20.8 17.5 20 19 18.5"
+                stroke="#F0F2F5" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+          <circle cx="21.5" cy="7" r="4.5" fill="#E87020"/>
+          <polyline points="19.3,7 21,8.7 24,5.3" stroke="white" stroke-width="1.4"
+                    stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <span><span class="nav-logo-clari">Clari</span><span class="nav-logo-fact">Fact</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html#features">Features</a></li>
+        <li><a href="index.html#how-it-works">How It Works</a></li>
+        <li><a href="index.html#setup">Backend Setup</a></li>
+        <li><a href="index.html#faq">FAQ</a></li>
+      </ul>
+      <a href="downloads/clarifact-extension-v1.1.0.zip" download class="nav-cta">
+        ↓ Download Extension
+      </a>
+    </div>
+  </nav>
+
+  <div class="ex-page">
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- HERO                                                     -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <section class="ex-hero">
+      <div>
+        <div class="ex-hero__eyebrow">
+          <span class="ex-pulse"></span>
+          Chrome Extension &mdash; Manifest V3
+        </div>
+
+        <h1 class="ex-hero__h1">
+          ClariFact<br/>
+          Browser Extension
+        </h1>
+
+        <p class="ex-hero__sub">
+          Select any text on any webpage. ClariFact searches the web, reads the top sources,
+          and returns an AI verdict — verdict, confidence score, and evidence — in your browser sidebar.
+        </p>
+
+        <div class="ex-hero__actions">
+          <a href="downloads/clarifact-extension-v1.1.0.zip" download class="ex-download-btn" id="hero-download-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Download Extension
+          </a>
+          <a href="#installation" class="btn-ghost">Installation Guide</a>
+          <a href="#privacy" class="btn-ghost">Privacy</a>
+        </div>
+
+        <div class="ex-trust-row">
+          <span class="ex-trust-item">
+            <span class="ex-trust-icon">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            No account required
+          </span>
+          <span class="ex-trust-item">
+            <span class="ex-trust-icon">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            Open source
+          </span>
+          <span class="ex-trust-item">
+            <span class="ex-trust-icon">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            Free forever
+          </span>
+          <span class="ex-trust-item">
+            <span class="ex-trust-icon">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            MIT License
+          </span>
+        </div>
+      </div>
+
+      <!-- Version card -->
+      <div class="ex-version-card" aria-label="Current release">
+        <div class="ex-ver-header">
+          <span class="ex-ver-label">Current Release</span>
+          <span class="ex-ver-badge">Latest</span>
+        </div>
+        <div class="ex-ver-rows">
+          <div class="ex-ver-row">
+            <span class="ex-ver-key">Version</span>
+            <span class="ex-ver-val">1.1.0</span>
+          </div>
+          <div class="ex-ver-row">
+            <span class="ex-ver-key">Released</span>
+            <span class="ex-ver-val">June 2026</span>
+          </div>
+          <div class="ex-ver-row">
+            <span class="ex-ver-key">File size</span>
+            <span class="ex-ver-val">1.3 MB</span>
+          </div>
+          <div class="ex-ver-row">
+            <span class="ex-ver-key">Manifest</span>
+            <span class="ex-ver-val">V3</span>
+          </div>
+          <div class="ex-ver-row">
+            <span class="ex-ver-key">Requires</span>
+            <span class="ex-ver-val">Node.js backend</span>
+          </div>
+        </div>
+        <div style="margin-bottom:14px">
+          <div class="ex-ver-key" style="margin-bottom:8px">Supported Browsers</div>
+          <div class="ex-ver-browsers">
+            <span class="ex-ver-br">Chrome</span>
+            <span class="ex-ver-br">Edge</span>
+            <span class="ex-ver-br">Brave</span>
+            <span class="ex-ver-br">Opera</span>
+          </div>
+        </div>
+        <div class="ex-ver-divider"></div>
+        <a href="downloads/clarifact-extension-v1.1.0.zip" download class="ex-card-download" id="card-download-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Download v1.1.0
+        </a>
+        <p class="ex-ver-note">ZIP &middot; 1.3 MB &middot; No installer required</p>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- FEATURES                                                 -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <section class="ex-section">
+      <div class="ex-eyebrow">What it does</div>
+      <h2 class="ex-h2">Fact-check anything, inline</h2>
+      <p class="ex-lead">
+        ClariFact adds a permanent fact-checking layer to your browser. Select text, get a verdict.
+        No tab-switching, no manual googling.
+      </p>
+
+      <div class="ex-feature-grid">
+        <div class="ex-feature-card">
+          <div class="ex-feature-icon" style="background:rgba(55,138,221,0.10);border:1px solid rgba(55,138,221,0.18);color:#B5D4F4">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          </div>
+          <div class="ex-feature-title">Instant Fact-Check</div>
+          <div class="ex-feature-desc">Select any text, click the floating button. ClariFact runs a full search-and-analyse pipeline and shows results in a sidebar — no new tab, no copy-paste.</div>
+        </div>
+        <div class="ex-feature-card">
+          <div class="ex-feature-icon" style="background:rgba(99,153,34,0.10);border:1px solid rgba(99,153,34,0.2);color:#8BBF3A">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+          </div>
+          <div class="ex-feature-title">AI-Powered Verdict</div>
+          <div class="ex-feature-desc">Nemotron Nano 3 30B (via AWS Bedrock) reads the top sources and returns a structured SUPPORTED / INCONCLUSIVE / CONTRADICTED verdict with confidence score.</div>
+        </div>
+        <div class="ex-feature-card">
+          <div class="ex-feature-icon" style="background:rgba(186,117,23,0.10);border:1px solid rgba(186,117,23,0.2);color:#D4911E">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>
+          </div>
+          <div class="ex-feature-title">PDF Source Support</div>
+          <div class="ex-feature-desc">Government reports, court orders, and official documents in PDF format are automatically detected and parsed — the most authoritative sources are no longer skipped.</div>
+        </div>
+        <div class="ex-feature-card">
+          <div class="ex-feature-icon" style="background:rgba(55,138,221,0.10);border:1px solid rgba(55,138,221,0.18);color:#B5D4F4">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          </div>
+          <div class="ex-feature-title">Source Cards with Trust Scores</div>
+          <div class="ex-feature-desc">Every source is shown as an expandable card with domain trust score, the best-matching sentence, and a direct link. PDF sources get a dedicated badge.</div>
+        </div>
+        <div class="ex-feature-card">
+          <div class="ex-feature-icon" style="background:rgba(163,45,45,0.10);border:1px solid rgba(163,45,45,0.2);color:#C44040">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+          <div class="ex-feature-title">Contradiction Detection</div>
+          <div class="ex-feature-desc">When sources disagree with the claim, contradictions are surfaced separately — so you can see not just the verdict, but exactly what disputes it.</div>
+        </div>
+        <div class="ex-feature-card">
+          <div class="ex-feature-icon" style="background:rgba(99,153,34,0.10);border:1px solid rgba(99,153,34,0.2);color:#8BBF3A">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          </div>
+          <div class="ex-feature-title">Copy Report</div>
+          <div class="ex-feature-desc">One click exports a plain-text fact-check report — claim, verdict, confidence breakdown, all source URLs, and AI explanation — ready to paste anywhere.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- INSTALLATION GUIDE                                       -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <section class="ex-section" id="installation">
+      <div class="ex-eyebrow">Installation</div>
+      <h2 class="ex-h2">Up and running in under 5 minutes</h2>
+      <p class="ex-lead">
+        ClariFact is not yet on the Chrome Web Store. Load it as an unpacked developer extension — it takes
+        under 5 minutes and requires no build tools.
+      </p>
+
+      <div class="ex-timeline">
+
+        <div class="ex-step">
+          <div class="ex-step__num">1</div>
+          <div class="ex-step__body">
+            <div class="ex-step__title">Download the Extension ZIP</div>
+            <div class="ex-step__desc">
+              Click the button below to download the ClariFact extension as a ZIP file.
+              No installer or build step required — the ZIP contains the complete, ready-to-load extension.
+            </div>
+            <a href="downloads/clarifact-extension-v1.1.0.zip" download class="ex-step__download">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              clarifact-extension-v1.1.0.zip
+            </a>
+          </div>
+        </div>
+
+        <div class="ex-step">
+          <div class="ex-step__num">2</div>
+          <div class="ex-step__body">
+            <div class="ex-step__title">Extract the ZIP</div>
+            <div class="ex-step__desc">
+              Right-click the downloaded file → <strong>Extract All</strong> (Windows) or double-click (macOS).
+              Note where the extracted folder is — you'll need it in Step 6.
+            </div>
+            <div class="ex-step__tip">
+              The extracted folder should contain a <code>manifest.json</code> file at its root.
+              That's the folder you'll point Chrome to.
+            </div>
+          </div>
+        </div>
+
+        <div class="ex-step">
+          <div class="ex-step__num">3</div>
+          <div class="ex-step__body">
+            <div class="ex-step__title">Open Chrome (or Edge / Brave / Opera)</div>
+            <div class="ex-step__desc">
+              ClariFact supports any Chromium-based browser. All use the same extension package.
+            </div>
+          </div>
+        </div>
+
+        <div class="ex-step">
+          <div class="ex-step__num">4</div>
+          <div class="ex-step__body">
+            <div class="ex-step__title">Go to the Extensions page</div>
+            <div class="ex-step__desc">In the address bar, type and press Enter:</div>
+            <code class="ex-step__code">chrome://extensions</code>
+            <div class="ex-step__desc" style="margin-top:8px">
+              For Edge: <code class="ex-step__code" style="display:inline">edge://extensions</code> &nbsp;
+              For Brave: <code class="ex-step__code" style="display:inline">brave://extensions</code>
+            </div>
+          </div>
+        </div>
+
+        <div class="ex-step">
+          <div class="ex-step__num">5</div>
+          <div class="ex-step__body">
+            <div class="ex-step__title">Enable Developer Mode</div>
+            <div class="ex-step__desc">
+              Toggle <strong>Developer mode</strong> ON using the switch in the top-right corner of the Extensions page.
+              New buttons will appear in the top-left.
+            </div>
+            <div class="ex-step__tip">
+              Developer mode is required to load extensions not from the Web Store.
+              It does not weaken your browser security in any meaningful way.
+            </div>
+          </div>
+        </div>
+
+        <div class="ex-step">
+          <div class="ex-step__num">6</div>
+          <div class="ex-step__body">
+            <div class="ex-step__title">Click "Load Unpacked"</div>
+            <div class="ex-step__desc">
+              Click the <strong>Load unpacked</strong> button that appeared after enabling Developer mode.
+              A file picker dialog will open.
+            </div>
+          </div>
+        </div>
+
+        <div class="ex-step">
+          <div class="ex-step__num">7</div>
+          <div class="ex-step__body">
+            <div class="ex-step__title">Select the ClariFact Extension Folder</div>
+            <div class="ex-step__desc">
+              Navigate to the folder you extracted in Step 2. Select the folder that
+              contains <code>manifest.json</code> and click <strong>Select Folder</strong>.
+            </div>
+            <div class="ex-step__tip">
+              Select the <em>folder itself</em>, not any file inside it.
+              The folder should be named something like <code>extension</code> or <code>clarifact-extension-v1.1.0</code>.
+            </div>
+          </div>
+        </div>
+
+        <div class="ex-step">
+          <div class="ex-step__num">8</div>
+          <div class="ex-step__body">
+            <div class="ex-step__title">Set Up the Backend</div>
+            <div class="ex-step__desc">
+              ClariFact requires its Node.js backend running locally on port 3000 to search the web and
+              call Nemotron AI. Without it, the extension popup will show "Backend not reachable".
+            </div>
+            <div class="ex-step__tip">
+              See the <a href="index.html#setup" style="color:#B5D4F4">Backend Setup Guide</a> on the main page for full instructions —
+              it takes about 10 minutes and requires a Tavily API key (free tier) and AWS Bedrock access.
+            </div>
+          </div>
+        </div>
+
+        <div class="ex-step">
+          <div class="ex-step__num ex-step__num--done">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
+          <div class="ex-step__body">
+            <div class="ex-step__title">You're Ready</div>
+            <div class="ex-step__desc">
+              ClariFact is now installed. Navigate to any webpage, select a sentence or claim,
+              and click the <strong>Fact-check</strong> button that appears. The sidebar will slide in
+              with the full verdict.
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+              <a href="index.html#faq" class="btn-ghost" style="font-size:13px;padding:7px 14px">Installation FAQ</a>
+              <a href="index.html#setup" class="btn-ghost" style="font-size:13px;padding:7px 14px">Backend Setup Guide</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- PERMISSIONS                                              -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <section class="ex-section">
+      <div class="ex-eyebrow">Transparency</div>
+      <h2 class="ex-h2">Permissions — and why each one is needed</h2>
+      <p class="ex-lead">
+        ClariFact requests the minimum permissions required. Here is exactly what each one does.
+      </p>
+
+      <div class="ex-perms">
+        <div class="ex-perm-row">
+          <code>activeTab</code>
+          <div class="ex-perm-desc">Inject the sidebar and floating button into the current tab. Only activated when you explicitly trigger a fact-check — not on page load.</div>
+        </div>
+        <div class="ex-perm-row">
+          <code>scripting</code>
+          <div class="ex-perm-desc">Required by Chrome MV3 to programmatically inject content scripts when triggered by the context menu or keyboard shortcut.</div>
+        </div>
+        <div class="ex-perm-row">
+          <code>storage</code>
+          <div class="ex-perm-desc">Stores the last fact-check result locally so the popup can display it when you click the toolbar icon. Nothing is synced to any server.</div>
+        </div>
+        <div class="ex-perm-row">
+          <code>contextMenus</code>
+          <div class="ex-perm-desc">Adds a "Fact-check with ClariFact" right-click menu option as an alternative to the floating button.</div>
+        </div>
+        <div class="ex-perm-row">
+          <code>host: 127.0.0.1:3000</code>
+          <div class="ex-perm-desc">Allows the extension to communicate with the ClariFact backend running on your own machine (localhost). No external domains are accessed by the extension itself.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- PRIVACY                                                  -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <section class="ex-section" id="privacy">
+      <div class="ex-eyebrow">Privacy &amp; Security</div>
+      <h2 class="ex-h2">What ClariFact does — and doesn't — do with your data</h2>
+      <p class="ex-lead">
+        ClariFact's architecture is designed so that trust is not required. You can inspect every line of source code.
+      </p>
+
+      <div class="ex-privacy-wrap">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px">
+          <div style="width:36px;height:36px;border-radius:50%;background:rgba(99,153,34,0.14);border:1px solid rgba(99,153,34,0.28);display:flex;align-items:center;justify-content:center;color:#8BBF3A;flex-shrink:0">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <div style="font-size:15px;font-weight:600;color:#F0F2F5">Privacy by design</div>
+            <div style="font-size:12px;color:#6B7280">Not a policy — verifiable from the source code</div>
+          </div>
+        </div>
+
+        <div class="ex-privacy-grid">
+          <div class="ex-privacy-item">
+            <div class="ex-privacy-check">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="ex-privacy-text"><strong>Your selected text stays local.</strong> The claim is sent only to your local backend (127.0.0.1:3000) — never to any third-party server directly from the extension.</div>
+          </div>
+          <div class="ex-privacy-item">
+            <div class="ex-privacy-check">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="ex-privacy-text"><strong>No analytics, no tracking.</strong> The extension contains zero analytics, telemetry, or crash-reporting code.</div>
+          </div>
+          <div class="ex-privacy-item">
+            <div class="ex-privacy-check">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="ex-privacy-text"><strong>Open source.</strong> Every line of extension and backend code is on GitHub. No obfuscation, no minification of logic.</div>
+          </div>
+          <div class="ex-privacy-item">
+            <div class="ex-privacy-check">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="ex-privacy-text"><strong>Local result storage only.</strong> Results are stored in <code>chrome.storage.local</code> — on your device, never synced.</div>
+          </div>
+          <div class="ex-privacy-item">
+            <div class="ex-privacy-check">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="ex-privacy-text"><strong>Backend is your own.</strong> The Node.js backend runs entirely on your machine. You control the API keys and all network calls.</div>
+          </div>
+          <div class="ex-privacy-item">
+            <div class="ex-privacy-check">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="ex-privacy-text"><strong>Minimal permissions.</strong> Only 4 Chrome permissions requested — all auditable and justified above.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- CTA BANNER                                               -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <div class="ex-cta-banner">
+      <h2>Ready to fact-check the web?</h2>
+      <p>Download the extension and have it installed in under 5 minutes.</p>
+      <div class="ex-cta-actions">
+        <a href="downloads/clarifact-extension-v1.1.0.zip" download class="ex-download-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Download v1.1.0
+        </a>
+        <a href="#installation" class="btn-ghost">Installation Guide</a>
+      </div>
+    </div>
+
+  </div><!-- /ex-page -->
+
+  <!-- ── Footer ───────────────────────────────────────────────── -->
+  <footer>
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <svg width="22" height="22" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="28" height="28" rx="6" fill="#111318"/>
+          <path d="M19 9.5C17.5 8 15.8 7.2 14 7.2C10.2 7.2 7.2 10.2 7.2 14C7.2 17.8 10.2 20.8 14 20.8C15.8 20.8 17.5 20 19 18.5"
+                stroke="#F0F2F5" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+          <circle cx="21.5" cy="7" r="4.5" fill="#E87020"/>
+          <polyline points="19.3,7 21,8.7 24,5.3" stroke="white" stroke-width="1.4"
+                    stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <div>
+          <div class="footer-brand-name">
+            <span class="footer-clari">Clari</span><span class="footer-fact">Fact</span>
+          </div>
+          <div class="footer-tagline">AI Fact Checker</div>
+        </div>
+      </div>
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#features">Features</a></li>
+        <li><a href="index.html#setup">Backend Setup</a></li>
+        <li><a href="index.html#faq">FAQ</a></li>
+        <li><a href="https://github.com/Sanskar-bot/clarifact" target="_blank" rel="noopener">GitHub</a></li>
+      </ul>
+      <p class="footer-copy">MIT License · No data collected · Open source</p>
+    </div>
+  </footer>
+
+  <script>
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.style.background = window.scrollY > 20
+        ? 'rgba(20,23,28,0.98)'
+        : 'rgba(20,23,28,0.95)';
+    }, { passive: true });
+  </script>
+
+</body>
+</html>
