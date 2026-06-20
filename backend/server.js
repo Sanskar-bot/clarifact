@@ -7,9 +7,10 @@
  *   • Amazon Bedrock/Claude  (AI-powered fact-check analysis via AWS SDK)
  *
  * Security model:
- *   • Binds only to 127.0.0.1 — not accessible from outside the machine
+ *   • Binds to 0.0.0.0 on Render (localhost in dev via PORT=3000)
  *   • CORS whitelist allows only chrome-extension:// origins + localhost dev
- *   • Per-route rate limiters protect AWS costs
+ *   • Per-IP, per-route rate limiters protect Tavily + AWS Bedrock costs
+ *   • trust proxy = 1 so X-Forwarded-For is used as the real client IP
  *   • No user data is stored — every request is stateless
  *
  * Usage:
@@ -30,6 +31,15 @@ const factcheckRouter = require("./routes/factcheck");
 const { isGeminiConfigured, isBedrockConfigured, isNemotronConfigured } = require("./services/analyzeService");
 
 const app = express();
+
+// ── Trust proxy ───────────────────────────────────────────────────────────────
+// Render (and most cloud platforms) sit behind a reverse proxy/load balancer.
+// Without this, req.ip is always the proxy's IP → all users share one rate-limit
+// bucket → one person's requests lock out everyone else.
+// With trust proxy = 1, Express reads X-Forwarded-For and uses the real client IP
+// as the rate-limit key, so each user gets their own independent quota.
+app.set('trust proxy', 1);
+
 const PORT = parseInt(process.env.PORT || "3000", 10);
 
 // ── Body parsing ─────────────────────────────────────────────────────────────
@@ -64,32 +74,37 @@ app.use(cors({
   allowedHeaders: ["Content-Type"]
 }));
 
-// ── Rate limiting ─────────────────────────────────────────────────────────────
-// Outer limit: 60 requests per minute total (across all routes)
+// ── Rate limiting (per real client IP) ───────────────────────────────────────
+// All limiters key by req.ip, which resolves to the real user IP because
+// app.set('trust proxy', 1) is set above.
+
+// Global: 120 requests / 15 min per IP across all routes.
+// Generous enough for normal use, stops runaway scripts.
 const globalLimiter = rateLimit({
-  windowMs: 60 * 1000,
-  max: 60,
-  standardHeaders: true,
+  windowMs: 15 * 60 * 1000,   // 15 minutes
+  max: 120,
+  standardHeaders: true,       // Return RateLimit-* headers (RFC 6585)
   legacyHeaders: false,
-  message: { error: "Too many requests. Please wait before fact-checking again." }
+  message: { error: "Too many requests from your IP. Please wait before trying again." }
 });
 
-// Tighter limit on /api/search (protects Tavily quota when configured)
+// Search: 30 searches / 15 min per IP (protects Tavily monthly quota).
 const searchLimiter = rateLimit({
-  windowMs: 60 * 1000,
-  max: 20,
+  windowMs: 15 * 60 * 1000,   // 15 minutes
+  max: 30,
   standardHeaders: true,
   legacyHeaders: false,
-  message: { error: "Search rate limit reached. Please wait before searching again." }
+  message: { error: "Search rate limit reached. Please wait a few minutes before fact-checking again." }
 });
 
-// Bedrock has per-request costs — cap at 10 analyses per minute
+// Analyze: 10 AI calls / hour per IP — each Nemotron call costs real money.
+// A genuine user rarely needs more than a few fact-checks per hour.
 const analyzeLimiter = rateLimit({
-  windowMs: 60 * 1000,
+  windowMs: 60 * 60 * 1000,   // 1 hour
   max: 10,
   standardHeaders: true,
   legacyHeaders: false,
-  message: { error: "Bedrock analysis rate limit reached. Wait a moment before fact-checking again." }
+  message: { error: "AI analysis rate limit reached (10 fact-checks/hour per IP). Please try again later." }
 });
 
 app.use(globalLimiter);
