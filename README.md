@@ -1,19 +1,18 @@
-# Clarifact — Chrome Extension Fact-Checker
+# Clarifact — AI-Powered Chrome Extension Fact-Checker
 
 > **Fact-check any selected text on any webpage.**  
-> Pure programmatic approach — Brave Search API + NLP. No AI APIs. No LLMs.
+> Powered by Nvidia Nemotron Nano 3 30B via Amazon Bedrock + Tavily web search.
 
 ---
 
 ## What It Does
 
-1. You select text on any webpage (or right-click → "Fact-check with Clarifact")
-2. The extension searches Brave Search for the claim
-3. It scrapes and parses the top 5 results with Readability.js
-4. It extracts named entities (people, places, orgs, dates) with compromise.js
-5. It computes sentence similarity between the claim and each source
-6. It detects contradictions using negation analysis
-7. A confidence score (0–100%) and verdict (SUPPORTED / INCONCLUSIVE / CONTRADICTED) are shown in a sidebar
+1. Select text on any webpage (or right-click → "🔍 Fact-check with Clarifact")
+2. The backend searches the web via Tavily API (or Wikipedia as a free fallback)
+3. It scrapes and parses the top sources with Readability.js
+4. It runs NLP scoring (entity matching, cosine similarity, negation detection)
+5. It sends the claim + sources to **Nvidia Nemotron Nano 3 30B** via Amazon Bedrock
+6. A verdict (**SUPPORTED / INCONCLUSIVE / CONTRADICTED**) and AI explanation appear in a sidebar
 
 ---
 
@@ -21,8 +20,17 @@
 
 ```
 clarifact/
-├── backend/          Node.js/Express proxy (hides API key, scrapes pages)
+├── backend/          Node.js/Express local proxy server
+│   ├── routes/       API route handlers (search, scrape, analyze, factcheck)
+│   ├── services/     AI providers (Nemotron, Gemini, Bedrock/Claude), web search, scraper
+│   ├── scripts/      Diagnostic utilities (check-aws-setup.js)
+│   ├── server.js     Entry point
+│   └── .env.example  Environment variable template
 └── extension/        Chrome Extension (Manifest V3)
+    ├── background.js  Service worker — orchestrates the pipeline
+    ├── content.js     Sidebar UI injected into pages
+    ├── popup.js       Extension popup (health check display)
+    └── manifest.json
 ```
 
 ---
@@ -30,163 +38,211 @@ clarifact/
 ## Prerequisites
 
 - **Node.js** v18 or higher — https://nodejs.org
-- **Google Chrome** (or Chromium)
-- **Brave Search API key** (free tier) — https://brave.com/search/api/
+- **Google Chrome** (or Chromium-based browser)
+- **AWS Account** with IAM user that has `AmazonBedrockFullAccess`
+- **Bedrock Model Access** — Nemotron Nano 3 30B must be enabled in your region
 
 ---
 
-## Step 1 — Get Your Brave Search API Key
+## Getting Started
 
-1. Go to https://brave.com/search/api/
-2. Click **"Get Started for Free"**
-3. Create an account and subscribe to the **Free tier** (2,000 queries/month)
-4. Go to **API Keys** in your dashboard
-5. Copy your API key — it starts with `BSA...`
-
----
-
-## Step 2 — Set Up the Backend
+### Step 1 — Clone and install dependencies
 
 ```powershell
-# From the project root:
-cd backend
+git clone https://github.com/Sanskar-bot/clarifact.git
+cd clarifact\backend
 npm install
 
-# Copy the example env file
+cd ..\extension
+npm install   # copies compromise.js into extension\lib\
+```
+
+### Step 2 — Configure environment variables
+
+```powershell
+cd ..\backend
 copy .env.example .env
 ```
 
-Open `backend\.env` in any text editor and replace the placeholder:
+Open `backend\.env` in any editor and fill in these values:
 
+#### Required — AWS IAM credentials (for Nemotron)
+
+1. Go to **AWS Console → IAM → Users → [your user] → Security credentials**
+2. Click **"Create access key"** → choose "Application running outside AWS"
+3. Copy the Key ID and Secret Access Key into `.env`:
+
+```env
+AWS_ACCESS_KEY_ID=AKIA...
+AWS_SECRET_ACCESS_KEY=your_secret_key
+AWS_REGION=ap-south-1
+AI_PROVIDER=nemotron
 ```
-BRAVE_API_KEY=BSAxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-PORT=3000
+
+Make sure `AmazonBedrockFullAccess` is attached to your IAM user, and that **Nemotron Nano 3 30B** is enabled in **Bedrock Console → Model access**.
+
+#### Optional — Tavily API key (for real web search)
+
+Without Tavily, the app falls back to Wikipedia — fine for established facts, but won't find recent news.
+
+1. Go to **https://app.tavily.com/sign-up** (free, no credit card)
+2. Copy your API key into `.env`:
+
+```env
+TAVILY_API_KEY=tvly-...
 ```
 
----
+### Step 3 — Verify the AWS connection
 
-## Step 3 — Run the Backend
+Before starting the server, confirm everything is wired up:
 
 ```powershell
-# Development (auto-restart on file changes):
-npm run dev
-
-# Production:
-npm start
+npm run check-aws
 ```
 
-You should see:
-
+Expected output:
 ```
-╔════════════════════════════════════════════════╗
-║         Clarifact Backend — Running            ║
-║  http://127.0.0.1:3000                        ║
-║  API Key: ✓ configured                        ║
-╚════════════════════════════════════════════════╝
+─────────────────────────────────────────────
+  Clarifact — AWS Bedrock Connection Check
+─────────────────────────────────────────────
+     Region:  ap-south-1
+     Model:   nvidia.nemotron-nano-3-30b
+     Key ID:  AKIARFIM... (20 chars)
+
+  Sending test request to Bedrock...
+
+  ✓  AWS Bedrock + Nemotron connection verified successfully
+
+     Model response: "OK"
+─────────────────────────────────────────────
 ```
 
-Verify it works:
+If you see an error, the script will tell you exactly what to fix.
+
+### Step 4 — Start the backend
 
 ```powershell
-# Should return { status: "ok", apiKeyConfigured: true }
-curl http://127.0.0.1:3000/health
-
-# Test a search
-curl -X POST http://127.0.0.1:3000/api/search `
-  -H "Content-Type: application/json" `
-  -d '{"query":"Neil Armstrong moon landing 1969","count":5}'
+npm run dev        # Development — auto-restarts on file changes
+# or
+npm start          # Production
 ```
 
----
-
-## Step 4 — Set Up the Extension Libraries
-
-```powershell
-cd ..\extension
-npm install
+Expected banner:
+```
+╔════════════════════════════════════════════════════╗
+║          Clarifact Backend — Running               ║
+║  http://127.0.0.1:3000                            ║
+║  Search:       ✓ Tavily API (free)               ║
+║  AI Provider:  nemotron                            ║
+║  Nemotron:     ✓ configured (IAM)                 ║
+╚════════════════════════════════════════════════════╝
 ```
 
-This automatically copies `compromise.js` into `extension\lib\`.  
-You should see:
+### Step 5 — Load the Chrome Extension
 
-```
-[setup] ✓ Copied compromise.js → lib/ (XXX KB)
-[setup] ✓ All libraries ready.
-```
-
----
-
-## Step 5 — Load the Extension in Chrome
-
-1. Open Chrome and go to `chrome://extensions`
-2. Enable **"Developer mode"** (toggle in the top-right)
+1. Open Chrome → go to `chrome://extensions`
+2. Enable **Developer mode** (top-right toggle)
 3. Click **"Load unpacked"**
-4. Browse to and select the `extension\` folder (the one containing `manifest.json`)
-5. The Clarifact extension will appear with its icon in the toolbar
+4. Select the `extension\` folder (the one containing `manifest.json`)
+5. The Clarifact icon will appear in your toolbar
 
-> **Important:** The extension ID shown on `chrome://extensions` is unique to your machine.  
-> You do not need to configure it anywhere for local use.
+> After editing any extension file, click **⟳ Reload** on the Clarifact card in `chrome://extensions`.
 
----
-
-## Step 6 — Test the Pipeline End-to-End
+### Step 6 — Test end-to-end
 
 Open any news article or Wikipedia page. Select some text, then:
 
-**Method A:** Click the purple **"✓ Fact-check"** button that appears near your selection  
-**Method B:** Right-click the selected text → **"🔍 Fact-check with Clarifact"**
+**Method A:** Click the purple **"✓ Fact-check"** floating button  
+**Method B:** Right-click → "🔍 Fact-check with Clarifact"
 
-### Recommended Test Claims
+#### Recommended test claims
 
-| Claim to select | Expected verdict | Why |
-|---|---|---|
-| `Neil Armstrong became the first human to walk on the Moon on July 20, 1969` | **SUPPORTED** | Extremely well-documented, many high-trust sources |
-| `The Great Wall of China is visible from space with the naked eye` | **INCONCLUSIVE** | Debated — some sources confirm the myth, others correct it |
-| `COVID-19 vaccines contain microchips implanted by the government` | **CONTRADICTED** | Well-refuted claim, negation sentences dominate results |
+| Claim | Expected verdict |
+|---|---|
+| `Neil Armstrong became the first human to walk on the Moon on July 20, 1969` | **SUPPORTED** |
+| `The Great Wall of China is visible from space with the naked eye` | **INCONCLUSIVE** |
+| `Drinking 8 glasses of water a day is a scientifically proven requirement` | **CONTRADICTED** |
 
 ---
 
-## Architecture Overview
+## AI Provider Chain
+
+The backend supports multiple AI providers with automatic fallback:
+
+```
+AI_PROVIDER=nemotron  →  always uses Nemotron (recommended)
+AI_PROVIDER=auto      →  Nemotron → Gemini → Bedrock/Claude (in order)
+AI_PROVIDER=gemini    →  always uses Google Gemini 1.5 Flash
+AI_PROVIDER=bedrock   →  always uses Claude via bearer token
+```
+
+| Provider | Model | Auth | Cost |
+|---|---|---|---|
+| **Nemotron** (primary) | Nvidia Nemotron Nano 3 30B | IAM credentials | Paid per token |
+| **Gemini** (secondary) | Gemini 1.5 Flash | API key | Free tier |
+| **Bedrock/Claude** (fallback) | Claude 3.5 Sonnet v2 | Bearer token or IAM | Paid per token |
+
+---
+
+## API Endpoints
+
+All endpoints accept and return `application/json`.
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/health` | Server + provider status |
+| `POST` | `/api/search` | Web search (Tavily or Wikipedia) |
+| `POST` | `/api/scrape` | Scrape and extract text from a URL |
+| `POST` | `/api/analyze` | AI fact-check (main pipeline endpoint) |
+| `POST` | `/api/factcheck` | Direct Nemotron fact-check with pre-formatted sources |
+
+---
+
+## Architecture
 
 ```
 [User selects text]
        │
        ▼
-[content.js]  ── FACT_CHECK_REQUEST ──▶  [background.js]
-                                                │
-                                    POST /api/search (Brave API)
-                                                │
-                                    POST /api/scrape ×5 (parallel)
-                                         │ Readability.js on backend
-                                                │
-                    SEARCH_RESULTS_READY ◀──────┘
-                          │
-               [content.js NLP pipeline]
-                  compromise.js entities
-                  TF cosine similarity
-                  negation contradiction detection
-                          │
-               [scorer.js] → confidence score
-                          │
-               [sidebar rendered in-page]
+[content.js] ── FACT_CHECK_REQUEST ──▶ [background.js service worker]
+                                               │
+                                   POST /api/search (Tavily / Wikipedia)
+                                               │
+                                   POST /api/scrape ×5 (parallel)
+                                        │ Readability.js on backend
+                                               │
+                       SEARCH_RESULTS_READY ◀──┘
+                             │
+                  [content.js NLP pipeline]
+                     compromise.js entities
+                     TF cosine similarity
+                     negation contradiction
+                             │
+                  POST /api/analyze ──▶ [analyzeService.js]
+                                              │
+                                   [nemotronAnalysis.js]
+                                   Nvidia Nemotron via Bedrock
+                                   ConverseCommand (IAM auth)
+                                              │
+                  [sidebar rendered in-page] ◀┘
 ```
 
 ---
 
 ## Development Tips
 
-- **Backend logs** all scrape calls — watch the terminal for `[scrape] OK` or `[scrape] Failed`
-- **Extension console logs** appear in Chrome DevTools → the tab's console (for content.js) or `chrome://extensions` → Inspect views → Service Worker (for background.js)
-- After editing any extension file, go to `chrome://extensions` and click **⟳ Reload** on the Clarifact card
-- The backend does **not** need to be restarted when you edit extension files
+- **Backend logs** — watch the terminal for `[search]`, `[scrape]`, `[nemotron]` prefixes
+- **Extension logs** — Chrome DevTools console (content.js) or `chrome://extensions` → Inspect → Service Worker (background.js)
+- **Verify AWS** anytime — `npm run check-aws`
+- **Nodemon** restarts the backend automatically when you save `.js` files; it does NOT watch `.env` (restart manually after `.env` changes)
 
 ---
 
-## Known Limitations (v1.0)
+## Known Limitations
 
 - **SPAs (React/Vue):** Backend fetches raw HTML — JavaScript-rendered content may be incomplete
-- **Hard paywalls:** WSJ, FT, and similar sites are blocked — skipped with a warning
-- **Rate limits:** Brave free tier is 2,000 searches/month — results are not cached in v1
+- **Hard paywalls:** WSJ, FT, etc. are skipped with a warning
+- **Recent news without Tavily:** Wikipedia won't find articles from the last few days
 - **Non-English claims:** NLP accuracy is reduced; a warning is shown
 - **PDF links:** Automatically skipped (Readability cannot parse binary files)
 

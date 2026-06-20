@@ -25,6 +25,18 @@ const {
   InvokeModelCommand
 } = require("@aws-sdk/client-bedrock-runtime");
 
+// ── LAST-RESORT FALLBACK — read this before editing ───────────────────────
+// This file is only executed when BOTH Nemotron AND Gemini are unavailable
+// (either not configured or failed). If AI_PROVIDER=nemotron and Nemotron
+// is working correctly, this code path should never run in normal operation.
+//
+// If you see ResourceNotFoundException errors referencing the model IDs below:
+//   1. Go to AWS Console → Amazon Bedrock → Model access
+//   2. Request access to "Claude 3.5 Sonnet v2" and "Claude 3 Haiku"
+//   3. Or update the IDs below to match what IS enabled in your account
+//      (run `aws bedrock list-foundation-models --region ap-south-1` to list them)
+// ──────────────────────────────────────────────────────────────────────────
+
 // Cross-region inference profile IDs — used with IAM credentials in ap-south-1
 // The 'ap.' prefix routes the request through AWS's AP inference network
 const MODEL_ID       = "ap.anthropic.claude-3-5-sonnet-20241022-v2:0"; // Claude 3.5 Sonnet v2

@@ -1,22 +1,27 @@
 /**
  * routes/search.js — POST /api/search
  *
- * Validates the incoming claim query and delegates to the Brave Search service.
- * All error cases return a consistent { error: string } JSON shape so the
- * extension service worker can handle them uniformly.
+ * Validates the incoming search query and delegates to the web search service.
+ * The service auto-selects between:
+ *   - Tavily API      (if TAVILY_API_KEY is set — recommended for news claims)
+ *   - Wikipedia API   (free fallback — no key needed, good for established facts)
+ *
+ * All error responses use a consistent { error: string } JSON shape so the
+ * extension service worker (background.js) can handle them uniformly.
  */
 
-const express = require("express");
-const router = express.Router();
-const { searchBrave } = require("../services/braveSearch");
+"use strict";
 
-// Brave free tier: 2,000 req/month — we log every call for the user's awareness
+const express = require("express");
+const router  = express.Router();
+const { searchWeb } = require("../services/webSearch");
+
 let searchCallCount = 0;
 
 router.post("/", async (req, res) => {
   const { query, count = 10 } = req.body;
 
-  // ── Input validation ────────────────────────────────────────────────────────
+  // ── Input validation ──────────────────────────────────────────────────────
   if (!query || typeof query !== "string") {
     return res.status(400).json({ error: "Missing required field: query (string)" });
   }
@@ -31,16 +36,21 @@ router.post("/", async (req, res) => {
 
   const clampedCount = Math.max(1, Math.min(Number(count) || 10, 20));
 
-  // ── Execute search ──────────────────────────────────────────────────────────
+  // ── Execute search ────────────────────────────────────────────────────────
   try {
     searchCallCount++;
-    console.log(`[search] Call #${searchCallCount} | query="${trimmed.slice(0, 60)}…" | count=${clampedCount}`);
+    console.log(
+      `[search] Call #${searchCallCount} | ` +
+      `query="${trimmed.slice(0, 60)}…" | count=${clampedCount}`
+    );
 
-    const results = await searchBrave(trimmed, clampedCount);
+    const results = await searchWeb(trimmed, clampedCount);
 
     if (results.length === 0) {
-      // Valid response but no results — extension handles this as a special case
-      return res.json({ results: [], warning: "No search results found for this query" });
+      return res.json({
+        results: [],
+        warning: "No search results found — try adding more specific terms"
+      });
     }
 
     return res.json({ results });
@@ -48,12 +58,15 @@ router.post("/", async (req, res) => {
   } catch (err) {
     console.error("[search] Error:", err.message);
 
-    // Distinguish API key misconfiguration from transient errors
-    if (err.message.includes("BRAVE_API_KEY")) {
-      return res.status(503).json({ error: "Brave API key not configured on server" });
-    }
     if (err.message.includes("rate limit")) {
-      return res.status(429).json({ error: "Brave API rate limit reached. Try again later." });
+      return res.status(429).json({
+        error: "Search rate limit reached — wait a moment and try again"
+      });
+    }
+    if (err.message.includes("API key invalid")) {
+      return res.status(503).json({
+        error: "TAVILY_API_KEY is invalid — check backend/.env"
+      });
     }
 
     return res.status(500).json({ error: `Search failed: ${err.message}` });
