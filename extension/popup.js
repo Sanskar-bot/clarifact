@@ -120,7 +120,7 @@ function renderResult(result) {
     resultTime.textContent = formatRelativeTime(new Date(result.timestamp));
   }
 
-  // Verdict
+  // Verdict + combined score
   const verdictMap = {
     SUPPORTED:    { icon: "✓", cls: "cf-verdict-supported" },
     INCONCLUSIVE: { icon: "?", cls: "cf-verdict-inconclusive" },
@@ -130,6 +130,8 @@ function renderResult(result) {
   verdictBadge.className  = `cf-verdict-badge ${vm.cls}`;
   verdictIcon.textContent = vm.icon;
   verdictText.textContent = result.verdict;
+  // result.confidence.score is the combined score when AI is available (source="combined")
+  // or the pure NLP score when AI was not available (source="nlp")
   verdictScore.textContent = `${Math.round(result.confidence.score * 100)}%`;
 
   // Breakdown bars — animate after short delay so transition fires

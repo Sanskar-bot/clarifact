@@ -382,6 +382,52 @@
 #clarifact-sidebar .clarifact-bar-amber  { background: linear-gradient(90deg, #d97706, #fbbf24); }
 #clarifact-sidebar .clarifact-bar-red    { background: linear-gradient(90deg, #dc2626, #f87171); }
 
+/* Score source attribution ("Nemotron AI + NLP") */
+#clarifact-sidebar .clarifact-score-source-row {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 14px 6px;
+}
+
+#clarifact-sidebar .clarifact-score-source {
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  color: #4a5070;
+  text-transform: uppercase;
+}
+
+/* AI explanation — prominent text shown directly below confidence bar */
+#clarifact-sidebar .clarifact-ai-explanation-main {
+  margin: 4px 12px 0;
+  padding: 10px 12px;
+  font-size: 12.5px;
+  color: #e2e8f0;
+  line-height: 1.7;
+  background: #1a1d27;
+  border: 1px solid #2d3148;
+  border-left: 3px solid #6366f1;
+  border-radius: 0 8px 8px 0;
+}
+
+/* Caveat chips — plain-language moderation notes */
+#clarifact-sidebar .clarifact-caveats-container {
+  margin: 6px 12px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+#clarifact-sidebar .clarifact-caveat {
+  font-size: 11.5px;
+  color: #fde68a;
+  background: rgba(245,158,11,0.08);
+  border: 1px solid rgba(245,158,11,0.2);
+  border-radius: 6px;
+  padding: 5px 10px;
+  line-height: 1.5;
+}
+
 /* ── Sections ────────────────────────────────────────────────────────────── */
 
 #clarifact-sidebar .clarifact-section {
@@ -790,8 +836,9 @@
   line-height: 1.65;
 }
 
-/* Sub-labels: KEY EVIDENCE, CAVEATS */
-#clarifact-sidebar .clarifact-ai-sub-label {
+/* Sub-labels: KEY EVIDENCE, SUPPORTING SIGNALS (in breakdown section) */
+#clarifact-sidebar .clarifact-ai-sub-label,
+#clarifact-sidebar .clarifact-sub-label {
   display: block;
   font-size: 9px;
   font-weight: 700;
@@ -799,6 +846,7 @@
   color: #4a5070;
   margin-bottom: 5px;
   text-transform: uppercase;
+  padding: 0 14px;
 }
 
 /* Evidence + caveats lists */
