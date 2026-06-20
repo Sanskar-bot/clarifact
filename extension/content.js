@@ -604,14 +604,24 @@
     return `
     <div class="clarifact-header">
       <div class="clarifact-logo">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-          <path d="M11 8v3l2 2" stroke-width="2.5"/>
+        <!-- ClariFact C-mark logo -->
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="28" height="28" rx="6" fill="#111318"/>
+          <path d="M19 9.5C17.5 8 15.8 7.2 14 7.2C10.2 7.2 7.2 10.2 7.2 14C7.2 17.8 10.2 20.8 14 20.8C15.8 20.8 17.5 20 19 18.5"
+                stroke="#F0F2F5" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+          <circle cx="21.5" cy="7" r="4.5" fill="#E87020"/>
+          <polyline points="19.3,7 21,8.7 24,5.3" stroke="white" stroke-width="1.4"
+                    stroke-linecap="round" stroke-linejoin="round" fill="none"/>
         </svg>
-        <span>Clarifact</span>
+        <div class="clarifact-logo-wordmark">
+          <div class="clarifact-logo-name">
+            <span class="clarifact-logo-clari">Clari</span><span class="clarifact-logo-fact">Fact</span>
+          </div>
+          <div class="clarifact-logo-tagline">Clarity · Truth · Verified</div>
+        </div>
       </div>
-      <button id="clarifact-close" aria-label="Close Clarifact sidebar">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <button id="clarifact-close" aria-label="Close ClariFact sidebar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
           <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
         </svg>
       </button>

@@ -1,11 +1,30 @@
 /**
- * popup.css — Clarifact Browser-Action Popup Styles
+ * popup.css — ClariFact Browser-Action Popup
  *
- * Popup dimensions: 340px wide, auto height (Chrome caps at ~600px)
- * Dark theme matching the sidebar for a consistent brand identity.
+ * Design System:
+ *   Background:      #14171C (near-black)
+ *   Surface:         #1C2026 (card)
+ *   Surface-2:       #21252C (muted panel)
+ *   Border subtle:   rgba(255,255,255,0.08)
+ *   Border emphasis: rgba(255,255,255,0.15)
+ *   Text primary:    #F0F2F5
+ *   Text secondary:  #9AA1AC
+ *   Text tertiary:   #6B7280
+ *   Blue trust:      #378ADD (bars, badges, links)
+ *   Blue text:       #B5D4F4 (blue on dark bg)
+ *   Green:           #639922 (supported only)
+ *   Amber:           #BA7517 (caution only)
+ *   Red:             #A32D2D (contradicted only)
+ *   Orange (logo):   #E87020
+ *
+ * Typography:
+ *   UI:    Inter, system-ui — 13–14px regular
+ *   Claim: Georgia, serif — italic (editorial)
+ *   Labels: 11px, medium, uppercase, 0.05em tracking
+ *   Score: 26px, weight 500 (calm, not aggressive)
  */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Georgia&display=swap');
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -13,10 +32,14 @@ body {
   width: 340px;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   font-size: 13px;
-  background: #0f1117;
-  color: #f1f5f9;
+  line-height: 1.5;
+  background: #14171C;
+  color: #F0F2F5;
   -webkit-font-smoothing: antialiased;
 }
+
+/* ── Logo SVG helper ─────────────────────────────────────────────────────── */
+/* Inline SVG used in the popup header — orange C mark */
 
 /* ── Header ─────────────────────────────────────────────────────────────── */
 
@@ -24,44 +47,74 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 13px 16px;
-  border-bottom: 1px solid #2d3148;
-  background: #0f1117;
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  background: #14171C;
 }
 
 .cf-logo {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 15px;
-  font-weight: 800;
-  color: #6366f1;
-  letter-spacing: -0.02em;
+  text-decoration: none;
+}
+
+.cf-logo-icon {
+  width: 28px;
+  height: 28px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* The "C" mark drawn as SVG inline — see popup.html */
+
+.cf-logo-wordmark {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.cf-logo-name {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.cf-logo-clari { color: #F0F2F5; }
+.cf-logo-fact  { color: #E87020; }
+
+.cf-logo-tagline {
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: #6B7280;
+  text-transform: uppercase;
 }
 
 /* Backend status dot */
 .cf-status-dot {
-  width: 9px;
-  height: 9px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   flex-shrink: 0;
   transition: background 0.3s;
 }
-.cf-status-checking { background: #4a5070; animation: cf-pulse 1.2s ease-in-out infinite; }
-.cf-status-ok       { background: #22c55e; box-shadow: 0 0 0 3px rgba(34,197,94,0.2); }
-.cf-status-warn     { background: #f59e0b; box-shadow: 0 0 0 3px rgba(245,158,11,0.2); }
-.cf-status-error    { background: #ef4444; box-shadow: 0 0 0 3px rgba(239,68,68,0.2); }
+
+.cf-status-checking { background: #374151; animation: cf-pulse 1.4s ease-in-out infinite; }
+.cf-status-ok       { background: #639922; }
+.cf-status-warn     { background: #BA7517; }
+.cf-status-error    { background: #A32D2D; }
 
 @keyframes cf-pulse {
   0%, 100% { opacity: 1; }
-  50%       { opacity: 0.4; }
+  50%       { opacity: 0.35; }
 }
 
 /* ── Backend Banner ──────────────────────────────────────────────────────── */
 
 .cf-backend-banner {
-  padding: 7px 16px;
-  font-size: 11.5px;
+  padding: 6px 14px;
+  font-size: 11px;
   font-weight: 500;
   display: flex;
   align-items: center;
@@ -70,10 +123,10 @@ body {
   transition: background 0.3s;
 }
 
-.cf-banner-checking { background: #1a1d27; color: #64748b; border-color: #2d3148; }
-.cf-banner-ok       { background: rgba(34,197,94,0.07);  color: #4ade80; border-color: rgba(34,197,94,0.15); }
-.cf-banner-warn     { background: rgba(245,158,11,0.08); color: #fbbf24; border-color: rgba(245,158,11,0.2); }
-.cf-banner-error    { background: rgba(239,68,68,0.07);  color: #f87171; border-color: rgba(239,68,68,0.15); }
+.cf-banner-checking { background: #1C2026; color: #6B7280; border-color: rgba(255,255,255,0.08); }
+.cf-banner-ok       { background: rgba(99,153,34,0.10);  color: #8BBF3A; border-color: rgba(99,153,34,0.2); }
+.cf-banner-warn     { background: rgba(186,117,23,0.10); color: #D4911E; border-color: rgba(186,117,23,0.2); }
+.cf-banner-error    { background: rgba(163,45,45,0.10);  color: #C44040; border-color: rgba(163,45,45,0.2); }
 
 /* ── Empty State ─────────────────────────────────────────────────────────── */
 
@@ -86,22 +139,22 @@ body {
   gap: 10px;
 }
 
-.cf-empty-icon { opacity: 0.5; }
+.cf-empty-icon { opacity: 0.3; }
 
 .cf-empty-title {
   font-size: 14px;
-  font-weight: 700;
-  color: #94a3b8;
+  font-weight: 500;
+  color: #9AA1AC;
 }
 
 .cf-empty-hint {
   font-size: 12px;
-  color: #4a5070;
+  color: #6B7280;
   line-height: 1.65;
   max-width: 260px;
 }
 
-.cf-empty-hint strong { color: #6366f1; }
+.cf-empty-hint strong { color: #B5D4F4; font-weight: 500; }
 
 /* ── Result State ────────────────────────────────────────────────────────── */
 
@@ -111,55 +164,63 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 9px 16px 5px;
+  padding: 10px 14px 6px;
 }
 
 .cf-result-label {
-  font-size: 9.5px;
-  font-weight: 700;
-  letter-spacing: 0.09em;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
-  color: #4a5070;
+  color: #6B7280;
 }
 
 .cf-result-time {
   font-size: 11px;
-  color: #4a5070;
+  color: #6B7280;
 }
 
-/* ── Claim preview ────────────────────────────────────────────────────────── */
+/* ── Claim preview — serif italic for editorial feel ─────────────────────── */
 
 .cf-claim-preview {
   margin: 0 12px 10px;
   padding: 10px 12px;
-  background: #1a1d27;
-  border: 1px solid #2d3148;
-  border-radius: 8px;
+  background: #1C2026;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-left: 2px solid rgba(255,255,255,0.15);
+  border-radius: 0 6px 6px 0;
 }
 
 .cf-claim-text {
+  font-family: Georgia, 'Times New Roman', serif;
   font-size: 12.5px;
-  color: #cbd5e1;
-  line-height: 1.55;
+  color: #9AA1AC;
+  line-height: 1.6;
   font-style: italic;
   word-break: break-word;
 }
 
-/* ── Verdict badge ───────────────────────────────────────────────────────── */
+/* ── Unified Verdict Card ────────────────────────────────────────────────── */
 
 .cf-verdict-badge {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 11px 14px;
-  margin: 0 12px 8px;
-  border-radius: 10px;
+  margin: 0 12px 6px;
+  padding: 14px 14px 10px;
+  border-radius: 8px;
   border: 1px solid transparent;
 }
 
-.cf-verdict-supported   { background: rgba(34,197,94,0.1);  border-color: rgba(34,197,94,0.25);  }
-.cf-verdict-inconclusive{ background: rgba(245,158,11,0.1); border-color: rgba(245,158,11,0.25); }
-.cf-verdict-contradicted{ background: rgba(239,68,68,0.1);  border-color: rgba(239,68,68,0.25);  }
+/* Verdict states — flat, no glow */
+.cf-verdict-supported    { background: rgba(99,153,34,0.12);  border-color: rgba(99,153,34,0.25); }
+.cf-verdict-inconclusive { background: rgba(186,117,23,0.10); border-color: rgba(186,117,23,0.22); }
+.cf-verdict-contradicted { background: rgba(163,45,45,0.12);  border-color: rgba(163,45,45,0.25); }
+
+/* Top row: icon + label | percentage */
+.cf-verdict-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
 
 .cf-verdict-left { display: flex; align-items: center; gap: 8px; }
 
@@ -167,72 +228,113 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
-  font-size: 13px;
-  font-weight: 800;
+  font-size: 12px;
+  font-weight: 600;
+  flex-shrink: 0;
 }
 
-.cf-verdict-supported   .cf-verdict-icon { background: rgba(34,197,94,0.2);  color: #4ade80; }
-.cf-verdict-inconclusive .cf-verdict-icon{ background: rgba(245,158,11,0.2); color: #fbbf24; }
-.cf-verdict-contradicted .cf-verdict-icon{ background: rgba(239,68,68,0.2);  color: #f87171; }
+.cf-verdict-supported    .cf-verdict-icon { background: rgba(99,153,34,0.2);  color: #8BBF3A; }
+.cf-verdict-inconclusive .cf-verdict-icon { background: rgba(186,117,23,0.2); color: #D4911E; }
+.cf-verdict-contradicted .cf-verdict-icon { background: rgba(163,45,45,0.2);  color: #C44040; }
 
-.cf-verdict-text {
-  font-size: 13px;
-  font-weight: 800;
-  letter-spacing: 0.04em;
+.cf-verdict-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
 }
-.cf-verdict-supported   .cf-verdict-text { color: #4ade80; }
-.cf-verdict-inconclusive .cf-verdict-text{ color: #fbbf24; }
-.cf-verdict-contradicted .cf-verdict-text{ color: #f87171; }
 
+.cf-verdict-supported    .cf-verdict-label { color: #8BBF3A; }
+.cf-verdict-inconclusive .cf-verdict-label { color: #D4911E; }
+.cf-verdict-contradicted .cf-verdict-label { color: #C44040; }
+
+/* The one big number */
 .cf-verdict-score {
-  font-size: 22px;
-  font-weight: 800;
+  font-size: 26px;
+  font-weight: 500;
   letter-spacing: -0.03em;
-  color: #f1f5f9;
+  color: #F0F2F5;
 }
 
-/* ── Mini breakdown bars ─────────────────────────────────────────────────── */
+/* Subtitle: "High confidence · 2 sources agree" */
+.cf-verdict-subtitle {
+  font-size: 11.5px;
+  color: #9AA1AC;
+  margin-top: 2px;
+  line-height: 1.4;
+}
 
-.cf-mini-breakdown {
-  margin: 0 12px 10px;
-  padding: 10px 12px;
-  background: #1a1d27;
-  border: 1px solid #2d3148;
-  border-radius: 8px;
+/* Clarification: "Combined score — AI + source checks" */
+.cf-verdict-clarification {
+  font-size: 10.5px;
+  color: #6B7280;
+  margin-top: 5px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+
+/* ── Confidence breakdown bars ───────────────────────────────────────────── */
+
+.cf-breakdown {
+  margin: 0 12px 8px;
+  background: #1C2026;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.cf-breakdown-header {
+  padding: 8px 12px 5px;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #6B7280;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.cf-breakdown-rows {
+  padding: 8px 12px 10px;
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 8px;
 }
 
-.cf-mini-row {
+.cf-bd-row {
   display: grid;
-  grid-template-columns: 72px 1fr;
+  grid-template-columns: 80px 1fr 36px;
   align-items: center;
   gap: 8px;
 }
 
-.cf-mini-label {
+.cf-bd-label {
   font-size: 11px;
-  color: #64748b;
-  font-weight: 500;
+  color: #9AA1AC;
 }
 
-.cf-mini-track {
-  height: 5px;
-  background: #22263a;
-  border-radius: 3px;
+.cf-bd-track {
+  height: 3px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 2px;
   overflow: hidden;
 }
 
-.cf-mini-fill {
+.cf-bd-fill {
   height: 100%;
-  background: linear-gradient(90deg, #6366f1, #a5b4fc);
-  border-radius: 3px;
+  background: #378ADD;
+  border-radius: 2px;
   width: 0%;
   transition: width 0.6s cubic-bezier(0.16,1,0.3,1);
+}
+
+.cf-bd-value {
+  font-size: 11px;
+  font-weight: 500;
+  color: #9AA1AC;
+  text-align: right;
 }
 
 /* ── Source pills ────────────────────────────────────────────────────────── */
@@ -246,23 +348,45 @@ body {
 
 .cf-source-pill {
   display: inline-block;
-  padding: 2px 9px;
-  border-radius: 12px;
+  padding: 2px 8px;
+  border-radius: 10px;
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 500;
+  background: rgba(55,138,221,0.10);
+  color: #B5D4F4;
+  border: 1px solid rgba(55,138,221,0.2);
   cursor: default;
 }
 
-.cf-trust-high { background: rgba(34,197,94,0.12);  color: #4ade80;  border: 1px solid rgba(34,197,94,0.2); }
-.cf-trust-mid  { background: rgba(245,158,11,0.12); color: #fbbf24; border: 1px solid rgba(245,158,11,0.2); }
-.cf-trust-low  { background: rgba(239,68,68,0.12);  color: #f87171; border: 1px solid rgba(239,68,68,0.2); }
+/* Trust tiers — subtle variation */
+.cf-trust-high { background: rgba(99,153,34,0.10);  color: #8BBF3A; border-color: rgba(99,153,34,0.2); }
+.cf-trust-mid  { background: rgba(55,138,221,0.10); color: #B5D4F4; border-color: rgba(55,138,221,0.2); }
+.cf-trust-low  { background: rgba(186,117,23,0.10); color: #D4911E; border-color: rgba(186,117,23,0.2); }
 
 .cf-no-sources {
-  font-size: 11.5px;
-  color: #4a5070;
+  font-size: 11px;
+  color: #6B7280;
   font-style: italic;
   padding: 0 2px;
 }
+
+/* ── Caveat strip ────────────────────────────────────────────────────────── */
+
+.cf-caveat-strip {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  margin: 0 12px 6px;
+  padding: 7px 10px;
+  background: rgba(186,117,23,0.10);
+  border: 1px solid rgba(186,117,23,0.2);
+  border-radius: 6px;
+  font-size: 11.5px;
+  color: #D4911E;
+  line-height: 1.5;
+}
+
+.cf-caveat-icon { font-size: 13px; flex-shrink: 0; }
 
 /* ── Alert strips ────────────────────────────────────────────────────────── */
 
@@ -272,59 +396,68 @@ body {
   align-items: center;
   gap: 8px;
   margin: 0 12px 6px;
-  padding: 7px 12px;
-  border-radius: 8px;
-  font-size: 12px;
-  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 11.5px;
+  font-weight: 500;
 }
 
 .cf-contradiction-alert {
-  background: rgba(239,68,68,0.1);
-  border: 1px solid rgba(239,68,68,0.25);
-  color: #f87171;
+  background: rgba(163,45,45,0.10);
+  border: 1px solid rgba(163,45,45,0.22);
+  color: #C44040;
 }
 
 .cf-warnings-alert {
-  background: rgba(245,158,11,0.1);
-  border: 1px solid rgba(245,158,11,0.25);
-  color: #fbbf24;
+  background: rgba(186,117,23,0.10);
+  border: 1px solid rgba(186,117,23,0.22);
+  color: #D4911E;
 }
 
-.cf-alert-icon { font-size: 14px; }
+.cf-alert-icon { font-size: 13px; }
 
-/* ── Open sidebar button ─────────────────────────────────────────────────── */
+/* ── View Full Analysis button — outlined, no fill ───────────────────────── */
 
 .cf-open-sidebar-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 7px;
+  gap: 6px;
   width: calc(100% - 24px);
-  margin: 6px 12px 12px;
-  padding: 10px;
-  background: #6366f1;
-  color: #fff;
-  border: none;
-  border-radius: 10px;
+  margin: 4px 12px 12px;
+  padding: 9px 14px;
+  background: transparent;
+  color: #B5D4F4;
+  border: 1px solid rgba(55,138,221,0.35);
+  border-radius: 6px;
   font-family: inherit;
-  font-size: 13px;
-  font-weight: 700;
+  font-size: 12.5px;
+  font-weight: 500;
   cursor: pointer;
-  transition: background 0.15s, transform 0.12s;
+  transition: background 0.15s, border-color 0.15s;
   letter-spacing: 0.01em;
 }
 
-.cf-open-sidebar-btn:hover   { background: #4f52d3; }
-.cf-open-sidebar-btn:active  { transform: scale(0.98); }
-.cf-open-sidebar-btn:disabled{ background: #2d3148; color: #4a5070; cursor: not-allowed; }
+.cf-open-sidebar-btn:hover {
+  background: #21252C;
+  border-color: rgba(55,138,221,0.55);
+}
+
+.cf-open-sidebar-btn:active  { opacity: 0.8; }
+.cf-open-sidebar-btn:disabled {
+  background: transparent;
+  border-color: rgba(255,255,255,0.08);
+  color: #6B7280;
+  cursor: not-allowed;
+}
 
 /* ── Footer ──────────────────────────────────────────────────────────────── */
 
 .cf-footer {
-  padding: 9px 16px;
-  border-top: 1px solid #2d3148;
-  font-size: 10.5px;
+  padding: 8px 14px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  font-size: 10px;
   color: #374151;
   text-align: center;
-  background: #0a0c10;
+  background: #14171C;
 }

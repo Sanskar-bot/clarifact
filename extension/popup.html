@@ -3,23 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Clarifact</title>
+  <title>ClariFact</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="popup.css" />
 </head>
 <body>
 
   <!-- Header -->
   <header class="cf-header">
+    <!-- Logo: inline SVG "C" mark + wordmark -->
     <div class="cf-logo">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2.2">
-        <circle cx="11" cy="11" r="8"/>
-        <path d="m21 21-4.35-4.35"/>
-        <path d="M11 8v3l2 2" stroke-width="2.5" stroke-linecap="round"/>
+      <svg class="cf-logo-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Rounded square background -->
+        <rect width="28" height="28" rx="6" fill="#111318"/>
+        <!-- White C letterform -->
+        <path d="M19 9.5C17.5 8 15.8 7.2 14 7.2C10.2 7.2 7.2 10.2 7.2 14C7.2 17.8 10.2 20.8 14 20.8C15.8 20.8 17.5 20 19 18.5"
+              stroke="#F0F2F5" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+        <!-- Orange checkmark badge -->
+        <circle cx="21.5" cy="7" r="4.5" fill="#E87020"/>
+        <polyline points="19.3,7 21,8.7 24,5.3" stroke="white" stroke-width="1.4"
+                  stroke-linecap="round" stroke-linejoin="round" fill="none"/>
       </svg>
-      <span>Clarifact</span>
+      <div class="cf-logo-wordmark">
+        <div class="cf-logo-name">
+          <span class="cf-logo-clari">Clari</span><span class="cf-logo-fact">Fact</span>
+        </div>
+        <div class="cf-logo-tagline">Clarity · Truth · Verified</div>
+      </div>
     </div>
     <div id="cf-status-dot" class="cf-status-dot cf-status-checking" title="Backend status"></div>
   </header>
@@ -32,15 +44,17 @@
   <!-- No result state -->
   <div id="cf-empty-state" class="cf-empty-state">
     <div class="cf-empty-icon">
-      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#4a5070" stroke-width="1.5">
-        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      <svg width="36" height="36" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="28" height="28" rx="6" fill="#1C2026"/>
+        <path d="M19 9.5C17.5 8 15.8 7.2 14 7.2C10.2 7.2 7.2 10.2 7.2 14C7.2 17.8 10.2 20.8 14 20.8C15.8 20.8 17.5 20 19 18.5"
+              stroke="#374151" stroke-width="2.6" stroke-linecap="round" fill="none"/>
       </svg>
     </div>
     <p class="cf-empty-title">No fact-check yet</p>
     <p class="cf-empty-hint">
       Select any text on a webpage, then click the
       <strong>Fact-check</strong> button — or right-click and choose
-      <strong>Fact-check with Clarifact</strong>.
+      <strong>Fact-check with ClariFact</strong>.
     </p>
   </div>
 
@@ -48,63 +62,80 @@
   <div id="cf-result-state" class="cf-result-state" style="display:none;">
 
     <div class="cf-result-header">
-      <span class="cf-result-label">LAST FACT-CHECK</span>
+      <span class="cf-result-label">Last fact-check</span>
       <span id="cf-result-time" class="cf-result-time">—</span>
     </div>
 
-    <!-- Claim preview -->
+    <!-- Claim preview — serif italic -->
     <div class="cf-claim-preview">
       <p id="cf-claim-text" class="cf-claim-text">…</p>
     </div>
 
-    <!-- Verdict -->
+    <!-- Unified verdict card — ONE number, ONE verdict -->
     <div id="cf-verdict-badge" class="cf-verdict-badge">
-      <div class="cf-verdict-left">
-        <span id="cf-verdict-icon" class="cf-verdict-icon">?</span>
-        <span id="cf-verdict-text" class="cf-verdict-text">INCONCLUSIVE</span>
+      <div class="cf-verdict-top">
+        <div class="cf-verdict-left">
+          <span id="cf-verdict-icon" class="cf-verdict-icon">?</span>
+          <span id="cf-verdict-text" class="cf-verdict-label">INCONCLUSIVE</span>
+        </div>
+        <span id="cf-verdict-score" class="cf-verdict-score">—%</span>
       </div>
-      <span id="cf-verdict-score" class="cf-verdict-score">—%</span>
+      <p id="cf-verdict-subtitle" class="cf-verdict-subtitle"></p>
+      <p class="cf-verdict-clarification">Combined score — AI analysis weighted with source checks below</p>
     </div>
 
-    <!-- Mini breakdown -->
-    <div class="cf-mini-breakdown">
-      <div class="cf-mini-row">
-        <span class="cf-mini-label">Sources</span>
-        <div class="cf-mini-track"><div id="cf-bar-sources" class="cf-mini-fill" style="width:0%"></div></div>
-      </div>
-      <div class="cf-mini-row">
-        <span class="cf-mini-label">Trust</span>
-        <div class="cf-mini-track"><div id="cf-bar-trust" class="cf-mini-fill" style="width:0%"></div></div>
-      </div>
-      <div class="cf-mini-row">
-        <span class="cf-mini-label">Entities</span>
-        <div class="cf-mini-track"><div id="cf-bar-entities" class="cf-mini-fill" style="width:0%"></div></div>
-      </div>
-      <div class="cf-mini-row">
-        <span class="cf-mini-label">Similarity</span>
-        <div class="cf-mini-track"><div id="cf-bar-similarity" class="cf-mini-fill" style="width:0%"></div></div>
+    <!-- Caveat strip (shown only when data is limited) -->
+    <div id="cf-caveat-strip" class="cf-caveat-strip" style="display:none;">
+      <span class="cf-caveat-icon">⚠</span>
+      <span id="cf-caveat-text"></span>
+    </div>
+
+    <!-- Confidence breakdown -->
+    <div class="cf-breakdown">
+      <div class="cf-breakdown-header">Confidence Breakdown</div>
+      <div class="cf-breakdown-rows">
+        <div class="cf-bd-row">
+          <span class="cf-bd-label">Domain Trust</span>
+          <div class="cf-bd-track"><div id="cf-bar-trust" class="cf-bd-fill"></div></div>
+          <span id="cf-val-trust" class="cf-bd-value">—</span>
+        </div>
+        <div class="cf-bd-row">
+          <span class="cf-bd-label">Sources</span>
+          <div class="cf-bd-track"><div id="cf-bar-sources" class="cf-bd-fill"></div></div>
+          <span id="cf-val-sources" class="cf-bd-value">—</span>
+        </div>
+        <div class="cf-bd-row">
+          <span class="cf-bd-label">Entity Match</span>
+          <div class="cf-bd-track"><div id="cf-bar-entities" class="cf-bd-fill"></div></div>
+          <span id="cf-val-entities" class="cf-bd-value">—</span>
+        </div>
+        <div class="cf-bd-row">
+          <span class="cf-bd-label">Similarity</span>
+          <div class="cf-bd-track"><div id="cf-bar-similarity" class="cf-bd-fill"></div></div>
+          <span id="cf-val-similarity" class="cf-bd-value">—</span>
+        </div>
       </div>
     </div>
 
-    <!-- Source count pills -->
+    <!-- Source domain pills -->
     <div id="cf-source-pills" class="cf-source-pills"></div>
 
     <!-- Contradictions alert -->
     <div id="cf-contradiction-alert" class="cf-contradiction-alert" style="display:none;">
       <span class="cf-alert-icon">⚡</span>
-      <span id="cf-contradiction-count">0</span> contradiction(s) detected
+      <span><span id="cf-contradiction-count">0</span> contradiction(s) detected</span>
     </div>
 
     <!-- Warnings alert -->
     <div id="cf-warnings-alert" class="cf-warnings-alert" style="display:none;">
       <span class="cf-alert-icon">⚠</span>
-      <span id="cf-warnings-count">0</span> warning(s)
+      <span><span id="cf-warnings-count">0</span> warning(s)</span>
     </div>
 
-    <!-- View full result button -->
+    <!-- View full result button — outlined, not filled -->
     <button id="cf-open-sidebar-btn" class="cf-open-sidebar-btn">
       View Full Analysis on Page
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M5 12h14M12 5l7 7-7 7"/>
       </svg>
     </button>

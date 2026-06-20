@@ -1,42 +1,44 @@
 /**
- * popup.js — Clarifact Browser-Action Popup Logic
+ * popup.js — ClariFact Browser-Action Popup Logic
  *
- * Runs in the popup window context (NOT a content script or service worker).
- * Has access to chrome.* APIs but no direct access to the page DOM.
- *
+ * Runs in the popup window context.
  * On open:
  *   1. Ping the backend /health endpoint via the service worker
  *   2. Ask the service worker for the last FactCheckResult
  *   3. Render the result summary (or empty state)
- *
- * The "View Full Analysis on Page" button injects the sidebar into the
- * active tab's content script by sending a message.
  */
 
 "use strict";
 
 // ── DOM Refs ──────────────────────────────────────────────────────────────────
-const statusDot        = document.getElementById("cf-status-dot");
-const backendBanner    = document.getElementById("cf-backend-banner");
-const backendMsg       = document.getElementById("cf-backend-msg");
-const emptyState       = document.getElementById("cf-empty-state");
-const resultState      = document.getElementById("cf-result-state");
-const claimText        = document.getElementById("cf-claim-text");
-const resultTime       = document.getElementById("cf-result-time");
-const verdictBadge     = document.getElementById("cf-verdict-badge");
-const verdictIcon      = document.getElementById("cf-verdict-icon");
-const verdictText      = document.getElementById("cf-verdict-text");
-const verdictScore     = document.getElementById("cf-verdict-score");
-const barSources       = document.getElementById("cf-bar-sources");
-const barTrust         = document.getElementById("cf-bar-trust");
-const barEntities      = document.getElementById("cf-bar-entities");
-const barSimilarity    = document.getElementById("cf-bar-similarity");
-const sourcePills      = document.getElementById("cf-source-pills");
-const contradAlert     = document.getElementById("cf-contradiction-alert");
-const contradCount     = document.getElementById("cf-contradiction-count");
-const warningsAlert    = document.getElementById("cf-warnings-alert");
-const warningsCount    = document.getElementById("cf-warnings-count");
-const openSidebarBtn   = document.getElementById("cf-open-sidebar-btn");
+const statusDot       = document.getElementById("cf-status-dot");
+const backendBanner   = document.getElementById("cf-backend-banner");
+const backendMsg      = document.getElementById("cf-backend-msg");
+const emptyState      = document.getElementById("cf-empty-state");
+const resultState     = document.getElementById("cf-result-state");
+const claimText       = document.getElementById("cf-claim-text");
+const resultTime      = document.getElementById("cf-result-time");
+const verdictBadge    = document.getElementById("cf-verdict-badge");
+const verdictIcon     = document.getElementById("cf-verdict-icon");
+const verdictLabel    = document.getElementById("cf-verdict-text");
+const verdictScore    = document.getElementById("cf-verdict-score");
+const verdictSubtitle = document.getElementById("cf-verdict-subtitle");
+const caveatStrip     = document.getElementById("cf-caveat-strip");
+const caveatText      = document.getElementById("cf-caveat-text");
+const barTrust        = document.getElementById("cf-bar-trust");
+const barSources      = document.getElementById("cf-bar-sources");
+const barEntities     = document.getElementById("cf-bar-entities");
+const barSimilarity   = document.getElementById("cf-bar-similarity");
+const valTrust        = document.getElementById("cf-val-trust");
+const valSources      = document.getElementById("cf-val-sources");
+const valEntities     = document.getElementById("cf-val-entities");
+const valSimilarity   = document.getElementById("cf-val-similarity");
+const sourcePills     = document.getElementById("cf-source-pills");
+const contradAlert    = document.getElementById("cf-contradiction-alert");
+const contradCount    = document.getElementById("cf-contradiction-count");
+const warningsAlert   = document.getElementById("cf-warnings-alert");
+const warningsCount   = document.getElementById("cf-warnings-count");
+const openSidebarBtn  = document.getElementById("cf-open-sidebar-btn");
 
 // ── Initialise ────────────────────────────────────────────────────────────────
 
@@ -65,20 +67,15 @@ async function checkBackendHealth() {
     } else {
       setBackendStatus("error", response?.error || "Backend not reachable");
     }
-  } catch (err) {
+  } catch {
     setBackendStatus("error", "Cannot reach backend — is it running on port 3000?");
   }
 }
 
-/**
- * setBackendStatus — Updates the status dot and banner.
- * @param {"ok"|"warn"|"error"|"checking"} state
- * @param {string} message
- */
 function setBackendStatus(state, message) {
-  statusDot.className   = `cf-status-dot cf-status-${state}`;
-  backendBanner.className = `cf-backend-banner cf-banner-${state}`;
-  backendMsg.textContent = message;
+  statusDot.className      = `cf-status-dot cf-status-${state}`;
+  backendBanner.className  = `cf-backend-banner cf-banner-${state}`;
+  backendMsg.textContent   = message;
 }
 
 // ── Last Result ───────────────────────────────────────────────────────────────
@@ -87,12 +84,7 @@ async function loadLastResult() {
   try {
     const response = await sendToServiceWorker({ type: "GET_LAST_RESULT" });
     const result = response?.result;
-
-    if (!result) {
-      showEmptyState();
-      return;
-    }
-
+    if (!result) { showEmptyState(); return; }
     renderResult(result);
   } catch {
     showEmptyState();
@@ -106,7 +98,7 @@ function showEmptyState() {
 
 /**
  * renderResult — Populates the popup with a FactCheckResult summary.
- * @param {FactCheckResult} result
+ * Shows ONE headline score (combined), one verdict, optional caveat strip.
  */
 function renderResult(result) {
   emptyState.style.display  = "none";
@@ -120,30 +112,50 @@ function renderResult(result) {
     resultTime.textContent = formatRelativeTime(new Date(result.timestamp));
   }
 
-  // Verdict + combined score
+  // ── Unified verdict (combined score if AI ran, NLP otherwise) ────────────
   const verdictMap = {
     SUPPORTED:    { icon: "✓", cls: "cf-verdict-supported" },
     INCONCLUSIVE: { icon: "?", cls: "cf-verdict-inconclusive" },
-    CONTRADICTED: { icon: "✗", cls: "cf-verdict-contradicted" }
+    CONTRADICTED: { icon: "✕", cls: "cf-verdict-contradicted" }
   };
   const vm = verdictMap[result.verdict] || verdictMap.INCONCLUSIVE;
-  verdictBadge.className  = `cf-verdict-badge ${vm.cls}`;
-  verdictIcon.textContent = vm.icon;
-  verdictText.textContent = result.verdict;
-  // result.confidence.score is the combined score when AI is available (source="combined")
-  // or the pure NLP score when AI was not available (source="nlp")
-  verdictScore.textContent = `${Math.round(result.confidence.score * 100)}%`;
 
-  // Breakdown bars — animate after short delay so transition fires
+  verdictBadge.className    = `cf-verdict-badge ${vm.cls}`;
+  verdictIcon.textContent   = vm.icon;
+  verdictLabel.textContent  = result.verdict;
+  // result.confidence.score = combined score (AI-led) or NLP score
+  const pct = Math.round(result.confidence.score * 100);
+  verdictScore.textContent  = `${pct}%`;
+
+  // Generate a natural subtitle line
   const bd = result.confidence.breakdown;
+  const accessedCount = Math.round(bd.sourceCountScore * 5);
+  const sourcePart = accessedCount === 1 ? "1 source"
+                   : accessedCount > 1  ? `${accessedCount} sources`
+                   : "no sources";
+  const confidenceLabel = pct >= 75 ? "High confidence"
+                        : pct >= 50 ? "Moderate confidence"
+                        : "Low confidence";
+  verdictSubtitle.textContent = `${confidenceLabel} · ${sourcePart} checked`;
+
+  // ── Caveat strip ─────────────────────────────────────────────────────────
+  const caveats = result.confidence.caveats || [];
+  if (caveats.length > 0) {
+    caveatStrip.style.display = "flex";
+    caveatText.textContent = caveats[0]; // Show the most important one
+  } else {
+    caveatStrip.style.display = "none";
+  }
+
+  // ── Confidence breakdown bars ─────────────────────────────────────────────
   setTimeout(() => {
-    setBar(barSources,    bd.sourceCountScore);
-    setBar(barTrust,      bd.domainTrustScore);
-    setBar(barEntities,   bd.entityMatchScore);
-    setBar(barSimilarity, bd.sentenceMatchScore);
+    setBar(barTrust,     valTrust,     bd.domainTrustScore,   null);
+    setBar(barSources,   valSources,   bd.sourceCountScore,   `${accessedCount}/5`);
+    setBar(barEntities,  valEntities,  bd.entityMatchScore,   null);
+    setBar(barSimilarity,valSimilarity,bd.sentenceMatchScore, null);
   }, 60);
 
-  // Source domain pills
+  // ── Source domain pills ───────────────────────────────────────────────────
   const validSources = (result.sources || []).filter(s => !s.skipped && s.text);
   if (validSources.length > 0) {
     sourcePills.innerHTML = validSources.slice(0, 5).map(s => `
@@ -155,23 +167,14 @@ function renderResult(result) {
     sourcePills.innerHTML = `<span class="cf-no-sources">No sources accessible</span>`;
   }
 
-  // Contradictions alert
+  // ── Contradiction / warning alerts ────────────────────────────────────────
   const contCount = result.contradictions?.length || 0;
-  if (contCount > 0) {
-    contradAlert.style.display = "flex";
-    contradCount.textContent   = contCount;
-  } else {
-    contradAlert.style.display = "none";
-  }
+  contradAlert.style.display = contCount > 0 ? "flex" : "none";
+  if (contCount > 0) contradCount.textContent = contCount;
 
-  // Warnings alert
   const warnCount = result.warnings?.length || 0;
-  if (warnCount > 0) {
-    warningsAlert.style.display = "flex";
-    warningsCount.textContent   = warnCount;
-  } else {
-    warningsAlert.style.display = "none";
-  }
+  warningsAlert.style.display = warnCount > 0 ? "flex" : "none";
+  if (warnCount > 0) warningsCount.textContent = warnCount;
 }
 
 // ── Open Sidebar in Active Tab ────────────────────────────────────────────────
@@ -181,26 +184,17 @@ async function openSidebarInTab() {
   if (!tab?.id) return;
 
   try {
-    // The content script is already injected — just ask it to re-open the sidebar
-    // with the last stored result. If it was closed, re-render it.
     await chrome.tabs.sendMessage(tab.id, { type: "SHOW_LAST_RESULT" });
   } catch {
-    // Content script might not be injected on this page (e.g., chrome:// pages)
     openSidebarBtn.textContent = "Not available on this page";
     openSidebarBtn.disabled = true;
   }
 
-  // Close the popup so the user can see the sidebar
   window.close();
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
-/**
- * sendToServiceWorker — Wraps chrome.runtime.sendMessage as a Promise.
- * @param {object} message
- * @returns {Promise<object>}
- */
 function sendToServiceWorker(message) {
   return new Promise((resolve, reject) => {
     chrome.runtime.sendMessage(message, (response) => {
@@ -213,13 +207,15 @@ function sendToServiceWorker(message) {
   });
 }
 
-function setBar(el, value) {
-  if (el) el.style.width = `${Math.round(value * 100)}%`;
+function setBar(barEl, valEl, value, overrideLabel) {
+  const pct = Math.round(value * 100);
+  if (barEl) barEl.style.width = `${pct}%`;
+  if (valEl) valEl.textContent = overrideLabel !== null ? (overrideLabel ?? `${pct}%`) : `${pct}%`;
 }
 
 function getTrustClass(score) {
-  if (score >= 0.8) return "high";
-  if (score >= 0.5) return "mid";
+  if (score >= 0.75) return "high";
+  if (score >= 0.50) return "mid";
   return "low";
 }
 
@@ -236,11 +232,6 @@ function escHtml(str) {
     .replace(/"/g, "&quot;");
 }
 
-/**
- * formatRelativeTime — Returns "2 minutes ago", "Just now", etc.
- * @param {Date} date
- * @returns {string}
- */
 function formatRelativeTime(date) {
   if (!date || isNaN(date.getTime())) return "";
   const diffMs  = Date.now() - date.getTime();
