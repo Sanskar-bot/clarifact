@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clarifact</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="cf-header">
+    <div class="cf-logo">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2.2">
+        <circle cx="11" cy="11" r="8"/>
+        <path d="m21 21-4.35-4.35"/>
+        <path d="M11 8v3l2 2" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+      <span>Clarifact</span>
+    </div>
+    <div id="cf-status-dot" class="cf-status-dot cf-status-checking" title="Backend status"></div>
+  </header>
+
+  <!-- Backend Status Banner -->
+  <div id="cf-backend-banner" class="cf-backend-banner cf-banner-checking">
+    <span id="cf-backend-msg">Checking backend…</span>
+  </div>
+
+  <!-- No result state -->
+  <div id="cf-empty-state" class="cf-empty-state">
+    <div class="cf-empty-icon">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#4a5070" stroke-width="1.5">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+    </div>
+    <p class="cf-empty-title">No fact-check yet</p>
+    <p class="cf-empty-hint">
+      Select any text on a webpage, then click the
+      <strong>Fact-check</strong> button — or right-click and choose
+      <strong>Fact-check with Clarifact</strong>.
+    </p>
+  </div>
+
+  <!-- Last result summary -->
+  <div id="cf-result-state" class="cf-result-state" style="display:none;">
+
+    <div class="cf-result-header">
+      <span class="cf-result-label">LAST FACT-CHECK</span>
+      <span id="cf-result-time" class="cf-result-time">—</span>
+    </div>
+
+    <!-- Claim preview -->
+    <div class="cf-claim-preview">
+      <p id="cf-claim-text" class="cf-claim-text">…</p>
+    </div>
+
+    <!-- Verdict -->
+    <div id="cf-verdict-badge" class="cf-verdict-badge">
+      <div class="cf-verdict-left">
+        <span id="cf-verdict-icon" class="cf-verdict-icon">?</span>
+        <span id="cf-verdict-text" class="cf-verdict-text">INCONCLUSIVE</span>
+      </div>
+      <span id="cf-verdict-score" class="cf-verdict-score">—%</span>
+    </div>
+
+    <!-- Mini breakdown -->
+    <div class="cf-mini-breakdown">
+      <div class="cf-mini-row">
+        <span class="cf-mini-label">Sources</span>
+        <div class="cf-mini-track"><div id="cf-bar-sources" class="cf-mini-fill" style="width:0%"></div></div>
+      </div>
+      <div class="cf-mini-row">
+        <span class="cf-mini-label">Trust</span>
+        <div class="cf-mini-track"><div id="cf-bar-trust" class="cf-mini-fill" style="width:0%"></div></div>
+      </div>
+      <div class="cf-mini-row">
+        <span class="cf-mini-label">Entities</span>
+        <div class="cf-mini-track"><div id="cf-bar-entities" class="cf-mini-fill" style="width:0%"></div></div>
+      </div>
+      <div class="cf-mini-row">
+        <span class="cf-mini-label">Similarity</span>
+        <div class="cf-mini-track"><div id="cf-bar-similarity" class="cf-mini-fill" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <!-- Source count pills -->
+    <div id="cf-source-pills" class="cf-source-pills"></div>
+
+    <!-- Contradictions alert -->
+    <div id="cf-contradiction-alert" class="cf-contradiction-alert" style="display:none;">
+      <span class="cf-alert-icon">⚡</span>
+      <span id="cf-contradiction-count">0</span> contradiction(s) detected
+    </div>
+
+    <!-- Warnings alert -->
+    <div id="cf-warnings-alert" class="cf-warnings-alert" style="display:none;">
+      <span class="cf-alert-icon">⚠</span>
+      <span id="cf-warnings-count">0</span> warning(s)
+    </div>
+
+    <!-- View full result button -->
+    <button id="cf-open-sidebar-btn" class="cf-open-sidebar-btn">
+      View Full Analysis on Page
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </button>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="cf-footer">
+    <span>Brave Search · compromise.js · Pure NLP</span>
+  </footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>

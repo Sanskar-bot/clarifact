@@ -1,0 +1,835 @@
+/**
+ * styles.css — Clarifact Sidebar + Floating Button Styles
+ *
+ * All selectors are prefixed with #clarifact-sidebar or .clarifact-*
+ * to avoid colliding with any host page's stylesheet.
+ *
+ * Design system:
+ *   Background:  #0f1117  (near-black)
+ *   Surface:     #1a1d27  (dark card)
+ *   Surface-2:   #22263a  (elevated card)
+ *   Accent:      #6366f1  (indigo)
+ *   Green:       #22c55e
+ *   Amber:       #f59e0b
+ *   Red:         #ef4444
+ *   Text-primary:#f1f5f9
+ *   Text-muted:  #94a3b8
+ *   Border:      #2d3148
+ */
+
+/* ── Floating Action Button ──────────────────────────────────────────────── */
+
+#clarifact-fab {
+  all: initial;
+  position: absolute;
+  z-index: 2147483646;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 13px;
+  background: #6366f1;
+  color: #fff;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 12.5px;
+  font-weight: 600;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(99,102,241,0.45), 0 1px 4px rgba(0,0,0,0.4);
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(6px) scale(0.95);
+  transition: opacity 0.18s ease, transform 0.18s ease, box-shadow 0.15s ease;
+  pointer-events: none;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+#clarifact-fab.clarifact-fab-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+#clarifact-fab:hover {
+  background: #4f52d3;
+  box-shadow: 0 6px 24px rgba(99,102,241,0.6), 0 2px 6px rgba(0,0,0,0.5);
+  transform: translateY(-1px) scale(1.03);
+}
+
+#clarifact-fab:active {
+  transform: scale(0.97);
+}
+
+#clarifact-fab svg {
+  flex-shrink: 0;
+  stroke: currentColor;
+}
+
+/* ── Sidebar Container ───────────────────────────────────────────────────── */
+
+#clarifact-sidebar {
+  all: initial;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 380px;
+  height: 100vh;
+  z-index: 2147483647;
+  background: #0f1117;
+  border-left: 1px solid #2d3148;
+  box-shadow: -8px 0 40px rgba(0,0,0,0.6);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 13px;
+  color: #f1f5f9;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  /* Slide-in from the right */
+  transform: translateX(100%);
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Scoped CSS custom properties */
+  --cf-accent:      #6366f1;
+  --cf-green:       #22c55e;
+  --cf-amber:       #f59e0b;
+  --cf-red:         #ef4444;
+  --cf-surface:     #1a1d27;
+  --cf-surface2:    #22263a;
+  --cf-border:      #2d3148;
+  --cf-text:        #f1f5f9;
+  --cf-muted:       #94a3b8;
+  --cf-radius:      10px;
+}
+
+#clarifact-sidebar.clarifact-open {
+  transform: translateX(0);
+}
+
+/* Scrollable inner content */
+#clarifact-sidebar #clarifact-result-view,
+#clarifact-sidebar #clarifact-loading-view,
+#clarifact-sidebar #clarifact-error-view {
+  overflow-y: auto;
+  overflow-x: hidden;
+  flex: 1;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: #2d3148 transparent;
+}
+
+#clarifact-sidebar ::-webkit-scrollbar { width: 4px; }
+#clarifact-sidebar ::-webkit-scrollbar-track { background: transparent; }
+#clarifact-sidebar ::-webkit-scrollbar-thumb { background: #2d3148; border-radius: 4px; }
+
+/* ── Header ─────────────────────────────────────────────────────────────── */
+
+#clarifact-sidebar .clarifact-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid #2d3148;
+  background: #0f1117;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+#clarifact-sidebar .clarifact-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #6366f1;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+#clarifact-sidebar .clarifact-logo svg { stroke: #6366f1; }
+
+#clarifact-sidebar #clarifact-close {
+  all: unset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #94a3b8;
+  transition: background 0.15s, color 0.15s;
+}
+
+#clarifact-sidebar #clarifact-close:hover {
+  background: #22263a;
+  color: #f1f5f9;
+}
+
+/* ── Claim Box ───────────────────────────────────────────────────────────── */
+
+#clarifact-sidebar .clarifact-claim-box {
+  padding: 12px 16px;
+  background: #1a1d27;
+  border-bottom: 1px solid #2d3148;
+  flex-shrink: 0;
+}
+
+#clarifact-sidebar .clarifact-claim-label {
+  display: block;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #94a3b8;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+
+#clarifact-sidebar .clarifact-claim-text {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: #e2e8f0;
+  font-style: italic;
+  word-break: break-word;
+}
+
+/* ── Loading View ────────────────────────────────────────────────────────── */
+
+#clarifact-sidebar #clarifact-loading-view {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  gap: 24px;
+}
+
+#clarifact-sidebar .clarifact-loading-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+#clarifact-sidebar .clarifact-spinner {
+  width: 44px;
+  height: 44px;
+  border: 3px solid #2d3148;
+  border-top-color: #6366f1;
+  border-radius: 50%;
+  animation: clarifact-spin 0.8s linear infinite;
+}
+
+@keyframes clarifact-spin {
+  to { transform: rotate(360deg); }
+}
+
+#clarifact-sidebar .clarifact-loading-msg {
+  margin: 0;
+  font-size: 14px;
+  color: #94a3b8;
+  font-weight: 500;
+  text-align: center;
+  min-height: 1.4em;
+}
+
+/* Pipeline steps */
+#clarifact-sidebar .clarifact-steps {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-top: 8px;
+}
+
+#clarifact-sidebar .clarifact-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: #4a5070;
+  font-weight: 500;
+  transition: color 0.2s;
+  min-width: 56px;
+}
+
+#clarifact-sidebar .clarifact-step-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #2d3148;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+#clarifact-sidebar .clarifact-step-line {
+  width: 40px;
+  height: 2px;
+  background: #2d3148;
+  margin-bottom: 16px;
+  transition: background 0.2s;
+}
+
+#clarifact-sidebar .clarifact-step.active .clarifact-step-dot {
+  background: #6366f1;
+  box-shadow: 0 0 0 4px rgba(99,102,241,0.2);
+}
+#clarifact-sidebar .clarifact-step.active { color: #a5b4fc; }
+
+#clarifact-sidebar .clarifact-step.done .clarifact-step-dot { background: #22c55e; }
+#clarifact-sidebar .clarifact-step.done { color: #86efac; }
+
+/* ── Error View ──────────────────────────────────────────────────────────── */
+
+#clarifact-sidebar #clarifact-error-view {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  text-align: center;
+  gap: 12px;
+}
+
+#clarifact-sidebar .clarifact-error-icon {
+  font-size: 40px;
+  margin-bottom: 4px;
+}
+
+#clarifact-sidebar .clarifact-error-msg {
+  margin: 0;
+  font-size: 13.5px;
+  color: #fca5a5;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+#clarifact-sidebar .clarifact-error-hint {
+  margin: 8px 0 0;
+  font-size: 12px;
+  color: #64748b;
+  line-height: 1.6;
+}
+
+#clarifact-sidebar .clarifact-error-hint code {
+  font-family: 'Fira Code', 'Courier New', monospace;
+  background: #1a1d27;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #a5b4fc;
+  font-size: 11px;
+}
+
+/* ── Result View ─────────────────────────────────────────────────────────── */
+
+#clarifact-sidebar #clarifact-result-view {
+  padding: 0 0 80px;
+}
+
+/* ── Verdict Badge ───────────────────────────────────────────────────────── */
+
+#clarifact-sidebar .clarifact-verdict-badge {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 16px 10px;
+  margin: 12px 12px 0;
+  border-radius: var(--cf-radius);
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: 0.04em;
+}
+
+#clarifact-sidebar .clarifact-verdict-badge.clarifact-verdict-supported {
+  background: rgba(34,197,94,0.12);
+  color: #4ade80;
+  border: 1px solid rgba(34,197,94,0.25);
+}
+#clarifact-sidebar .clarifact-verdict-badge.clarifact-verdict-inconclusive {
+  background: rgba(245,158,11,0.12);
+  color: #fbbf24;
+  border: 1px solid rgba(245,158,11,0.25);
+}
+#clarifact-sidebar .clarifact-verdict-badge.clarifact-verdict-contradicted {
+  background: rgba(239,68,68,0.12);
+  color: #f87171;
+  border: 1px solid rgba(239,68,68,0.25);
+}
+
+#clarifact-sidebar .clarifact-score-pct {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+/* ── Confidence Bar ──────────────────────────────────────────────────────── */
+
+#clarifact-sidebar .clarifact-bar-track {
+  height: 5px;
+  background: #22263a;
+  margin: 0 12px 4px;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+#clarifact-sidebar .clarifact-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  width: 0%;
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#clarifact-sidebar .clarifact-bar-green  { background: linear-gradient(90deg, #16a34a, #4ade80); }
+#clarifact-sidebar .clarifact-bar-amber  { background: linear-gradient(90deg, #d97706, #fbbf24); }
+#clarifact-sidebar .clarifact-bar-red    { background: linear-gradient(90deg, #dc2626, #f87171); }
+
+/* ── Sections ────────────────────────────────────────────────────────────── */
+
+#clarifact-sidebar .clarifact-section {
+  margin: 12px 12px 0;
+  background: #1a1d27;
+  border: 1px solid #2d3148;
+  border-radius: var(--cf-radius);
+  overflow: hidden;
+}
+
+#clarifact-sidebar .clarifact-section-title {
+  margin: 0;
+  padding: 10px 14px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: #94a3b8;
+  border-bottom: 1px solid #2d3148;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── Score Breakdown ─────────────────────────────────────────────────────── */
+
+#clarifact-sidebar .clarifact-breakdown { padding: 10px 14px; display: flex; flex-direction: column; gap: 9px; }
+
+#clarifact-sidebar .clarifact-breakdown-row {
+  display: grid;
+  grid-template-columns: 110px 1fr 40px;
+  align-items: center;
+  gap: 8px;
+}
+
+#clarifact-sidebar .clarifact-breakdown-label {
+  font-size: 12px;
+  color: #94a3b8;
+  white-space: nowrap;
+}
+
+#clarifact-sidebar .clarifact-mini-track {
+  height: 5px;
+  background: #22263a;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+#clarifact-sidebar .clarifact-mini-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #6366f1, #a5b4fc);
+  border-radius: 3px;
+  width: 0%;
+  transition: width 0.7s cubic-bezier(0.16,1,0.3,1);
+}
+
+#clarifact-sidebar .clarifact-breakdown-value {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #e2e8f0;
+  text-align: right;
+}
+
+/* ── Entities ────────────────────────────────────────────────────────────── */
+
+#clarifact-sidebar .clarifact-entities { padding: 10px 14px; display: flex; flex-direction: column; gap: 8px; }
+
+#clarifact-sidebar .clarifact-ent-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+#clarifact-sidebar .clarifact-ent-icon {
+  font-size: 14px;
+  flex-shrink: 0;
+  line-height: 1.6;
+}
+
+#clarifact-sidebar .clarifact-ent-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding-top: 2px;
+}
+
+#clarifact-sidebar .clarifact-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  background: #22263a;
+  border: 1px solid #2d3148;
+  border-radius: 12px;
+  font-size: 11.5px;
+  color: #c7d2fe;
+  font-weight: 500;
+}
+
+#clarifact-sidebar .clarifact-ent-empty {
+  font-size: 12px;
+  color: #4a5070;
+  padding-top: 2px;
+}
+
+/* ── Source Cards ────────────────────────────────────────────────────────── */
+
+#clarifact-sidebar .clarifact-sources-list { display: flex; flex-direction: column; }
+
+#clarifact-sidebar .clarifact-source-card {
+  border-bottom: 1px solid #2d3148;
+}
+#clarifact-sidebar .clarifact-source-card:last-child { border-bottom: none; }
+
+#clarifact-sidebar .clarifact-source-header {
+  padding: 10px 14px;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.15s;
+}
+#clarifact-sidebar .clarifact-source-header:hover { background: #22263a; }
+
+#clarifact-sidebar .clarifact-source-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 3px;
+}
+
+#clarifact-sidebar .clarifact-source-domain {
+  font-size: 12px;
+  font-weight: 700;
+  color: #a5b4fc;
+}
+
+#clarifact-sidebar .clarifact-trust-badge {
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 10px;
+}
+#clarifact-sidebar .clarifact-trust-high { background: rgba(34,197,94,0.15); color: #4ade80; }
+#clarifact-sidebar .clarifact-trust-mid  { background: rgba(245,158,11,0.15); color: #fbbf24; }
+#clarifact-sidebar .clarifact-trust-low  { background: rgba(239,68,68,0.15);  color: #f87171; }
+
+#clarifact-sidebar .clarifact-source-title {
+  margin: 0;
+  font-size: 12px;
+  color: #94a3b8;
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 20px;
+}
+
+#clarifact-sidebar .clarifact-accordion-icon {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #4a5070;
+  font-size: 14px;
+  transition: transform 0.2s;
+}
+
+#clarifact-sidebar .clarifact-source-expanded .clarifact-accordion-icon {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+#clarifact-sidebar .clarifact-source-body {
+  display: none;
+  padding: 0 14px 12px;
+  border-top: 1px solid #22263a;
+}
+
+#clarifact-sidebar .clarifact-source-expanded .clarifact-source-body {
+  display: block;
+}
+
+#clarifact-sidebar .clarifact-source-snippet {
+  margin: 10px 0 8px;
+  font-size: 12px;
+  color: #cbd5e1;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+#clarifact-sidebar .clarifact-sim-score {
+  font-style: normal;
+  color: #64748b;
+  font-size: 11px;
+}
+
+#clarifact-sidebar .clarifact-source-link {
+  display: inline-block;
+  font-size: 11.5px;
+  color: #818cf8;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.15s;
+}
+#clarifact-sidebar .clarifact-source-link:hover { color: #a5b4fc; text-decoration: underline; }
+
+#clarifact-sidebar .clarifact-empty {
+  padding: 12px 14px;
+  margin: 0;
+  font-size: 12px;
+  color: #4a5070;
+  font-style: italic;
+}
+
+/* ── Contradictions ──────────────────────────────────────────────────────── */
+
+#clarifact-sidebar .clarifact-contradiction-section {
+  border-color: rgba(239,68,68,0.3);
+  background: rgba(239,68,68,0.05);
+}
+
+#clarifact-sidebar .clarifact-contradiction-section .clarifact-section-title {
+  color: #f87171;
+  border-bottom-color: rgba(239,68,68,0.2);
+}
+
+#clarifact-sidebar .clarifact-badge-count {
+  background: #ef4444;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 1px 6px;
+  border-radius: 10px;
+  letter-spacing: 0;
+}
+
+#clarifact-sidebar .clarifact-contradiction-item {
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(239,68,68,0.15);
+}
+#clarifact-sidebar .clarifact-contradiction-item:last-child { border-bottom: none; }
+
+#clarifact-sidebar .clarifact-contradiction-text {
+  margin: 5px 0 0;
+  font-size: 12px;
+  color: #fca5a5;
+  line-height: 1.55;
+  font-style: italic;
+}
+
+/* ── Warnings ────────────────────────────────────────────────────────────── */
+
+#clarifact-sidebar .clarifact-warnings-section {
+  border-color: rgba(245,158,11,0.3);
+  background: rgba(245,158,11,0.04);
+}
+
+#clarifact-sidebar .clarifact-warnings-section .clarifact-section-title {
+  color: #fbbf24;
+  border-bottom-color: rgba(245,158,11,0.2);
+}
+
+#clarifact-sidebar .clarifact-warnings-list {
+  margin: 0;
+  padding: 10px 14px 10px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+#clarifact-sidebar .clarifact-warnings-list li {
+  font-size: 12px;
+  color: #fde68a;
+  line-height: 1.5;
+}
+
+/* ── Footer ──────────────────────────────────────────────────────────────── */
+
+#clarifact-sidebar .clarifact-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  margin-top: 12px;
+  border-top: 1px solid #2d3148;
+  background: #0f1117;
+  position: sticky;
+  bottom: 0;
+}
+
+#clarifact-sidebar .clarifact-copy-btn {
+  all: unset;
+  cursor: pointer;
+  padding: 6px 14px;
+  background: #22263a;
+  border: 1px solid #2d3148;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #a5b4fc;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  font-family: inherit;
+}
+
+#clarifact-sidebar .clarifact-copy-btn:hover {
+  background: #6366f1;
+  border-color: #6366f1;
+  color: #fff;
+}
+
+#clarifact-sidebar .clarifact-footer-note {
+  font-size: 10.5px;
+  color: #4a5070;
+}
+
+/* ── AI Analysis Section (Amazon Bedrock / Claude 3.5 Sonnet) ────────────── */
+
+#clarifact-sidebar .clarifact-ai-section {
+  border-color: #3730a3;
+  background: linear-gradient(145deg, #1a1d35, #1a1d27);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle top border glow to distinguish AI section */
+#clarifact-sidebar .clarifact-ai-section::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #6366f1, #a855f7, #6366f1);
+  opacity: 0.8;
+}
+
+#clarifact-sidebar .clarifact-ai-section .clarifact-section-title {
+  color: #a5b4fc;
+  border-bottom-color: #2d3060;
+  gap: 6px;
+}
+
+#clarifact-sidebar .clarifact-ai-logo {
+  font-size: 13px;
+  color: #818cf8;
+}
+
+#clarifact-sidebar .clarifact-ai-model-tag {
+  margin-left: auto;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: #6366f1;
+  background: rgba(99,102,241,0.12);
+  border: 1px solid rgba(99,102,241,0.25);
+  border-radius: 10px;
+  padding: 1px 8px;
+  text-transform: none;
+}
+
+#clarifact-sidebar .clarifact-ai-body {
+  padding: 10px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* AI verdict strip */
+#clarifact-sidebar .clarifact-ai-verdict {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+}
+
+#clarifact-sidebar .clarifact-ai-verdict-supported {
+  background: rgba(34,197,94,0.1);
+  border-color: rgba(34,197,94,0.25);
+}
+#clarifact-sidebar .clarifact-ai-verdict-inconclusive {
+  background: rgba(245,158,11,0.1);
+  border-color: rgba(245,158,11,0.25);
+}
+#clarifact-sidebar .clarifact-ai-verdict-contradicted {
+  background: rgba(239,68,68,0.1);
+  border-color: rgba(239,68,68,0.25);
+}
+
+#clarifact-sidebar .clarifact-ai-verdict-text {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+#clarifact-sidebar .clarifact-ai-verdict-supported   .clarifact-ai-verdict-text { color: #4ade80; }
+#clarifact-sidebar .clarifact-ai-verdict-inconclusive .clarifact-ai-verdict-text { color: #fbbf24; }
+#clarifact-sidebar .clarifact-ai-verdict-contradicted .clarifact-ai-verdict-text { color: #f87171; }
+
+#clarifact-sidebar .clarifact-ai-conf {
+  font-size: 18px;
+  font-weight: 800;
+  color: #f1f5f9;
+  letter-spacing: -0.02em;
+}
+
+/* Explanation paragraph */
+#clarifact-sidebar .clarifact-ai-explanation {
+  margin: 0;
+  font-size: 12.5px;
+  color: #cbd5e1;
+  line-height: 1.65;
+}
+
+/* Sub-labels: KEY EVIDENCE, CAVEATS */
+#clarifact-sidebar .clarifact-ai-sub-label {
+  display: block;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #4a5070;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+
+/* Evidence + caveats lists */
+#clarifact-sidebar .clarifact-ai-list {
+  margin: 0;
+  padding-left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+#clarifact-sidebar .clarifact-ai-list li {
+  font-size: 12px;
+  color: #94a3b8;
+  line-height: 1.55;
+}
+
+#clarifact-sidebar .clarifact-ai-caveats-list li {
+  color: #fde68a;
+}
+
+/* "Not configured" note */
+#clarifact-sidebar .clarifact-ai-unavailable {
+  margin: 0;
+  padding: 10px 14px 12px;
+  font-size: 11.5px;
+  color: #4a5070;
+  font-style: italic;
+}
+
+/* ── Responsive: narrow screens ──────────────────────────────────────────── */
+@media (max-width: 480px) {
+  #clarifact-sidebar { width: 100vw; }
+}

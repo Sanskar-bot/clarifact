@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clarifact — AI-Powered Fact Checker for Chrome</title>
+  <meta name="description" content="Clarifact is a free, open-source Chrome extension that fact-checks any selected text on any webpage using Brave Search and Claude 3.5 Sonnet AI — no subscriptions, no data collection." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ── Navigation ────────────────────────────────────────────────── -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2.2">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+          <path d="M11 8v3l2 2" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        Clarifact
+      </a>
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#setup">Setup Guide</a></li>
+        <li><a href="#tech">Tech Stack</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+      <a href="#setup" class="nav-cta">Get Started →</a>
+      <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav-mobile-menu" id="mobileMenu">
+      <a href="#features">Features</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#setup">Setup Guide</a>
+      <a href="#tech">Tech Stack</a>
+      <a href="#faq">FAQ</a>
+    </div>
+  </nav>
+
+  <!-- ── Hero ──────────────────────────────────────────────────────── -->
+  <section id="hero">
+    <div class="hero-bg-orb orb-1"></div>
+    <div class="hero-bg-orb orb-2"></div>
+    <div class="hero-bg-orb orb-3"></div>
+    <div class="particles" id="particles"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        Free &amp; Open Source · No Data Collection · Runs Locally
+      </div>
+      <h1 class="hero-title">
+        Fact-check anything,<br/>
+        <span class="hero-gradient">instantly.</span>
+      </h1>
+      <p class="hero-sub">
+        Select any text on any webpage. Clarifact searches the web, reads the top sources, 
+        and uses <strong>Claude 3.5 Sonnet</strong> to give you a structured verdict — 
+        complete with confidence score, evidence, and entities.
+      </p>
+      <div class="hero-actions">
+        <a href="#setup" class="btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Download &amp; Setup
+        </a>
+        <a href="https://github.com" target="_blank" rel="noopener" class="btn-ghost">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          View on GitHub
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-val">5</span>
+          <span class="stat-label">Sources analysed</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-val">~4s</span>
+          <span class="stat-label">Average response</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-val">0</span>
+          <span class="stat-label">Data stored</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-val">100%</span>
+          <span class="stat-label">Local processing</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar mockup -->
+    <div class="hero-mockup" id="heroMockup">
+      <div class="mockup-sidebar">
+        <div class="mockup-header">
+          <div class="mockup-logo">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2.5">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+            </svg>
+            Clarifact
+          </div>
+          <div class="mockup-close">✕</div>
+        </div>
+        <div class="mockup-claim">
+          <div class="mockup-label">CHECKING CLAIM</div>
+          <div class="mockup-claim-text">"Neil Armstrong walked on the Moon on July 20, 1969"</div>
+        </div>
+        <div class="mockup-verdict supported">
+          <span>SUPPORTED</span>
+          <span class="mockup-score">94%</span>
+        </div>
+        <div class="mockup-bar-track"><div class="mockup-bar-fill" id="mockupBar"></div></div>
+        <div class="mockup-section">
+          <div class="mockup-section-title">Score Breakdown</div>
+          <div class="mockup-row"><span>Sources</span><div class="mockup-mini-track"><div class="mockup-mini-fill" style="width:100%"></div></div><span>5/5</span></div>
+          <div class="mockup-row"><span>Domain Trust</span><div class="mockup-mini-track"><div class="mockup-mini-fill" style="width:95%"></div></div><span>95%</span></div>
+          <div class="mockup-row"><span>Entity Match</span><div class="mockup-mini-track"><div class="mockup-mini-fill" style="width:88%"></div></div><span>88%</span></div>
+          <div class="mockup-row"><span>Similarity</span><div class="mockup-mini-track"><div class="mockup-mini-fill" style="width:92%"></div></div><span>92%</span></div>
+        </div>
+        <div class="mockup-ai-section">
+          <div class="mockup-ai-header">
+            <span class="mockup-ai-star">✦</span> AI Analysis
+            <span class="mockup-ai-tag">Claude 3.5 Sonnet</span>
+          </div>
+          <div class="mockup-ai-verdict">SUPPORTED · 97%</div>
+          <div class="mockup-ai-text">"Multiple high-trust sources including NASA and Britannica confirm that Neil Armstrong became the first human to walk on the Moon on July 20, 1969 during the Apollo 11 mission."</div>
+        </div>
+        <div class="mockup-section">
+          <div class="mockup-section-title">Entities Found</div>
+          <div class="mockup-tags">
+            <span class="mockup-tag">👤 Neil Armstrong</span>
+            <span class="mockup-tag">📍 Moon</span>
+            <span class="mockup-tag">🏢 NASA</span>
+            <span class="mockup-tag">📅 July 20, 1969</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Verdict types demo ─────────────────────────────────────────── -->
+  <section class="verdict-strip">
+    <div class="container">
+      <p class="verdict-strip-label">Three possible verdicts — always grounded in real sources</p>
+      <div class="verdict-cards">
+        <div class="verdict-card supported">
+          <div class="verdict-icon">✓</div>
+          <div class="verdict-name">SUPPORTED</div>
+          <div class="verdict-desc">Multiple reliable sources confirm the claim</div>
+        </div>
+        <div class="verdict-card inconclusive">
+          <div class="verdict-icon">?</div>
+          <div class="verdict-name">INCONCLUSIVE</div>
+          <div class="verdict-desc">Evidence is mixed or sources disagree</div>
+        </div>
+        <div class="verdict-card contradicted">
+          <div class="verdict-icon">✕</div>
+          <div class="verdict-name">CONTRADICTED</div>
+          <div class="verdict-desc">Sources clearly dispute the claim</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Features ───────────────────────────────────────────────────── -->
+  <section id="features" class="section">
+    <div class="container">
+      <div class="section-label reveal">Features</div>
+      <h2 class="section-title reveal">Everything you need to<br/>stop misinformation.</h2>
+      <p class="section-sub reveal">No subscriptions. No data collection. Runs entirely on your machine.</p>
+
+      <div class="features-grid">
+        <div class="feature-card reveal">
+          <div class="feature-icon" style="background:rgba(99,102,241,0.12);color:#818cf8;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          </div>
+          <h3>Brave Search API</h3>
+          <p>Queries Brave's independent search index (not Google) to get unbiased, real web results for any claim. API key is kept server-side — never exposed.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon" style="background:rgba(168,85,247,0.12);color:#c084fc;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <h3>Readability.js Scraping</h3>
+          <p>Uses Mozilla's Readability.js to extract clean article text from the top 5 search results — stripping ads, nav, and noise. Runs server-side to bypass CORS.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon" style="background:rgba(34,197,94,0.12);color:#4ade80;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          </div>
+          <h3>Claude 3.5 Sonnet AI</h3>
+          <p>Amazon Bedrock powers a grounded AI analysis. Claude reads the scraped sources and returns a verdict, explanation, and key evidence — based only on what it read.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon" style="background:rgba(245,158,11,0.12);color:#fbbf24;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          </div>
+          <h3>compromise.js NLP</h3>
+          <p>Extracts named entities (people, places, organisations, dates) from the claim using compromise.js — all on-device. No cloud NLP service required.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon" style="background:rgba(239,68,68,0.12);color:#f87171;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <h3>Contradiction Detection</h3>
+          <p>Scans source sentences for negation patterns that directly contradict the claim. Surfaces specific contradicting sentences with their source domain.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon" style="background:rgba(6,182,212,0.12);color:#22d3ee;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <h3>Zero Data Storage</h3>
+          <p>The backend binds only to 127.0.0.1 — never reachable from the internet. Every request is stateless. Nothing is logged, stored, or sent to third parties.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon" style="background:rgba(99,102,241,0.12);color:#818cf8;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <h3>4-Signal Confidence Score</h3>
+          <p>Combines source count (20%), domain trust (25%), entity match (30%), and text similarity (25%) into a single 0–100% NLP confidence score.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon" style="background:rgba(168,85,247,0.12);color:#c084fc;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <h3>50+ Trusted Domains</h3>
+          <p>A curated trust database rates domains from 0 to 1 — NASA, Reuters, and academic journals score near 1.0; unknown blogs score near 0.4. Affects the final score.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── How It Works ───────────────────────────────────────────────── -->
+  <section id="how-it-works" class="section section-dark">
+    <div class="container">
+      <div class="section-label reveal">Pipeline</div>
+      <h2 class="section-title reveal">From selection to verdict<br/>in under 5 seconds.</h2>
+
+      <div class="pipeline">
+        <div class="pipeline-step reveal">
+          <div class="pipeline-num">01</div>
+          <div class="pipeline-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2"><path d="M4 6h16M4 10h16M4 14h8"/></svg>
+          </div>
+          <h3>Select &amp; Trigger</h3>
+          <p>Highlight any text on any webpage. A floating <strong>Fact-check</strong> button appears. Click it — or right-click and choose Clarifact from the context menu.</p>
+        </div>
+        <div class="pipeline-arrow reveal">→</div>
+        <div class="pipeline-step reveal">
+          <div class="pipeline-num">02</div>
+          <div class="pipeline-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          </div>
+          <h3>Brave Search</h3>
+          <p>The backend proxies a query to Brave's independent search index, retrieves the top 10 results, and deduplicates by domain to ensure source diversity.</p>
+        </div>
+        <div class="pipeline-arrow reveal">→</div>
+        <div class="pipeline-step reveal">
+          <div class="pipeline-num">03</div>
+          <div class="pipeline-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
+          </div>
+          <h3>Parallel Scraping</h3>
+          <p>The top 5 unique sources are fetched and parsed with Readability.js in parallel, extracting clean article text. Paywalled or bot-blocked sources are automatically skipped.</p>
+        </div>
+        <div class="pipeline-arrow reveal">→</div>
+        <div class="pipeline-step reveal">
+          <div class="pipeline-num">04</div>
+          <div class="pipeline-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+          <h3>Claude 3.5 AI</h3>
+          <p>Source excerpts + the claim are sent to Claude 3.5 Sonnet via Amazon Bedrock. Claude returns a structured JSON verdict grounded exclusively in the scraped sources.</p>
+        </div>
+        <div class="pipeline-arrow reveal">→</div>
+        <div class="pipeline-step reveal">
+          <div class="pipeline-num">05</div>
+          <div class="pipeline-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <h3>NLP + Scoring</h3>
+          <p>On-device: compromise.js extracts entities, TF-cosine finds best-matching sentences, negation scanning detects contradictions. A 4-signal score is computed.</p>
+        </div>
+        <div class="pipeline-arrow reveal">→</div>
+        <div class="pipeline-step reveal">
+          <div class="pipeline-num">06</div>
+          <div class="pipeline-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <h3>Sidebar Result</h3>
+          <p>A beautiful in-page sidebar slides in with the verdict, confidence score, AI explanation, entity tags, source cards, contradictions, and a copyable report.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Setup Guide ────────────────────────────────────────────────── -->
+  <section id="setup" class="section">
+    <div class="container">
+      <div class="section-label reveal">Setup Guide</div>
+      <h2 class="section-title reveal">Up and running in<br/>under 10 minutes.</h2>
+      <p class="section-sub reveal">Follow each step in order. Everything runs locally — no cloud deployments.</p>
+
+      <div class="setup-wrapper">
+        <!-- Tab buttons -->
+        <div class="setup-tabs" role="tablist">
+          <button class="setup-tab active" data-tab="prereqs" role="tab">1. Prerequisites</button>
+          <button class="setup-tab" data-tab="brave"   role="tab">2. Brave API Key</button>
+          <button class="setup-tab" data-tab="bedrock" role="tab">3. Bedrock API Key</button>
+          <button class="setup-tab" data-tab="backend" role="tab">4. Backend</button>
+          <button class="setup-tab" data-tab="extension" role="tab">5. Extension</button>
+          <button class="setup-tab" data-tab="test"    role="tab">6. Test</button>
+        </div>
+
+        <!-- Tab panels -->
+        <div class="setup-panels">
+
+          <!-- Prerequisites -->
+          <div class="setup-panel active" id="tab-prereqs">
+            <h3>What you need before starting</h3>
+            <div class="prereq-grid">
+              <div class="prereq-card">
+                <div class="prereq-icon">⬡</div>
+                <h4>Node.js v18+</h4>
+                <p>Required to run the backend proxy server.</p>
+                <a href="https://nodejs.org" target="_blank" rel="noopener" class="prereq-link">Download from nodejs.org →</a>
+                <div class="code-block">
+                  <div class="code-header"><span class="code-lang">Verify</span><button class="copy-btn" data-copy="node --version">Copy</button></div>
+                  <pre><code>node --version   <span class="code-comment"># Should be v18 or higher</span>
+npm --version    <span class="code-comment"># Comes with Node.js</span></code></pre>
+                </div>
+              </div>
+              <div class="prereq-card">
+                <div class="prereq-icon">⬡</div>
+                <h4>Google Chrome</h4>
+                <p>The extension requires Manifest V3 Chrome (v88+).</p>
+                <a href="https://www.google.com/chrome" target="_blank" rel="noopener" class="prereq-link">Download Chrome →</a>
+              </div>
+              <div class="prereq-card">
+                <div class="prereq-icon">⬡</div>
+                <h4>Project Source Code</h4>
+                <p>Download or clone the Clarifact repository.</p>
+                <div class="code-block">
+                  <div class="code-header"><span class="code-lang">PowerShell</span><button class="copy-btn" data-copy="git clone https://github.com/your-repo/clarifact.git&#10;cd clarifact">Copy</button></div>
+                  <pre><code>git clone https://github.com/your-repo/clarifact
+cd clarifact</code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Brave API Key -->
+          <div class="setup-panel" id="tab-brave">
+            <h3>Get your Brave Search API key</h3>
+            <p class="panel-intro">Brave Search has an independent index (not Google). The free tier gives you <strong>2,000 queries/month</strong> — plenty for personal use.</p>
+            <div class="steps-list">
+              <div class="step-item">
+                <div class="step-num">1</div>
+                <div class="step-body">
+                  <h4>Go to the Brave Search API page</h4>
+                  <p>Visit <a href="https://brave.com/search/api/" target="_blank" rel="noopener">brave.com/search/api</a> and click <strong>"Get Started for Free"</strong>.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">2</div>
+                <div class="step-body">
+                  <h4>Create an account and subscribe</h4>
+                  <p>Sign up and subscribe to the <strong>Free tier</strong> (no credit card required for the free plan).</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">3</div>
+                <div class="step-body">
+                  <h4>Copy your API key</h4>
+                  <p>Go to <strong>API Keys</strong> in your dashboard. Your key starts with <code>BSA...</code>.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">4</div>
+                <div class="step-body">
+                  <h4>Add it to your .env file</h4>
+                  <div class="code-block">
+                    <div class="code-header"><span class="code-lang">backend/.env</span><button class="copy-btn" data-copy="BRAVE_API_KEY=BSAxxxxxxxxxxxxxxxxxx">Copy</button></div>
+                    <pre><code>BRAVE_API_KEY=<span class="code-val">BSAxxxxxxxxxxxxxxxxxx</span></code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bedrock API Key -->
+          <div class="setup-panel" id="tab-bedrock">
+            <h3>Get your Amazon Bedrock API key</h3>
+            <p class="panel-intro">You need an AWS account and access to Claude 3.5 Sonnet in the <strong>ap-south-1 (Mumbai)</strong> region. The long-term API key is the easiest auth method.</p>
+            <div class="steps-list">
+              <div class="step-item">
+                <div class="step-num">1</div>
+                <div class="step-body">
+                  <h4>Sign in to AWS Console</h4>
+                  <p>Go to <a href="https://console.aws.amazon.com" target="_blank" rel="noopener">console.aws.amazon.com</a> and sign in.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">2</div>
+                <div class="step-body">
+                  <h4>Switch region to ap-south-1 (Mumbai)</h4>
+                  <p>In the top-right corner of the AWS Console, click the region selector and choose <strong>Asia Pacific (Mumbai) — ap-south-1</strong>.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">3</div>
+                <div class="step-body">
+                  <h4>Enable Claude 3.5 Sonnet model access</h4>
+                  <p>Go to <strong>Amazon Bedrock → Model catalog</strong> → search <em>"Claude 3.5 Sonnet"</em> → click <strong>"Enable"</strong>. Wait ~1 minute for status to change to "Access granted".</p>
+                  <div class="info-box">
+                    <strong>⚠ Critical:</strong> Skipping this step causes a 403 error even with a valid API key. The model must be explicitly enabled per region.
+                  </div>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">4</div>
+                <div class="step-body">
+                  <h4>Generate a long-term API key</h4>
+                  <p>In Bedrock Console → left sidebar → <strong>API keys</strong> → <strong>"Generate long-term API key"</strong>.</p>
+                  <div class="info-box success">
+                    <strong>⚠ Copy it now!</strong> The key is shown only once. It starts with <code>ABSKQm...</code>
+                  </div>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">5</div>
+                <div class="step-body">
+                  <h4>Add it to your .env file</h4>
+                  <div class="code-block">
+                    <div class="code-header"><span class="code-lang">backend/.env</span><button class="copy-btn" data-copy="AWS_BEARER_TOKEN_BEDROCK=ABSKQmxxxxxxxxxxxxxxxxxx&#10;AWS_REGION=ap-south-1">Copy</button></div>
+                    <pre><code>AWS_BEARER_TOKEN_BEDROCK=<span class="code-val">ABSKQmxxxxxxxxxxxxxxxxxx</span>
+AWS_REGION=<span class="code-val">ap-south-1</span></code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Backend -->
+          <div class="setup-panel" id="tab-backend">
+            <h3>Set up and run the backend</h3>
+            <p class="panel-intro">The backend is a Node.js/Express server that runs locally at <code>http://127.0.0.1:3000</code>. It hides your API keys and handles web scraping.</p>
+            <div class="steps-list">
+              <div class="step-item">
+                <div class="step-num">1</div>
+                <div class="step-body">
+                  <h4>Navigate to the backend folder</h4>
+                  <div class="code-block">
+                    <div class="code-header"><span class="code-lang">PowerShell</span><button class="copy-btn" data-copy='cd "S:\Personal Projects\Clarifact\backend"'>Copy</button></div>
+                    <pre><code>cd "S:\Personal Projects\Clarifact\backend"</code></pre>
+                  </div>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">2</div>
+                <div class="step-body">
+                  <h4>Install dependencies</h4>
+                  <div class="code-block">
+                    <div class="code-header"><span class="code-lang">PowerShell</span><button class="copy-btn" data-copy="npm install">Copy</button></div>
+                    <pre><code>npm install   <span class="code-comment"># installs Express, Readability, AWS SDK, etc.</span></code></pre>
+                  </div>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">3</div>
+                <div class="step-body">
+                  <h4>Configure your .env file</h4>
+                  <p>Open <code>backend/.env</code> and fill in your API keys:</p>
+                  <div class="code-block">
+                    <div class="code-header"><span class="code-lang">backend/.env</span><button class="copy-btn" data-copy="BRAVE_API_KEY=BSAxxxxxxxxxxxxxxxxxx&#10;AWS_BEARER_TOKEN_BEDROCK=ABSKQmxxxxxxxxxxxxxxxxxx&#10;AWS_REGION=ap-south-1&#10;PORT=3000">Copy</button></div>
+                    <pre><code>BRAVE_API_KEY=<span class="code-val">BSAxxxxxxxxxxxxxxxxxx</span>
+AWS_BEARER_TOKEN_BEDROCK=<span class="code-val">ABSKQmxxxxxxxxxxxxxxxxxx</span>
+AWS_REGION=<span class="code-val">ap-south-1</span>
+PORT=<span class="code-val">3000</span></code></pre>
+                  </div>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">4</div>
+                <div class="step-body">
+                  <h4>Start the server</h4>
+                  <div class="code-block">
+                    <div class="code-header"><span class="code-lang">PowerShell</span><button class="copy-btn" data-copy="npm start">Copy</button></div>
+                    <pre><code>npm start</code></pre>
+                  </div>
+                  <p style="margin-top:10px;">You should see:</p>
+                  <div class="code-block success-block">
+                    <pre><code>╔══════════════════════════════════════════════════╗
+║         Clarifact Backend — Running              ║
+║  http://127.0.0.1:3000                           ║
+║  Brave Search: ✓ configured                      ║
+║  AWS Bedrock:  ✓ configured                      ║
+╚══════════════════════════════════════════════════╝</code></pre>
+                  </div>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">5</div>
+                <div class="step-body">
+                  <h4>Verify it's working</h4>
+                  <div class="code-block">
+                    <div class="code-header"><span class="code-lang">PowerShell</span><button class="copy-btn" data-copy="curl http://127.0.0.1:3000/health">Copy</button></div>
+                    <pre><code>curl http://127.0.0.1:3000/health
+<span class="code-comment"># Should return: { "status": "ok", "braveConfigured": true, "bedrockConfigured": true }</span></code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Extension -->
+          <div class="setup-panel" id="tab-extension">
+            <h3>Load the extension in Chrome</h3>
+            <p class="panel-intro">Chrome extensions in "developer mode" don't need to be published to the Chrome Web Store. You load them directly from your filesystem.</p>
+            <div class="steps-list">
+              <div class="step-item">
+                <div class="step-num">1</div>
+                <div class="step-body">
+                  <h4>Install extension dependencies</h4>
+                  <div class="code-block">
+                    <div class="code-header"><span class="code-lang">PowerShell</span><button class="copy-btn" data-copy='cd "S:\Personal Projects\Clarifact\extension"&#10;npm install'>Copy</button></div>
+                    <pre><code>cd "S:\Personal Projects\Clarifact\extension"
+npm install   <span class="code-comment"># copies compromise.js into lib/ folder</span></code></pre>
+                  </div>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">2</div>
+                <div class="step-body">
+                  <h4>Open Chrome Extensions page</h4>
+                  <p>Type this in Chrome's address bar and press Enter:</p>
+                  <div class="code-block">
+                    <div class="code-header"><span class="code-lang">Chrome Address Bar</span><button class="copy-btn" data-copy="chrome://extensions">Copy</button></div>
+                    <pre><code>chrome://extensions</code></pre>
+                  </div>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">3</div>
+                <div class="step-body">
+                  <h4>Enable Developer Mode</h4>
+                  <p>Toggle the <strong>"Developer mode"</strong> switch in the top-right corner of the extensions page.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">4</div>
+                <div class="step-body">
+                  <h4>Load the extension</h4>
+                  <p>Click <strong>"Load unpacked"</strong> → browse to and select the <code>extension\</code> folder (the one containing <code>manifest.json</code>).</p>
+                  <div class="info-box">
+                    <strong>📁 Path to select:</strong><br/>
+                    <code>S:\Personal Projects\Clarifact\extension</code>
+                  </div>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">5</div>
+                <div class="step-body">
+                  <h4>Pin to toolbar (optional)</h4>
+                  <p>Click the puzzle-piece 🧩 icon in Chrome's toolbar → find Clarifact → click the pin icon to keep it visible.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">6</div>
+                <div class="step-body">
+                  <h4>After editing any extension file</h4>
+                  <p>Go to <code>chrome://extensions</code> → find Clarifact → click the <strong>⟳ reload</strong> button to apply changes.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Test -->
+          <div class="setup-panel" id="tab-test">
+            <h3>Test the complete pipeline</h3>
+            <p class="panel-intro">Make sure the backend is running before testing. Open any news article or Wikipedia page and try selecting these claims:</p>
+            <div class="test-claims">
+              <div class="test-claim supported-claim">
+                <div class="test-claim-verdict">✓ SUPPORTED expected</div>
+                <div class="test-claim-text">"Neil Armstrong became the first human to walk on the Moon on July 20, 1969"</div>
+                <div class="test-claim-why">Well-documented by NASA, Britannica, and news archives. All high-trust sources should confirm.</div>
+              </div>
+              <div class="test-claim inconclusive-claim">
+                <div class="test-claim-verdict">? INCONCLUSIVE expected</div>
+                <div class="test-claim-text">"The Great Wall of China is visible from space with the naked eye"</div>
+                <div class="test-claim-why">A famous myth — some older sources repeat it, others debunk it. Mixed sources = inconclusive.</div>
+              </div>
+              <div class="test-claim contradicted-claim">
+                <div class="test-claim-verdict">✕ CONTRADICTED expected</div>
+                <div class="test-claim-text">"COVID-19 vaccines contain microchips implanted by the government"</div>
+                <div class="test-claim-why">Well-refuted claim — high-trust sources strongly deny it. Negation sentences should dominate.</div>
+              </div>
+            </div>
+            <div class="info-box" style="margin-top:24px;">
+              <strong>Troubleshooting:</strong>
+              <ul style="margin:8px 0 0 18px;line-height:1.9;">
+                <li>Red dot in popup → backend not running. Run <code>npm start</code> in <code>backend/</code></li>
+                <li>"AI analysis unavailable" → check <code>AWS_BEARER_TOKEN_BEDROCK</code> in your <code>.env</code></li>
+                <li>Extension not showing → reload it at <code>chrome://extensions</code></li>
+                <li>No results → try adding specific names, dates, or places to the claim</li>
+              </ul>
+            </div>
+          </div>
+
+        </div><!-- /setup-panels -->
+      </div><!-- /setup-wrapper -->
+    </div>
+  </section>
+
+  <!-- ── Tech Stack ─────────────────────────────────────────────────── -->
+  <section id="tech" class="section section-dark">
+    <div class="container">
+      <div class="section-label reveal">Technology</div>
+      <h2 class="section-title reveal">Built on the right tools<br/>for the job.</h2>
+
+      <div class="tech-grid">
+        <div class="tech-card reveal">
+          <div class="tech-logo">🔍</div>
+          <h4>Brave Search API</h4>
+          <p>Independent web index. Free tier. 2,000 queries/month.</p>
+          <span class="tech-tag">Backend</span>
+        </div>
+        <div class="tech-card reveal">
+          <div class="tech-logo">📄</div>
+          <h4>Readability.js</h4>
+          <p>Mozilla's battle-tested article extractor. Used by Firefox Reader View.</p>
+          <span class="tech-tag">Backend</span>
+        </div>
+        <div class="tech-card reveal">
+          <div class="tech-logo">⚡</div>
+          <h4>compromise.js</h4>
+          <p>Lightweight on-device NLP. Zero cloud. Extracts people, places, orgs, dates.</p>
+          <span class="tech-tag">Extension</span>
+        </div>
+        <div class="tech-card reveal">
+          <div class="tech-logo">🤖</div>
+          <h4>Claude 3.5 Sonnet v2</h4>
+          <p>Anthropic's model via Amazon Bedrock. Grounded analysis only.</p>
+          <span class="tech-tag">Backend · AI</span>
+        </div>
+        <div class="tech-card reveal">
+          <div class="tech-logo">🟩</div>
+          <h4>Node.js + Express</h4>
+          <p>Lightweight local proxy. Rate limited. Binds to 127.0.0.1 only.</p>
+          <span class="tech-tag">Backend</span>
+        </div>
+        <div class="tech-card reveal">
+          <div class="tech-logo">🔵</div>
+          <h4>Chrome MV3</h4>
+          <p>Manifest V3 service worker architecture. Context menu + FAB trigger.</p>
+          <span class="tech-tag">Extension</span>
+        </div>
+        <div class="tech-card reveal">
+          <div class="tech-logo">🛡</div>
+          <h4>AWS SDK v3</h4>
+          <p>@aws-sdk/client-bedrock-runtime for IAM auth. Also supports bearer token.</p>
+          <span class="tech-tag">Backend</span>
+        </div>
+        <div class="tech-card reveal">
+          <div class="tech-logo">🧮</div>
+          <h4>TF Cosine Similarity</h4>
+          <p>Term-frequency vectors compute sentence similarity without a model.</p>
+          <span class="tech-tag">Extension · NLP</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ ────────────────────────────────────────────────────────── -->
+  <section id="faq" class="section">
+    <div class="container faq-container">
+      <div class="section-label reveal">FAQ</div>
+      <h2 class="section-title reveal">Common questions.</h2>
+
+      <div class="faq-list">
+        <div class="faq-item reveal">
+          <button class="faq-q">Does this send my browsing data anywhere?<span class="faq-chevron">▾</span></button>
+          <div class="faq-a">
+            <p>No. The backend only ever runs on your own machine at <code>127.0.0.1:3000</code>. It cannot be reached from the internet. The claim text is sent to Brave Search and Amazon Bedrock as part of the fact-check — both have their own privacy policies — but no browsing history, cookies, or page content is ever transmitted.</p>
+          </div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q">Does it work on every website?<span class="faq-chevron">▾</span></button>
+          <div class="faq-a">
+            <p>It works on most websites. Chrome restricts content scripts from running on <code>chrome://</code> pages, the Chrome Web Store, and certain internal pages. Hard-paywalled sources (WSJ, FT) are automatically skipped during scraping. JavaScript-rendered SPAs may return incomplete text since the backend fetches raw HTML.</p>
+          </div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q">How much does it cost to run?<span class="faq-chevron">▾</span></button>
+          <div class="faq-a">
+            <p>Brave Search free tier gives you 2,000 queries/month at no cost. Amazon Bedrock charges per token — Claude 3.5 Sonnet v2 costs approximately $0.003 per 1,000 input tokens and $0.015 per 1,000 output tokens. A typical fact-check uses ~3,000-5,000 input tokens and ~300 output tokens, so each check costs roughly <strong>$0.01–$0.02</strong>.</p>
+          </div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q">Do I need to keep the backend running all the time?<span class="faq-chevron">▾</span></button>
+          <div class="faq-a">
+            <p>Yes — the backend must be running whenever you want to fact-check. Start it with <code>npm start</code> in the <code>backend/</code> folder. The popup shows a green dot when connected and a red dot when the backend is offline. A future enhancement would use Chrome's Native Messaging to auto-start it.</p>
+          </div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q">Can I use IAM credentials instead of the bearer token?<span class="faq-chevron">▾</span></button>
+          <div class="faq-a">
+            <p>Yes. The backend auto-detects which credentials you've set. If you set <code>AWS_BEARER_TOKEN_BEDROCK</code>, it uses bearer token auth (direct HTTP). If you instead set <code>AWS_ACCESS_KEY_ID</code> and <code>AWS_SECRET_ACCESS_KEY</code>, it uses the AWS SDK with IAM SigV4 signing. You only need one of the two methods.</p>
+          </div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q">What happens if Bedrock is not configured?<span class="faq-chevron">▾</span></button>
+          <div class="faq-a">
+            <p>The extension degrades gracefully. The NLP pipeline (compromise.js + TF cosine + negation detection) always runs. If Bedrock fails or is not configured, the AI Analysis section in the sidebar shows "Not configured" instead of a verdict. The NLP-only result is still displayed in full.</p>
+          </div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q">Can I add more trusted domains?<span class="faq-chevron">▾</span></button>
+          <div class="faq-a">
+            <p>Yes — edit <code>backend/data/trustedDomains.json</code>. Add any domain with a trust score between 0 and 1 (e.g. <code>"pubmed.ncbi.nlm.nih.gov": 0.97</code>). Restart the backend after editing. No code changes required.</p>
+          </div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q">Does it work in languages other than English?<span class="faq-chevron">▾</span></button>
+          <div class="faq-a">
+            <p>Partially. Brave Search returns results for any language. Readability.js extracts text in any language. However, compromise.js's entity extraction is English-only, reducing NLP accuracy for non-English claims. Claude 3.5 Sonnet handles many languages natively for the AI analysis. A warning is shown in the sidebar when a non-English claim is detected.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ────────────────────────────────────────────────────────── -->
+  <section class="cta-section">
+    <div class="cta-orb"></div>
+    <div class="container cta-inner">
+      <h2 class="cta-title">Stop guessing.<br/>Start fact-checking.</h2>
+      <p class="cta-sub">Free, open-source, and runs entirely on your machine.</p>
+      <a href="#setup" class="btn-primary btn-large">Set Up Clarifact →</a>
+    </div>
+  </section>
+
+  <!-- ── Footer ─────────────────────────────────────────────────────── -->
+  <footer>
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2.2">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+            <path d="M11 8v3l2 2" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+          Clarifact
+        </div>
+        <p>AI-powered fact-checking for Chrome.<br/>Brave Search · compromise.js · Claude 3.5 Sonnet</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h5>Extension</h5>
+          <a href="#features">Features</a>
+          <a href="#how-it-works">How It Works</a>
+          <a href="#setup">Setup Guide</a>
+        </div>
+        <div class="footer-col">
+          <h5>Resources</h5>
+          <a href="https://brave.com/search/api/" target="_blank" rel="noopener">Brave Search API</a>
+          <a href="https://aws.amazon.com/bedrock/" target="_blank" rel="noopener">Amazon Bedrock</a>
+          <a href="https://github.com/nicktacular/readability" target="_blank" rel="noopener">Readability.js</a>
+        </div>
+        <div class="footer-col">
+          <h5>Links</h5>
+          <a href="https://github.com" target="_blank" rel="noopener">GitHub</a>
+          <a href="#faq">FAQ</a>
+          <a href="#tech">Tech Stack</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Built with ❤ · MIT License · No data collected · Everything runs on your machine</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

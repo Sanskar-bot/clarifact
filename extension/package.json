@@ -1,0 +1,12 @@
+{
+  "name": "clarifact-extension-setup",
+  "version": "1.0.0",
+  "description": "Setup script to copy NLP library UMD bundles into extension/lib/",
+  "scripts": {
+    "setup": "node scripts/setup-libs.js",
+    "postinstall": "node scripts/setup-libs.js"
+  },
+  "dependencies": {
+    "compromise": "^14.14.0"
+  }
+}

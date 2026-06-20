@@ -1,0 +1,330 @@
+/**
+ * popup.css — Clarifact Browser-Action Popup Styles
+ *
+ * Popup dimensions: 340px wide, auto height (Chrome caps at ~600px)
+ * Dark theme matching the sidebar for a consistent brand identity.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  width: 340px;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 13px;
+  background: #0f1117;
+  color: #f1f5f9;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Header ─────────────────────────────────────────────────────────────── */
+
+.cf-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 16px;
+  border-bottom: 1px solid #2d3148;
+  background: #0f1117;
+}
+
+.cf-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 800;
+  color: #6366f1;
+  letter-spacing: -0.02em;
+}
+
+/* Backend status dot */
+.cf-status-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: background 0.3s;
+}
+.cf-status-checking { background: #4a5070; animation: cf-pulse 1.2s ease-in-out infinite; }
+.cf-status-ok       { background: #22c55e; box-shadow: 0 0 0 3px rgba(34,197,94,0.2); }
+.cf-status-warn     { background: #f59e0b; box-shadow: 0 0 0 3px rgba(245,158,11,0.2); }
+.cf-status-error    { background: #ef4444; box-shadow: 0 0 0 3px rgba(239,68,68,0.2); }
+
+@keyframes cf-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+/* ── Backend Banner ──────────────────────────────────────────────────────── */
+
+.cf-backend-banner {
+  padding: 7px 16px;
+  font-size: 11.5px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-bottom: 1px solid transparent;
+  transition: background 0.3s;
+}
+
+.cf-banner-checking { background: #1a1d27; color: #64748b; border-color: #2d3148; }
+.cf-banner-ok       { background: rgba(34,197,94,0.07);  color: #4ade80; border-color: rgba(34,197,94,0.15); }
+.cf-banner-warn     { background: rgba(245,158,11,0.08); color: #fbbf24; border-color: rgba(245,158,11,0.2); }
+.cf-banner-error    { background: rgba(239,68,68,0.07);  color: #f87171; border-color: rgba(239,68,68,0.15); }
+
+/* ── Empty State ─────────────────────────────────────────────────────────── */
+
+.cf-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 28px 20px 24px;
+  gap: 10px;
+}
+
+.cf-empty-icon { opacity: 0.5; }
+
+.cf-empty-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #94a3b8;
+}
+
+.cf-empty-hint {
+  font-size: 12px;
+  color: #4a5070;
+  line-height: 1.65;
+  max-width: 260px;
+}
+
+.cf-empty-hint strong { color: #6366f1; }
+
+/* ── Result State ────────────────────────────────────────────────────────── */
+
+.cf-result-state { padding-bottom: 4px; }
+
+.cf-result-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 16px 5px;
+}
+
+.cf-result-label {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: #4a5070;
+}
+
+.cf-result-time {
+  font-size: 11px;
+  color: #4a5070;
+}
+
+/* ── Claim preview ────────────────────────────────────────────────────────── */
+
+.cf-claim-preview {
+  margin: 0 12px 10px;
+  padding: 10px 12px;
+  background: #1a1d27;
+  border: 1px solid #2d3148;
+  border-radius: 8px;
+}
+
+.cf-claim-text {
+  font-size: 12.5px;
+  color: #cbd5e1;
+  line-height: 1.55;
+  font-style: italic;
+  word-break: break-word;
+}
+
+/* ── Verdict badge ───────────────────────────────────────────────────────── */
+
+.cf-verdict-badge {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 14px;
+  margin: 0 12px 8px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+}
+
+.cf-verdict-supported   { background: rgba(34,197,94,0.1);  border-color: rgba(34,197,94,0.25);  }
+.cf-verdict-inconclusive{ background: rgba(245,158,11,0.1); border-color: rgba(245,158,11,0.25); }
+.cf-verdict-contradicted{ background: rgba(239,68,68,0.1);  border-color: rgba(239,68,68,0.25);  }
+
+.cf-verdict-left { display: flex; align-items: center; gap: 8px; }
+
+.cf-verdict-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.cf-verdict-supported   .cf-verdict-icon { background: rgba(34,197,94,0.2);  color: #4ade80; }
+.cf-verdict-inconclusive .cf-verdict-icon{ background: rgba(245,158,11,0.2); color: #fbbf24; }
+.cf-verdict-contradicted .cf-verdict-icon{ background: rgba(239,68,68,0.2);  color: #f87171; }
+
+.cf-verdict-text {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+.cf-verdict-supported   .cf-verdict-text { color: #4ade80; }
+.cf-verdict-inconclusive .cf-verdict-text{ color: #fbbf24; }
+.cf-verdict-contradicted .cf-verdict-text{ color: #f87171; }
+
+.cf-verdict-score {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #f1f5f9;
+}
+
+/* ── Mini breakdown bars ─────────────────────────────────────────────────── */
+
+.cf-mini-breakdown {
+  margin: 0 12px 10px;
+  padding: 10px 12px;
+  background: #1a1d27;
+  border: 1px solid #2d3148;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.cf-mini-row {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  align-items: center;
+  gap: 8px;
+}
+
+.cf-mini-label {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.cf-mini-track {
+  height: 5px;
+  background: #22263a;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.cf-mini-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #6366f1, #a5b4fc);
+  border-radius: 3px;
+  width: 0%;
+  transition: width 0.6s cubic-bezier(0.16,1,0.3,1);
+}
+
+/* ── Source pills ────────────────────────────────────────────────────────── */
+
+.cf-source-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 0 12px 8px;
+}
+
+.cf-source-pill {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: default;
+}
+
+.cf-trust-high { background: rgba(34,197,94,0.12);  color: #4ade80;  border: 1px solid rgba(34,197,94,0.2); }
+.cf-trust-mid  { background: rgba(245,158,11,0.12); color: #fbbf24; border: 1px solid rgba(245,158,11,0.2); }
+.cf-trust-low  { background: rgba(239,68,68,0.12);  color: #f87171; border: 1px solid rgba(239,68,68,0.2); }
+
+.cf-no-sources {
+  font-size: 11.5px;
+  color: #4a5070;
+  font-style: italic;
+  padding: 0 2px;
+}
+
+/* ── Alert strips ────────────────────────────────────────────────────────── */
+
+.cf-contradiction-alert,
+.cf-warnings-alert {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 12px 6px;
+  padding: 7px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.cf-contradiction-alert {
+  background: rgba(239,68,68,0.1);
+  border: 1px solid rgba(239,68,68,0.25);
+  color: #f87171;
+}
+
+.cf-warnings-alert {
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.25);
+  color: #fbbf24;
+}
+
+.cf-alert-icon { font-size: 14px; }
+
+/* ── Open sidebar button ─────────────────────────────────────────────────── */
+
+.cf-open-sidebar-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  width: calc(100% - 24px);
+  margin: 6px 12px 12px;
+  padding: 10px;
+  background: #6366f1;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.12s;
+  letter-spacing: 0.01em;
+}
+
+.cf-open-sidebar-btn:hover   { background: #4f52d3; }
+.cf-open-sidebar-btn:active  { transform: scale(0.98); }
+.cf-open-sidebar-btn:disabled{ background: #2d3148; color: #4a5070; cursor: not-allowed; }
+
+/* ── Footer ──────────────────────────────────────────────────────────────── */
+
+.cf-footer {
+  padding: 9px 16px;
+  border-top: 1px solid #2d3148;
+  font-size: 10.5px;
+  color: #374151;
+  text-align: center;
+  background: #0a0c10;
+}
