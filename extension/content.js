@@ -451,6 +451,19 @@
         }
       });
     });
+
+    // ── Supporting Signals toggle ───────────────────────────────────────────
+    const signalsBtn  = sidebar.querySelector("#clarifact-signals-btn");
+    const signalsBody = sidebar.querySelector("#clarifact-breakdown-body");
+    if (signalsBtn && signalsBody) {
+      signalsBtn.addEventListener("click", () => {
+        const expanded = signalsBtn.getAttribute("aria-expanded") === "true";
+        signalsBtn.setAttribute("aria-expanded", !expanded);
+        signalsBody.classList.toggle("clarifact-breakdown-hidden");
+        signalsBtn.querySelector(".clarifact-chevron").style.transform =
+          expanded ? "" : "rotate(180deg)";
+      });
+    }
   }
 
   // ── 8. Render Helpers ─────────────────────────────────────────────────────
@@ -717,28 +730,33 @@
           <ul id="clarifact-ai-evidence-list" class="clarifact-ai-list"></ul>
         </div>
 
-        <!-- NLP Supporting Signals -->
-        <span class="clarifact-sub-label" style="margin-top:10px;display:block;">SUPPORTING SIGNALS</span>
-        <div class="clarifact-breakdown">
-          <div class="clarifact-breakdown-row">
-            <span class="clarifact-breakdown-label">Domain Trust</span>
-            <div class="clarifact-mini-track"><div id="clarifact-bar-trust" class="clarifact-mini-fill" style="width:0%"></div></div>
-            <span id="clarifact-label-trust" class="clarifact-breakdown-value">—</span>
-          </div>
-          <div class="clarifact-breakdown-row">
-            <span class="clarifact-breakdown-label">Sources Accessed</span>
-            <div class="clarifact-mini-track"><div id="clarifact-bar-sources" class="clarifact-mini-fill" style="width:0%"></div></div>
-            <span id="clarifact-label-sources" class="clarifact-breakdown-value">—</span>
-          </div>
-          <div class="clarifact-breakdown-row">
-            <span class="clarifact-breakdown-label">Entity Match</span>
-            <div class="clarifact-mini-track"><div id="clarifact-bar-entities" class="clarifact-mini-fill" style="width:0%"></div></div>
-            <span id="clarifact-label-entities" class="clarifact-breakdown-value">—</span>
-          </div>
-          <div class="clarifact-breakdown-row">
-            <span class="clarifact-breakdown-label">Text Similarity</span>
-            <div class="clarifact-mini-track"><div id="clarifact-bar-similarity" class="clarifact-mini-fill" style="width:0%"></div></div>
-            <span id="clarifact-label-similarity" class="clarifact-breakdown-value">—</span>
+        <!-- NLP Supporting Signals — collapsed by default -->
+        <div class="clarifact-signals-toggle" id="clarifact-signals-toggle">
+          <button class="clarifact-signals-btn" id="clarifact-signals-btn" aria-expanded="false">
+            <span>Supporting Signals</span>
+            <svg class="clarifact-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="clarifact-breakdown clarifact-breakdown-hidden" id="clarifact-breakdown-body">
+            <div class="clarifact-breakdown-row">
+              <span class="clarifact-breakdown-label" title="Credibility rating of sources found online">Domain Trust</span>
+              <div class="clarifact-mini-track"><div id="clarifact-bar-trust" class="clarifact-mini-fill" style="width:0%"></div></div>
+              <span id="clarifact-label-trust" class="clarifact-breakdown-value">—</span>
+            </div>
+            <div class="clarifact-breakdown-row">
+              <span class="clarifact-breakdown-label" title="Number of web sources successfully read">Sources Read</span>
+              <div class="clarifact-mini-track"><div id="clarifact-bar-sources" class="clarifact-mini-fill" style="width:0%"></div></div>
+              <span id="clarifact-label-sources" class="clarifact-breakdown-value">—</span>
+            </div>
+            <div class="clarifact-breakdown-row">
+              <span class="clarifact-breakdown-label" title="Named entities from claim found in sources">Entity Match</span>
+              <div class="clarifact-mini-track"><div id="clarifact-bar-entities" class="clarifact-mini-fill" style="width:0%"></div></div>
+              <span id="clarifact-label-entities" class="clarifact-breakdown-value">—</span>
+            </div>
+            <div class="clarifact-breakdown-row">
+              <span class="clarifact-breakdown-label" title="How closely source text matches the claim">Text Similarity</span>
+              <div class="clarifact-mini-track"><div id="clarifact-bar-similarity" class="clarifact-mini-fill" style="width:0%"></div></div>
+              <span id="clarifact-label-similarity" class="clarifact-breakdown-value">—</span>
+            </div>
           </div>
         </div>
       </div>

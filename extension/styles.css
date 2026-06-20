@@ -478,7 +478,49 @@
 
 /* ── Confidence Breakdown (supporting signals) ───────────────────────────── */
 
-#clarifact-sidebar .clarifact-breakdown { padding: 10px 13px; display: flex; flex-direction: column; gap: 9px; }
+/* Collapsible toggle button */
+#clarifact-sidebar .clarifact-signals-toggle {
+  margin-top: 2px;
+}
+
+#clarifact-sidebar .clarifact-signals-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 13px;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6B7280;
+  gap: 6px;
+}
+#clarifact-sidebar .clarifact-signals-btn:hover { color: #9AA1AC; }
+
+#clarifact-sidebar .clarifact-chevron {
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+  color: #6B7280;
+}
+
+/* Hidden state — collapsed by default */
+#clarifact-sidebar .clarifact-breakdown-hidden {
+  display: none !important;
+}
+
+#clarifact-sidebar .clarifact-breakdown { padding: 4px 13px 10px; display: flex; flex-direction: column; gap: 9px; }
+
+/* Tooltip on signal labels — native title attr is enough,
+   but add a subtle dotted underline to hint it's hoverable */
+#clarifact-sidebar .clarifact-breakdown-label[title] {
+  cursor: help;
+  text-decoration: underline dotted rgba(156,163,175,0.4);
+  text-underline-offset: 2px;
+}
 
 #clarifact-sidebar .clarifact-breakdown-row {
   display: grid;
