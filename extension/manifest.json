@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Clarifact",
-  "version": "1.0.0",
-  "description": "Fact-check any selected text on any webpage. Uses Brave Search + NLP — no AI APIs.",
+  "name": "ClariFact",
+  "version": "1.1.0",
+  "description": "Fact-check any selected text instantly. ClariFact searches the web and uses Nemotron AI to give you a structured verdict with confidence score and evidence.",
   "permissions": [
     "activeTab",
     "scripting",
@@ -33,15 +33,17 @@
   ],
   "action": {
     "default_popup": "popup.html",
-    "default_title": "Clarifact — Fact Checker",
+    "default_title": "ClariFact — AI Fact Checker",
     "default_icon": {
       "16":  "icons/icon16.png",
+      "32":  "icons/icon32.png",
       "48":  "icons/icon48.png",
       "128": "icons/icon128.png"
     }
   },
   "icons": {
     "16":  "icons/icon16.png",
+    "32":  "icons/icon32.png",
     "48":  "icons/icon48.png",
     "128": "icons/icon128.png"
   },
