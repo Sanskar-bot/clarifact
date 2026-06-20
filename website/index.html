@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ClariFact — AI-Powered Fact Checker for Chrome</title>
-  <meta name="description" content="ClariFact is a free, open-source Chrome extension that fact-checks any selected text on any webpage using Tavily Search and Nemotron AI — no subscriptions, no data collection." />
+  <meta name="description" content="ClariFact is a free Chrome extension that fact-checks any selected text instantly — no account, no setup, no API keys. Powered by Tavily Search and Nemotron AI on a hosted backend." />
   <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -31,7 +31,7 @@
       <ul class="nav-links">
         <li><a href="#features">Features</a></li>
         <li><a href="#how-it-works">How It Works</a></li>
-        <li><a href="#setup">Setup Guide</a></li>
+        <li><a href="#setup">Install</a></li>
         <li><a href="#tech">Tech Stack</a></li>
         <li><a href="#faq">FAQ</a></li>
       </ul>
@@ -43,7 +43,7 @@
     <div class="nav-mobile-menu" id="mobileMenu">
       <a href="#features">Features</a>
       <a href="#how-it-works">How It Works</a>
-      <a href="#setup">Setup Guide</a>
+      <a href="#setup">Install</a>
       <a href="#tech">Tech Stack</a>
       <a href="#faq">FAQ</a>
       <a href="extension.html">Extension</a>
@@ -61,7 +61,7 @@
     <div class="hero-content">
       <div class="hero-badge">
         <span class="hero-badge-dot"></span>
-        Free &amp; Open Source · No Data Collection · Runs Locally
+        Free &amp; Open Source · No Account Required · Zero Setup
       </div>
       <h1 class="hero-title">
         Fact-check anything,<br/>
@@ -85,7 +85,6 @@
           </svg>
           View on GitHub
         </a>
-        <a href="#setup" class="btn-ghost">Backend Setup</a>
       </div>
       <div class="hero-stats">
         <div class="stat">
@@ -100,12 +99,12 @@
         <div class="stat-divider"></div>
         <div class="stat">
           <span class="stat-val">0</span>
-          <span class="stat-label">Data stored</span>
+          <span class="stat-label">Setup steps</span>
         </div>
         <div class="stat-divider"></div>
         <div class="stat">
-          <span class="stat-val">100%</span>
-          <span class="stat-label">Local processing</span>
+          <span class="stat-val">Free</span>
+          <span class="stat-label">Forever</span>
         </div>
       </div>
     </div>
@@ -310,322 +309,62 @@
     </div>
   </section>
 
-  <!-- ── Setup Guide ────────────────────────────────────────────────── -->
+  <!-- ── Install Guide ───────────────────────────────────────────────── -->
   <section id="setup" class="section">
     <div class="container">
-      <div class="section-label reveal">Setup Guide</div>
-      <h2 class="section-title reveal">Up and running in<br/>under 10 minutes.</h2>
-      <p class="section-sub reveal">Follow each step in order. Everything runs locally — no cloud deployments.</p>
+      <div class="section-label reveal">Get Started</div>
+      <h2 class="section-title reveal">Installed in<br/>30 seconds.</h2>
+      <p class="section-sub reveal">No accounts. No API keys. Just download and start fact-checking.</p>
 
-      <div class="setup-wrapper">
-        <!-- Tab buttons -->
-        <div class="setup-tabs" role="tablist">
-          <button class="setup-tab active" data-tab="prereqs"   role="tab">1. Prerequisites</button>
-          <button class="setup-tab" data-tab="tavily"    role="tab">2. Tavily API Key</button>
-          <button class="setup-tab" data-tab="bedrock"   role="tab">3. AWS Bedrock</button>
-          <button class="setup-tab" data-tab="backend"   role="tab">4. Backend</button>
-          <button class="setup-tab" data-tab="extension" role="tab">5. Extension</button>
-          <button class="setup-tab" data-tab="test"      role="tab">6. Test</button>
+      <div class="steps-list" style="max-width:680px;margin-top:48px">
+
+        <!-- Step 1 -->
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h4>Download the extension</h4>
+            <p>Click the button below to get the ClariFact extension as a ZIP file. No build tools or Node.js required.</p>
+            <a href="extension.html" class="btn-primary" style="display:inline-flex;align-items:center;gap:8px;margin-top:14px;font-size:14px;padding:10px 18px">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download clarifact-extension-v1.1.0.zip
+            </a>
+            <p style="margin-top:10px;font-size:12.5px;color:#6B7280">ZIP &middot; 1.3 MB &middot; No installer required</p>
+          </div>
         </div>
 
-        <!-- Tab panels -->
-        <div class="setup-panels">
-
-          <!-- Prerequisites -->
-          <div class="setup-panel active" id="tab-prereqs">
-            <h3>What you need before starting</h3>
-            <div class="prereq-grid">
-              <div class="prereq-card">
-                <div class="prereq-icon">⬡</div>
-                <h4>Node.js v18+</h4>
-                <p>Required to run the backend proxy server.</p>
-                <a href="https://nodejs.org" target="_blank" rel="noopener" class="prereq-link">Download from nodejs.org →</a>
-                <div class="code-block">
-                  <div class="code-header"><span class="code-lang">Verify</span><button class="copy-btn" data-copy="node --version">Copy</button></div>
-                  <pre><code>node --version   <span class="code-comment"># Should be v18 or higher</span>
-npm --version    <span class="code-comment"># Comes with Node.js</span></code></pre>
-                </div>
-              </div>
-              <div class="prereq-card">
-                <div class="prereq-icon">⬡</div>
-                <h4>Google Chrome</h4>
-                <p>The extension requires Manifest V3 Chrome (v88+).</p>
-                <a href="https://www.google.com/chrome" target="_blank" rel="noopener" class="prereq-link">Download Chrome →</a>
-              </div>
-              <div class="prereq-card">
-                <div class="prereq-icon">⬡</div>
-                <h4>Project Source Code</h4>
-                <div class="code-block">
-                  <div class="code-header"><span class="code-lang">PowerShell</span><button class="copy-btn" data-copy="git clone https://github.com/your-repo/clarifact.git&#10;cd clarifact">Copy</button></div>
-                  <pre><code>git clone https://github.com/your-repo/clarifact
-cd clarifact</code></pre>
-                </div>
-              </div>
+        <!-- Step 2 -->
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h4>Load it in Chrome</h4>
+            <p>Extract the ZIP, then:</p>
+            <ol style="margin:12px 0 0 18px;line-height:2;font-size:14px">
+              <li>Go to <code>chrome://extensions</code> in the address bar</li>
+              <li>Toggle <strong>Developer mode</strong> ON (top-right corner)</li>
+              <li>Click <strong>Load unpacked</strong> &rarr; select the extracted folder (the one containing <code>manifest.json</code>)</li>
+            </ol>
+            <div class="info-box" style="margin-top:14px">
+              Need more detail? See the full <a href="extension.html#installation">installation guide &rarr;</a>
             </div>
           </div>
+        </div>
 
-          <!-- Brave API Key -->
-          <div class="setup-panel" id="tab-brave">
-            <h3>Get your Brave Search API key</h3>
-            <p class="panel-intro">Brave Search has an independent index (not Google). The free tier gives you <strong>2,000 queries/month</strong> — plenty for personal use.</p>
-            <div class="steps-list">
-              <div class="step-item">
-                <div class="step-num">1</div>
-                <div class="step-body">
-                  <h4>Go to the Brave Search API page</h4>
-                  <p>Visit <a href="https://brave.com/search/api/" target="_blank" rel="noopener">brave.com/search/api</a> and click <strong>"Get Started for Free"</strong>.</p>
-                </div>
-              </div>
-              <div class="step-item">
-                <div class="step-num">2</div>
-                <div class="step-body">
-                  <h4>Create an account and subscribe</h4>
-                  <p>Sign up and subscribe to the <strong>Free tier</strong> (no credit card required for the free plan).</p>
-                </div>
-              </div>
-              <div class="step-item">
-                <div class="step-num">3</div>
-                <div class="step-body">
-                  <h4>Copy your API key</h4>
-                  <p>Go to <strong>API Keys</strong> in your dashboard. Your key starts with <code>BSA...</code>.</p>
-                </div>
-              </div>
-              <div class="step-item">
-                <div class="step-num">4</div>
-                <div class="step-body">
-                  <h4>Add it to your .env file</h4>
-                  <div class="code-block">
-                    <div class="code-header"><span class="code-lang">backend/.env</span><button class="copy-btn" data-copy="BRAVE_API_KEY=BSAxxxxxxxxxxxxxxxxxx">Copy</button></div>
-                    <pre><code>BRAVE_API_KEY=<span class="code-val">BSAxxxxxxxxxxxxxxxxxx</span></code></pre>
-                  </div>
-                </div>
-              </div>
+        <!-- Step 3 -->
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <h4>Select any text and click Fact-check</h4>
+            <p>Navigate to any webpage, highlight a claim, and click the <strong>Fact-check</strong> button that appears. The hosted backend handles search and AI analysis automatically — you'll see a full verdict in the sidebar within seconds.</p>
+            <div class="info-box success" style="margin-top:14px">
+              <strong>&checkmark; Nothing to configure.</strong> The backend runs 24/7 on a server I maintain, rate-limited per IP. Prefer to self-host with your own keys? Full source is on <a href="https://github.com/Sanskar-bot/clarifact" target="_blank" rel="noopener">GitHub</a>.
             </div>
           </div>
+        </div>
 
-          <!-- Bedrock API Key -->
-          <div class="setup-panel" id="tab-bedrock">
-            <h3>Get your Amazon Bedrock API key</h3>
-            <p class="panel-intro">You need an AWS account and access to Claude 3.5 Sonnet in the <strong>ap-south-1 (Mumbai)</strong> region. The long-term API key is the easiest auth method.</p>
-            <div class="steps-list">
-              <div class="step-item">
-                <div class="step-num">1</div>
-                <div class="step-body">
-                  <h4>Sign in to AWS Console</h4>
-                  <p>Go to <a href="https://console.aws.amazon.com" target="_blank" rel="noopener">console.aws.amazon.com</a> and sign in.</p>
-                </div>
-              </div>
-              <div class="step-item">
-                <div class="step-num">2</div>
-                <div class="step-body">
-                  <h4>Switch region to ap-south-1 (Mumbai)</h4>
-                  <p>In the top-right corner of the AWS Console, click the region selector and choose <strong>Asia Pacific (Mumbai) — ap-south-1</strong>.</p>
-                </div>
-              </div>
-              <div class="step-item">
-                <div class="step-num">3</div>
-                <div class="step-body">
-                  <h4>Enable Claude 3.5 Sonnet model access</h4>
-                  <p>Go to <strong>Amazon Bedrock → Model catalog</strong> → search <em>"Claude 3.5 Sonnet"</em> → click <strong>"Enable"</strong>. Wait ~1 minute for status to change to "Access granted".</p>
-                  <div class="info-box">
-                    <strong>⚠ Critical:</strong> Skipping this step causes a 403 error even with a valid API key. The model must be explicitly enabled per region.
-                  </div>
-                </div>
-              </div>
-              <div class="step-item">
-                <div class="step-num">4</div>
-                <div class="step-body">
-                  <h4>Generate a long-term API key</h4>
-                  <p>In Bedrock Console → left sidebar → <strong>API keys</strong> → <strong>"Generate long-term API key"</strong>.</p>
-                  <div class="info-box success">
-                    <strong>⚠ Copy it now!</strong> The key is shown only once. It starts with <code>ABSKQm...</code>
-                  </div>
-                </div>
-              </div>
-              <div class="step-item">
-                <div class="step-num">5</div>
-                <div class="step-body">
-                  <h4>Add it to your .env file</h4>
-                  <div class="code-block">
-                    <div class="code-header"><span class="code-lang">backend/.env</span><button class="copy-btn" data-copy="AWS_BEARER_TOKEN_BEDROCK=ABSKQmxxxxxxxxxxxxxxxxxx&#10;AWS_REGION=ap-south-1">Copy</button></div>
-                    <pre><code>AWS_BEARER_TOKEN_BEDROCK=<span class="code-val">ABSKQmxxxxxxxxxxxxxxxxxx</span>
-AWS_REGION=<span class="code-val">ap-south-1</span></code></pre>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Backend -->
-          <div class="setup-panel" id="tab-backend">
-            <h3>Set up and run the backend</h3>
-            <p class="panel-intro">The backend is a Node.js/Express server that runs locally at <code>http://127.0.0.1:3000</code>. It hides your API keys and handles web scraping.</p>
-            <div class="steps-list">
-              <div class="step-item">
-                <div class="step-num">1</div>
-                <div class="step-body">
-                  <h4>Navigate to the backend folder</h4>
-                  <div class="code-block">
-                    <div class="code-header"><span class="code-lang">PowerShell</span><button class="copy-btn" data-copy='cd "S:\Personal Projects\Clarifact\backend"'>Copy</button></div>
-                    <pre><code>cd "S:\Personal Projects\Clarifact\backend"</code></pre>
-                  </div>
-                </div>
-              </div>
-              <div class="step-item">
-                <div class="step-num">2</div>
-                <div class="step-body">
-                  <h4>Install dependencies</h4>
-                  <div class="code-block">
-                    <div class="code-header"><span class="code-lang">PowerShell</span><button class="copy-btn" data-copy="npm install">Copy</button></div>
-                    <pre><code>npm install   <span class="code-comment"># installs Express, Readability, AWS SDK, etc.</span></code></pre>
-                  </div>
-                </div>
-              </div>
-              <div class="step-item">
-                <div class="step-num">3</div>
-                <div class="step-body">
-                  <h4>Configure your .env file</h4>
-                  <p>Open <code>backend/.env</code> and fill in your API keys:</p>
-                  <div class="code-block">
-                    <div class="code-header"><span class="code-lang">backend/.env</span><button class="copy-btn" data-copy="BRAVE_API_KEY=BSAxxxxxxxxxxxxxxxxxx&#10;AWS_BEARER_TOKEN_BEDROCK=ABSKQmxxxxxxxxxxxxxxxxxx&#10;AWS_REGION=ap-south-1&#10;PORT=3000">Copy</button></div>
-                    <pre><code>BRAVE_API_KEY=<span class="code-val">BSAxxxxxxxxxxxxxxxxxx</span>
-AWS_BEARER_TOKEN_BEDROCK=<span class="code-val">ABSKQmxxxxxxxxxxxxxxxxxx</span>
-AWS_REGION=<span class="code-val">ap-south-1</span>
-PORT=<span class="code-val">3000</span></code></pre>
-                  </div>
-                </div>
-              </div>
-              <div class="step-item">
-                <div class="step-num">4</div>
-                <div class="step-body">
-                  <h4>Start the server</h4>
-                  <div class="code-block">
-                    <div class="code-header"><span class="code-lang">PowerShell</span><button class="copy-btn" data-copy="npm start">Copy</button></div>
-                    <pre><code>npm start</code></pre>
-                  </div>
-                  <p style="margin-top:10px;">You should see:</p>
-                  <div class="code-block success-block">
-                    <pre><code>╔══════════════════════════════════════════════════╗
-║         Clarifact Backend — Running              ║
-║  http://127.0.0.1:3000                           ║
-║  Brave Search: ✓ configured                      ║
-║  AWS Bedrock:  ✓ configured                      ║
-╚══════════════════════════════════════════════════╝</code></pre>
-                  </div>
-                </div>
-              </div>
-              <div class="step-item">
-                <div class="step-num">5</div>
-                <div class="step-body">
-                  <h4>Verify it's working</h4>
-                  <div class="code-block">
-                    <div class="code-header"><span class="code-lang">PowerShell</span><button class="copy-btn" data-copy="curl http://127.0.0.1:3000/health">Copy</button></div>
-                    <pre><code>curl http://127.0.0.1:3000/health
-<span class="code-comment"># Should return: { "status": "ok", "braveConfigured": true, "bedrockConfigured": true }</span></code></pre>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Extension -->
-          <div class="setup-panel" id="tab-extension">
-            <h3>Load the extension in Chrome</h3>
-            <p class="panel-intro">Chrome extensions in "developer mode" don't need to be published to the Chrome Web Store. You load them directly from your filesystem.</p>
-            <div class="steps-list">
-              <div class="step-item">
-                <div class="step-num">1</div>
-                <div class="step-body">
-                  <h4>Install extension dependencies</h4>
-                  <div class="code-block">
-                    <div class="code-header"><span class="code-lang">PowerShell</span><button class="copy-btn" data-copy='cd "S:\Personal Projects\Clarifact\extension"&#10;npm install'>Copy</button></div>
-                    <pre><code>cd "S:\Personal Projects\Clarifact\extension"
-npm install   <span class="code-comment"># copies compromise.js into lib/ folder</span></code></pre>
-                  </div>
-                </div>
-              </div>
-              <div class="step-item">
-                <div class="step-num">2</div>
-                <div class="step-body">
-                  <h4>Open Chrome Extensions page</h4>
-                  <p>Type this in Chrome's address bar and press Enter:</p>
-                  <div class="code-block">
-                    <div class="code-header"><span class="code-lang">Chrome Address Bar</span><button class="copy-btn" data-copy="chrome://extensions">Copy</button></div>
-                    <pre><code>chrome://extensions</code></pre>
-                  </div>
-                </div>
-              </div>
-              <div class="step-item">
-                <div class="step-num">3</div>
-                <div class="step-body">
-                  <h4>Enable Developer Mode</h4>
-                  <p>Toggle the <strong>"Developer mode"</strong> switch in the top-right corner of the extensions page.</p>
-                </div>
-              </div>
-              <div class="step-item">
-                <div class="step-num">4</div>
-                <div class="step-body">
-                  <h4>Load the extension</h4>
-                  <p>Click <strong>"Load unpacked"</strong> → browse to and select the <code>extension\</code> folder (the one containing <code>manifest.json</code>).</p>
-                  <div class="info-box">
-                    <strong>📁 Path to select:</strong><br/>
-                    <code>S:\Personal Projects\Clarifact\extension</code>
-                  </div>
-                </div>
-              </div>
-              <div class="step-item">
-                <div class="step-num">5</div>
-                <div class="step-body">
-                  <h4>Pin to toolbar (optional)</h4>
-                  <p>Click the puzzle-piece 🧩 icon in Chrome's toolbar → find Clarifact → click the pin icon to keep it visible.</p>
-                </div>
-              </div>
-              <div class="step-item">
-                <div class="step-num">6</div>
-                <div class="step-body">
-                  <h4>After editing any extension file</h4>
-                  <p>Go to <code>chrome://extensions</code> → find Clarifact → click the <strong>⟳ reload</strong> button to apply changes.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Test -->
-          <div class="setup-panel" id="tab-test">
-            <h3>Test the complete pipeline</h3>
-            <p class="panel-intro">Make sure the backend is running before testing. Open any news article or Wikipedia page and try selecting these claims:</p>
-            <div class="test-claims">
-              <div class="test-claim supported-claim">
-                <div class="test-claim-verdict">✓ SUPPORTED expected</div>
-                <div class="test-claim-text">"Neil Armstrong became the first human to walk on the Moon on July 20, 1969"</div>
-                <div class="test-claim-why">Well-documented by NASA, Britannica, and news archives. All high-trust sources should confirm.</div>
-              </div>
-              <div class="test-claim inconclusive-claim">
-                <div class="test-claim-verdict">? INCONCLUSIVE expected</div>
-                <div class="test-claim-text">"The Great Wall of China is visible from space with the naked eye"</div>
-                <div class="test-claim-why">A famous myth — some older sources repeat it, others debunk it. Mixed sources = inconclusive.</div>
-              </div>
-              <div class="test-claim contradicted-claim">
-                <div class="test-claim-verdict">✕ CONTRADICTED expected</div>
-                <div class="test-claim-text">"COVID-19 vaccines contain microchips implanted by the government"</div>
-                <div class="test-claim-why">Well-refuted claim — high-trust sources strongly deny it. Negation sentences should dominate.</div>
-              </div>
-            </div>
-            <div class="info-box" style="margin-top:24px;">
-              <strong>Troubleshooting:</strong>
-              <ul style="margin:8px 0 0 18px;line-height:1.9;">
-                <li>Red dot in popup → backend not running. Run <code>npm start</code> in <code>backend/</code></li>
-                <li>"AI analysis unavailable" → check <code>AWS_BEARER_TOKEN_BEDROCK</code> in your <code>.env</code></li>
-                <li>Extension not showing → reload it at <code>chrome://extensions</code></li>
-                <li>No results → try adding specific names, dates, or places to the claim</li>
-              </ul>
-            </div>
-          </div>
-
-        </div><!-- /setup-panels -->
-      </div><!-- /setup-wrapper -->
+      </div><!-- /steps-list -->
     </div>
   </section>
+
 
   <!-- ── Tech Stack ─────────────────────────────────────────────────── -->
   <section id="tech" class="section section-dark">
@@ -636,8 +375,8 @@ npm install   <span class="code-comment"># copies compromise.js into lib/ folder
       <div class="tech-grid">
         <div class="tech-card reveal">
           <div class="tech-logo">🔍</div>
-          <h4>Brave Search API</h4>
-          <p>Independent web index. Free tier. 2,000 queries/month.</p>
+          <h4>Tavily Search API</h4>
+          <p>Fast, accurate web search built for AI pipelines. Free tier, 1,000 searches/month.</p>
           <span class="tech-tag">Backend</span>
         </div>
         <div class="tech-card reveal">
@@ -654,15 +393,15 @@ npm install   <span class="code-comment"># copies compromise.js into lib/ folder
         </div>
         <div class="tech-card reveal">
           <div class="tech-logo">🤖</div>
-          <h4>Claude 3.5 Sonnet v2</h4>
-          <p>Anthropic's model via Amazon Bedrock. Grounded analysis only.</p>
+          <h4>Nemotron Nano 3 30B</h4>
+          <p>NVIDIA's model via Amazon Bedrock (ap-south-1). Strict JSON-only grounded analysis.</p>
           <span class="tech-tag">Backend · AI</span>
         </div>
         <div class="tech-card reveal">
           <div class="tech-logo">🟩</div>
           <h4>Node.js + Express</h4>
-          <p>Lightweight local proxy. Rate limited. Binds to 127.0.0.1 only.</p>
-          <span class="tech-tag">Backend</span>
+          <p>Hosted on Render. Per-IP rate limited. Open source — self-hostable with your own keys.</p>
+          <span class="tech-tag">Backend · Hosted</span>
         </div>
         <div class="tech-card reveal">
           <div class="tech-logo">🔵</div>
@@ -696,7 +435,8 @@ npm install   <span class="code-comment"># copies compromise.js into lib/ folder
         <div class="faq-item reveal">
           <button class="faq-q">Does this send my browsing data anywhere?<span class="faq-chevron">▾</span></button>
           <div class="faq-a">
-            <p>No. The backend only ever runs on your own machine at <code>127.0.0.1:3000</code>. It cannot be reached from the internet. The claim text is sent to Brave Search and Amazon Bedrock as part of the fact-check — both have their own privacy policies — but no browsing history, cookies, or page content is ever transmitted.</p>
+            <p>When you trigger a fact-check, the <strong>selected claim text</strong> and a list of source URLs are sent to the ClariFact hosted backend (on Render). The backend calls Tavily Search and Nemotron AI (via AWS Bedrock) to analyse the claim.</p>
+            <p style="margin-top:10px"><strong>What is NOT sent:</strong> your browsing history, cookies, full page HTML, or anything outside the text you highlighted. There are no user accounts and no persistent logs of your queries.</p>
           </div>
         </div>
         <div class="faq-item reveal">
@@ -706,21 +446,21 @@ npm install   <span class="code-comment"># copies compromise.js into lib/ folder
           </div>
         </div>
         <div class="faq-item reveal">
-          <button class="faq-q">How much does it cost to run?<span class="faq-chevron">▾</span></button>
+          <button class="faq-q">How much does it cost to use?<span class="faq-chevron">▾</span></button>
           <div class="faq-a">
-            <p>Brave Search free tier gives you 2,000 queries/month at no cost. Amazon Bedrock charges per token — Claude 3.5 Sonnet v2 costs approximately $0.003 per 1,000 input tokens and $0.015 per 1,000 output tokens. A typical fact-check uses ~3,000-5,000 input tokens and ~300 output tokens, so each check costs roughly <strong>$0.01–$0.02</strong>.</p>
+            <p><strong>Free.</strong> The hosted backend absorbs the Tavily and AWS Bedrock API costs. Per-IP rate limiting keeps usage fair for everyone. If you'd prefer to run your own backend with your own keys, the full source code is on <a href="https://github.com/Sanskar-bot/clarifact" target="_blank" rel="noopener">GitHub</a>.</p>
           </div>
         </div>
         <div class="faq-item reveal">
-          <button class="faq-q">Do I need to keep the backend running all the time?<span class="faq-chevron">▾</span></button>
+          <button class="faq-q">Do I need to install or run anything other than the extension?<span class="faq-chevron">▾</span></button>
           <div class="faq-a">
-            <p>Yes — the backend must be running whenever you want to fact-check. Start it with <code>npm start</code> in the <code>backend/</code> folder. The popup shows a green dot when connected and a red dot when the backend is offline. A future enhancement would use Chrome's Native Messaging to auto-start it.</p>
+            <p>No. The backend runs 24/7 on Render's cloud infrastructure — just install the extension and it connects automatically. The popup shows a green dot when the backend is reachable and a red dot with a retry button if it's temporarily unreachable (e.g. during a cold start on the free tier, which can take ~30 seconds).</p>
           </div>
         </div>
         <div class="faq-item reveal">
-          <button class="faq-q">Can I use IAM credentials instead of the bearer token?<span class="faq-chevron">▾</span></button>
+          <button class="faq-q">How does the hosted backend authenticate with AWS?<span class="faq-chevron">▾</span></button>
           <div class="faq-a">
-            <p>Yes. The backend auto-detects which credentials you've set. If you set <code>AWS_BEARER_TOKEN_BEDROCK</code>, it uses bearer token auth (direct HTTP). If you instead set <code>AWS_ACCESS_KEY_ID</code> and <code>AWS_SECRET_ACCESS_KEY</code>, it uses the AWS SDK with IAM SigV4 signing. You only need one of the two methods.</p>
+            <p>The hosted backend uses IAM credentials (<code>AWS_ACCESS_KEY_ID</code> + <code>AWS_SECRET_ACCESS_KEY</code>) with SigV4 signing to call Amazon Bedrock. If you self-host, you can also use <code>AWS_BEARER_TOKEN_BEDROCK</code> for bearer token auth — the backend auto-detects which method you've configured. You only need one of the two.</p>
           </div>
         </div>
         <div class="faq-item reveal">
@@ -732,13 +472,13 @@ npm install   <span class="code-comment"># copies compromise.js into lib/ folder
         <div class="faq-item reveal">
           <button class="faq-q">Can I add more trusted domains?<span class="faq-chevron">▾</span></button>
           <div class="faq-a">
-            <p>Yes — edit <code>backend/data/trustedDomains.json</code>. Add any domain with a trust score between 0 and 1 (e.g. <code>"pubmed.ncbi.nlm.nih.gov": 0.97</code>). Restart the backend after editing. No code changes required.</p>
+            <p>On the hosted backend, the domain trust list is managed centrally. If you self-host, edit <code>backend/data/trustedDomains.json</code> — add any domain with a trust score between 0 and 1 (e.g. <code>"pubmed.ncbi.nlm.nih.gov": 0.97</code>) and restart the server. No code changes required.</p>
           </div>
         </div>
         <div class="faq-item reveal">
           <button class="faq-q">Does it work in languages other than English?<span class="faq-chevron">▾</span></button>
           <div class="faq-a">
-            <p>Partially. Brave Search returns results for any language. Readability.js extracts text in any language. However, compromise.js's entity extraction is English-only, reducing NLP accuracy for non-English claims. Claude 3.5 Sonnet handles many languages natively for the AI analysis. A warning is shown in the sidebar when a non-English claim is detected.</p>
+            <p>Partially. Tavily Search returns results for any language. Readability.js extracts text in any language. However, compromise.js's entity extraction is English-only, reducing NLP accuracy for non-English claims. Nemotron Nano 3 30B handles many languages for the AI analysis stage. A warning is shown in the sidebar when a non-English claim is detected.</p>
           </div>
         </div>
       </div>
@@ -750,7 +490,7 @@ npm install   <span class="code-comment"># copies compromise.js into lib/ folder
     <div class="cta-orb"></div>
     <div class="container cta-inner">
       <h2 class="cta-title">Stop guessing.<br/>Start fact-checking.</h2>
-      <p class="cta-sub">Free, open-source, and runs entirely on your machine.</p>
+      <p class="cta-sub">Free, open-source, and zero setup. Just install and fact-check.</p>
       <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
         <a href="extension.html" class="btn-primary btn-large">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:2px">
@@ -758,7 +498,7 @@ npm install   <span class="code-comment"># copies compromise.js into lib/ folder
           </svg>
           Download Extension
         </a>
-        <a href="#setup" class="btn-ghost btn-large">Backend Setup Guide</a>
+        <a href="https://github.com/Sanskar-bot/clarifact" target="_blank" rel="noopener" class="btn-ghost btn-large">View on GitHub</a>
       </div>
     </div>
   </section>
@@ -792,7 +532,7 @@ npm install   <span class="code-comment"># copies compromise.js into lib/ folder
       </ul>
     </div>
     <div class="footer-bottom">
-      <p>Built with ❤ · MIT License · No data collected · Everything runs on your machine</p>
+      <p>Built with ❤ · MIT License · Open source · Hosted on Render</p>
     </div>
   </footer>
 
