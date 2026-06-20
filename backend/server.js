@@ -166,10 +166,14 @@ const aiMode     = process.env.AI_PROVIDER || "auto";
 
 const searchMode = tavilyOk ? "Tavily API    " : "Wikipedia API ";
 
-const server = app.listen(PORT, "127.0.0.1", () => {
+// Bind to 0.0.0.0 on Render (production) so the port scanner can detect it.
+// In local dev (NODE_ENV !== production) we keep 127.0.0.1 for security.
+const HOST = process.env.NODE_ENV === "production" ? "0.0.0.0" : "127.0.0.1";
+
+const server = app.listen(PORT, HOST, () => {
   console.log("╔════════════════════════════════════════════════════╗");
   console.log("║          Clarifact Backend — Running               ║");
-  console.log(`║  http://127.0.0.1:${PORT}                            ║`);
+  console.log(`║  http://${HOST}:${PORT}                            ║`);
   console.log(`║  Search:       ✓ ${searchMode}(free)            ║`);
   console.log(`║  AI Provider:  ${aiMode.padEnd(36)}║`);
   console.log(`║  Nemotron:     ${nemotronOk ? "✓ configured (IAM)                   " : "✗ MISSING — add AWS_ACCESS_KEY_ID     "}  ║`);
@@ -178,6 +182,7 @@ const server = app.listen(PORT, "127.0.0.1", () => {
   console.log(`║  Region:       ${process.env.AWS_REGION || "ap-south-1"}                          ║`);
   console.log("╚════════════════════════════════════════════════════╝");
 });
+
 
 // Graceful shutdown on Ctrl+C
 process.on("SIGINT", () => {
