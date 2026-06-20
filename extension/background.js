@@ -22,7 +22,7 @@
  *   { type: "CHECK_BACKEND_HEALTH" }                — popup checking server status
  */
 
-const BACKEND = "http://127.0.0.1:3000";
+const BACKEND = "https://clarifact.onrender.com";
 
 // In-memory store for the last completed fact-check
 // Service workers can be terminated and restarted; for persistence use chrome.storage
