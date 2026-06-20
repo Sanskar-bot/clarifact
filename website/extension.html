@@ -354,7 +354,7 @@
       <ul class="nav-links">
         <li><a href="index.html#features">Features</a></li>
         <li><a href="index.html#how-it-works">How It Works</a></li>
-        <li><a href="index.html#setup">Backend Setup</a></li>
+        <li><a href="index.html#setup">Install</a></li>
         <li><a href="index.html#faq">FAQ</a></li>
       </ul>
       <a href="downloads/clarifact-extension-v1.1.0.zip" download class="nav-cta">
@@ -372,17 +372,17 @@
       <div>
         <div class="ex-hero__eyebrow">
           <span class="ex-pulse"></span>
-          Chrome Extension &mdash; Manifest V3
+          Free Chrome Extension &mdash; No account needed
         </div>
 
         <h1 class="ex-hero__h1">
-          ClariFact<br/>
-          Browser Extension
+          Fact-check anything.<br/>
+          Instantly.
         </h1>
 
         <p class="ex-hero__sub">
-          Select any text on any webpage. ClariFact searches the web, reads the top sources,
-          and returns an AI verdict — verdict, confidence score, and evidence — in your browser sidebar.
+          Highlight any sentence on any webpage. ClariFact searches the web, reads the top sources, and tells you
+          whether the claim holds up — with an AI verdict, cited evidence, and a confidence score — right inside your browser.
         </p>
 
         <div class="ex-hero__actions">
@@ -446,12 +446,12 @@
             <span class="ex-ver-val">1.3 MB</span>
           </div>
           <div class="ex-ver-row">
-            <span class="ex-ver-key">Manifest</span>
-            <span class="ex-ver-val">V3</span>
+            <span class="ex-ver-key">Setup</span>
+            <span class="ex-ver-val">Zero config</span>
           </div>
           <div class="ex-ver-row">
-            <span class="ex-ver-key">Requires</span>
-            <span class="ex-ver-val">Node.js backend</span>
+            <span class="ex-ver-key">Backend</span>
+            <span class="ex-ver-val">Cloud-hosted</span>
           </div>
         </div>
         <div style="margin-bottom:14px">
@@ -540,8 +540,8 @@
       <div class="ex-eyebrow">Installation</div>
       <h2 class="ex-h2">Up and running in under 5 minutes</h2>
       <p class="ex-lead">
-        ClariFact is not yet on the Chrome Web Store. Load it as an unpacked developer extension — it takes
-        under 5 minutes and requires no build tools.
+        ClariFact isn't on the Chrome Web Store yet, so installation takes one extra step — but it's quick.
+        No developer tools, no command line, no API keys. Just download, extract, and load.
       </p>
 
       <div class="ex-timeline">
@@ -606,14 +606,14 @@
         <div class="ex-step">
           <div class="ex-step__num">5</div>
           <div class="ex-step__body">
-            <div class="ex-step__title">Enable Developer Mode</div>
+            <div class="ex-step__title">Turn on Developer Mode</div>
             <div class="ex-step__desc">
-              Toggle <strong>Developer mode</strong> ON using the switch in the top-right corner of the Extensions page.
-              New buttons will appear in the top-left.
+              Look for the <strong>Developer mode</strong> toggle in the top-right corner of the Extensions page and switch it ON.
+              A few extra buttons will appear at the top — that's expected.
             </div>
             <div class="ex-step__tip">
-              Developer mode is required to load extensions not from the Web Store.
-              It does not weaken your browser security in any meaningful way.
+              This is just Chrome's way of allowing extensions that aren't in the Web Store.
+              It doesn't make your browser less safe.
             </div>
           </div>
         </div>
@@ -645,36 +645,25 @@
         </div>
 
         <div class="ex-step">
-          <div class="ex-step__num">8</div>
-          <div class="ex-step__body">
-            <div class="ex-step__title">Set Up the Backend</div>
-            <div class="ex-step__desc">
-              ClariFact requires its Node.js backend running locally on port 3000 to search the web and
-              call Nemotron AI. Without it, the extension popup will show "Backend not reachable".
-            </div>
-            <div class="ex-step__tip">
-              See the <a href="index.html#setup" style="color:#B5D4F4">Backend Setup Guide</a> on the main page for full instructions —
-              it takes about 10 minutes and requires a Tavily API key (free tier) and AWS Bedrock access.
-            </div>
-          </div>
-        </div>
-
-        <div class="ex-step">
           <div class="ex-step__num ex-step__num--done">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
               <polyline points="20 6 9 17 4 12"/>
             </svg>
           </div>
           <div class="ex-step__body">
-            <div class="ex-step__title">You're Ready</div>
+            <div class="ex-step__title">That's it — you're done!</div>
             <div class="ex-step__desc">
-              ClariFact is now installed. Navigate to any webpage, select a sentence or claim,
-              and click the <strong>Fact-check</strong> button that appears. The sidebar will slide in
-              with the full verdict.
+              ClariFact is installed and connected to the cloud backend automatically. Go to any webpage,
+              highlight a sentence or claim, and click the <strong>Fact-check</strong> button that appears.
+              You'll see a verdict, evidence, and sources slide in — no extra setup needed.
+            </div>
+            <div class="ex-step__tip">
+              The backend runs 24/7 on a hosted server. Your first fact-check might take ~30 seconds
+              if the server is waking from idle — subsequent ones are fast.
             </div>
             <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
-              <a href="index.html#faq" class="btn-ghost" style="font-size:13px;padding:7px 14px">Installation FAQ</a>
-              <a href="index.html#setup" class="btn-ghost" style="font-size:13px;padding:7px 14px">Backend Setup Guide</a>
+              <a href="index.html#faq" class="btn-ghost" style="font-size:13px;padding:7px 14px">FAQs</a>
+              <a href="https://github.com/Sanskar-bot/clarifact" target="_blank" rel="noopener" class="btn-ghost" style="font-size:13px;padding:7px 14px">View on GitHub</a>
             </div>
           </div>
         </div>
@@ -710,8 +699,8 @@
           <div class="ex-perm-desc">Adds a "Fact-check with ClariFact" right-click menu option as an alternative to the floating button.</div>
         </div>
         <div class="ex-perm-row">
-          <code>host: 127.0.0.1:3000</code>
-          <div class="ex-perm-desc">Allows the extension to communicate with the ClariFact backend running on your own machine (localhost). No external domains are accessed by the extension itself.</div>
+          <code>host: clarifact.onrender.com</code>
+          <div class="ex-perm-desc">Allows the extension to talk to the ClariFact cloud backend. This is the only external connection the extension makes — it sends your selected text to get a fact-check result back. No other sites are contacted.</div>
         </div>
       </div>
     </section>
@@ -721,9 +710,10 @@
     <!-- ════════════════════════════════════════════════════════ -->
     <section class="ex-section" id="privacy">
       <div class="ex-eyebrow">Privacy &amp; Security</div>
-      <h2 class="ex-h2">What ClariFact does — and doesn't — do with your data</h2>
+      <h2 class="ex-h2">What happens to your data?</h2>
       <p class="ex-lead">
-        ClariFact's architecture is designed so that trust is not required. You can inspect every line of source code.
+        Short answer: very little. ClariFact sends only the text you highlight — nothing else.
+        Here's the full picture, in plain language.
       </p>
 
       <div class="ex-privacy-wrap">
@@ -742,37 +732,37 @@
             <div class="ex-privacy-check">
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
-            <div class="ex-privacy-text"><strong>Your selected text stays local.</strong> The claim is sent only to your local backend (127.0.0.1:3000) — never to any third-party server directly from the extension.</div>
+            <div class="ex-privacy-text"><strong>Only the highlighted text is sent.</strong> When you fact-check something, just that claim goes to the backend — not the URL, not the page, not your history.</div>
           </div>
           <div class="ex-privacy-item">
             <div class="ex-privacy-check">
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
-            <div class="ex-privacy-text"><strong>No analytics, no tracking.</strong> The extension contains zero analytics, telemetry, or crash-reporting code.</div>
+            <div class="ex-privacy-text"><strong>Nothing is stored on the server.</strong> The backend is stateless — it processes each request and discards it. No database, no user accounts, no logs of your claims.</div>
           </div>
           <div class="ex-privacy-item">
             <div class="ex-privacy-check">
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
-            <div class="ex-privacy-text"><strong>Open source.</strong> Every line of extension and backend code is on GitHub. No obfuscation, no minification of logic.</div>
+            <div class="ex-privacy-text"><strong>No tracking or analytics.</strong> The extension has zero analytics, telemetry, or crash-reporting code — confirmed by reading the source.</div>
           </div>
           <div class="ex-privacy-item">
             <div class="ex-privacy-check">
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
-            <div class="ex-privacy-text"><strong>Local result storage only.</strong> Results are stored in <code>chrome.storage.local</code> — on your device, never synced.</div>
+            <div class="ex-privacy-text"><strong>Results stay on your device.</strong> Fact-check results are saved in your browser's local storage — they never leave your machine.</div>
           </div>
           <div class="ex-privacy-item">
             <div class="ex-privacy-check">
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
-            <div class="ex-privacy-text"><strong>Backend is your own.</strong> The Node.js backend runs entirely on your machine. You control the API keys and all network calls.</div>
+            <div class="ex-privacy-text"><strong>Fully open source.</strong> Every line — extension and backend — is on <a href="https://github.com/Sanskar-bot/clarifact" target="_blank" rel="noopener" style="color:#B5D4F4">GitHub</a>. No black boxes.</div>
           </div>
           <div class="ex-privacy-item">
             <div class="ex-privacy-check">
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
-            <div class="ex-privacy-text"><strong>Minimal permissions.</strong> Only 4 Chrome permissions requested — all auditable and justified above.</div>
+            <div class="ex-privacy-text"><strong>Minimal permissions.</strong> Only 4 Chrome permissions — each one explained in the section above.</div>
           </div>
         </div>
       </div>
