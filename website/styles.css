@@ -167,7 +167,7 @@ strong { color: var(--ink-paper); font-weight: 600; }
 
 .nav-inner {
   max-width: 1200px;
-  margin-inline: auto;
+  margin-inline: 0;
   padding-inline: var(--space-lg);
   height: 100%;
   display: flex;
