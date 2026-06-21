@@ -222,6 +222,24 @@ strong { color: var(--ink-paper); font-weight: 600; }
 }
 .nav-gh:hover { color: var(--ink-paper); opacity: 1; }
 
+/* Download button — amber border, right of nav */
+.nav-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border: 1.5px solid var(--accent-stamp);
+  border-radius: var(--radius);
+  color: var(--accent-stamp);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background var(--trans-fast), opacity var(--trans-fast);
+  margin-left: auto; /* pushes this + GitHub to the right */
+}
+.nav-download:hover { background: rgba(232,179,57,0.1); opacity: 1; }
+
 .nav-mobile-toggle {
   display: none;
   flex-direction: column;
