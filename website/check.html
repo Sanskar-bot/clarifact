@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ClariFact — Check a Claim Online</title>
+  <meta name="description" content="Paste any claim and ClariFact will search the web, read the sources, and give you an AI verdict with evidence. No account or extension needed." />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    /* ── Page layout ──────────────────────────────────────────── */
+    .check-page {
+      max-width: 820px;
+      margin-inline: auto;
+      padding: 110px 24px 100px;
+    }
+
+    .check-eyebrow {
+      font-size: 11px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.09em;
+      color: #B5D4F4; margin-bottom: 14px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .check-pulse {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #639922; flex-shrink: 0;
+      animation: pulse-anim 2s ease-in-out infinite;
+    }
+    @keyframes pulse-anim {
+      0%,100%{ opacity:1; transform:scale(1); }
+      50%    { opacity:.4; transform:scale(.65); }
+    }
+
+    .check-title {
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 700; letter-spacing: -0.03em;
+      color: #F0F2F5; line-height: 1.1; margin-bottom: 12px;
+    }
+    .check-title span { color: #378ADD; }
+
+    .check-sub {
+      font-size: 15px; color: #9AA1AC;
+      line-height: 1.6; margin-bottom: 40px;
+      max-width: 580px;
+    }
+
+    /* ── Input card ───────────────────────────────────────────── */
+    .check-card {
+      background: #1C2026;
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 32px;
+    }
+
+    .check-label {
+      font-size: 11px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.07em;
+      color: #6B7280; margin-bottom: 10px;
+      display: block;
+    }
+
+    #claim-input {
+      width: 100%; min-height: 120px;
+      background: #14171C;
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 8px; padding: 14px 16px;
+      color: #F0F2F5; font-family: 'Inter', sans-serif;
+      font-size: 15px; line-height: 1.6;
+      resize: vertical; outline: none;
+      transition: border-color 0.15s;
+      box-sizing: border-box;
+    }
+    #claim-input::placeholder { color: #4B5563; }
+    #claim-input:focus { border-color: rgba(55,138,221,0.5); }
+
+    .check-actions {
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 12px;
+      margin-top: 14px; flex-wrap: wrap;
+    }
+
+    .check-examples {
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    }
+    .check-examples-label {
+      font-size: 11.5px; color: #6B7280;
+    }
+    .example-pill {
+      font-size: 11.5px; color: #9AA1AC;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px; padding: 3px 10px;
+      cursor: pointer; transition: border-color 0.15s, color 0.15s;
+    }
+    .example-pill:hover { border-color: rgba(55,138,221,0.4); color: #B5D4F4; }
+
+    #check-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 24px;
+      background: #378ADD; color: #fff;
+      border: none; border-radius: 7px;
+      font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600;
+      cursor: pointer; transition: background 0.15s;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    #check-btn:hover:not(:disabled) { background: #2B70C0; }
+    #check-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+    /* ── Status bar ───────────────────────────────────────────── */
+    #status-bar {
+      display: none;
+      align-items: center; gap: 10px;
+      padding: 12px 16px;
+      background: rgba(55,138,221,0.07);
+      border: 1px solid rgba(55,138,221,0.18);
+      border-radius: 8px; margin-bottom: 28px;
+      font-size: 13px; color: #9AA1AC;
+    }
+    .status-spinner {
+      width: 16px; height: 16px;
+      border: 2px solid rgba(55,138,221,0.3);
+      border-top-color: #378ADD;
+      border-radius: 50%; flex-shrink: 0;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Results ──────────────────────────────────────────────── */
+    #result-area { display: none; }
+
+    /* Claim echo */
+    .result-claim-echo {
+      font-size: 12px; color: #6B7280;
+      margin-bottom: 20px; font-style: italic;
+    }
+    .result-claim-echo strong { color: #9AA1AC; font-style: normal; }
+
+    /* Verdict banner */
+    .result-verdict {
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 12px;
+      padding: 18px 22px; border-radius: 10px;
+      margin-bottom: 20px; flex-wrap: wrap;
+    }
+    .result-verdict.supported  { background:rgba(99,153,34,0.10); border:1px solid rgba(99,153,34,0.25); }
+    .result-verdict.inconclusive{ background:rgba(186,117,23,0.10); border:1px solid rgba(186,117,23,0.25); }
+    .result-verdict.contradicted{ background:rgba(163,45,45,0.10); border:1px solid rgba(163,45,45,0.25); }
+
+    .verdict-left { display: flex; align-items: center; gap: 14px; }
+    .verdict-icon {
+      width: 40px; height: 40px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 700; flex-shrink: 0;
+    }
+    .supported  .verdict-icon { background:rgba(99,153,34,0.18);  color:#8BBF3A; }
+    .inconclusive .verdict-icon{ background:rgba(186,117,23,0.18); color:#D4911E; }
+    .contradicted .verdict-icon{ background:rgba(163,45,45,0.18);  color:#C44040; }
+
+    .verdict-label {
+      font-size: 11px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      color: #6B7280; margin-bottom: 2px;
+    }
+    .verdict-word {
+      font-size: 20px; font-weight: 700; letter-spacing: -0.01em;
+    }
+    .supported  .verdict-word { color: #8BBF3A; }
+    .inconclusive .verdict-word{ color: #D4911E; }
+    .contradicted .verdict-word{ color: #C44040; }
+
+    .verdict-confidence {
+      text-align: right;
+    }
+    .confidence-num {
+      font-size: 30px; font-weight: 700; color: #F0F2F5;
+      letter-spacing: -0.02em; line-height: 1;
+    }
+    .confidence-pct { font-size: 16px; color: #9AA1AC; }
+    .confidence-label {
+      font-size: 11px; color: #6B7280; margin-top: 2px;
+    }
+
+    /* Confidence bar */
+    .conf-track {
+      height: 4px; background: rgba(255,255,255,0.07);
+      border-radius: 3px; overflow: hidden; margin-bottom: 24px;
+    }
+    .conf-fill {
+      height: 100%; border-radius: 3px; width: 0%;
+      transition: width 0.9s cubic-bezier(0.16,1,0.3,1);
+    }
+    .supported   .conf-fill { background: #639922; }
+    .inconclusive .conf-fill { background: #BA7517; }
+    .contradicted .conf-fill { background: #A32D2D; }
+
+    /* Section blocks */
+    .result-section {
+      background: #1C2026;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 14px;
+    }
+    .result-section-title {
+      font-size: 10px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      color: #6B7280; margin-bottom: 12px;
+    }
+    .result-explanation {
+      font-size: 14px; color: #D1D5DB;
+      line-height: 1.7;
+    }
+
+    /* Evidence list */
+    .evidence-list {
+      list-style: none; padding: 0; margin: 0;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .evidence-list li {
+      font-size: 13px; color: #9AA1AC; line-height: 1.6;
+      padding-left: 16px; position: relative;
+    }
+    .evidence-list li::before {
+      content: '✦'; position: absolute; left: 0;
+      font-size: 9px; color: #378ADD; top: 4px;
+    }
+
+    /* Caveats */
+    .caveats-list {
+      list-style: none; padding: 0; margin: 0;
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .caveats-list li {
+      font-size: 13px; color: #9AA1AC; line-height: 1.55;
+      padding-left: 16px; position: relative;
+    }
+    .caveats-list li::before {
+      content: '⚠'; position: absolute; left: 0;
+      font-size: 10px; color: #D4911E; top: 2px;
+    }
+
+    /* Source cards */
+    .source-list { display: flex; flex-direction: column; gap: 10px; }
+
+    .source-card {
+      background: #14171C;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 8px; overflow: hidden;
+    }
+    .source-card-header {
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 10px;
+      padding: 12px 14px; cursor: pointer;
+      transition: background 0.12s;
+    }
+    .source-card-header:hover { background: rgba(255,255,255,0.03); }
+    .source-domain {
+      font-size: 13px; font-weight: 600; color: #F0F2F5;
+    }
+    .source-trust {
+      font-size: 11px; font-weight: 600;
+      padding: 2px 7px; border-radius: 4px;
+      background: rgba(55,138,221,0.1);
+      border: 1px solid rgba(55,138,221,0.2);
+      color: #B5D4F4; flex-shrink: 0;
+    }
+    .source-card-body {
+      display: none; padding: 0 14px 12px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .source-card.expanded .source-card-body { display: block; }
+    .source-excerpt {
+      font-size: 12.5px; color: #9AA1AC;
+      line-height: 1.65; margin: 10px 0 8px;
+      font-style: italic;
+    }
+    .source-link {
+      font-size: 12px; color: #378ADD;
+      text-decoration: none; word-break: break-all;
+    }
+    .source-link:hover { text-decoration: underline; }
+
+    /* Error state */
+    .check-error {
+      display: none;
+      padding: 16px 18px;
+      background: rgba(163,45,45,0.08);
+      border: 1px solid rgba(163,45,45,0.2);
+      border-radius: 8px; margin-bottom: 24px;
+      font-size: 13.5px; color: #E06060;
+      line-height: 1.6;
+    }
+
+    /* Copy button */
+    .result-copy-btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      margin-top: 18px; padding: 9px 16px;
+      background: none; border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 6px; color: #9AA1AC;
+      font-family: 'Inter', sans-serif; font-size: 13px;
+      cursor: pointer; transition: border-color 0.15s, color 0.15s;
+    }
+    .result-copy-btn:hover { border-color: rgba(255,255,255,0.2); color: #F0F2F5; }
+
+    /* Disclaimer */
+    .result-disclaimer {
+      font-size: 11.5px; color: #4B5563;
+      text-align: center; margin-top: 20px; line-height: 1.6;
+    }
+
+    /* Cold-start tip */
+    .cold-start-note {
+      font-size: 12px; color: #6B7280;
+      margin-top: 8px; display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navigation ──────────────────────────────────────────────── -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <svg class="nav-logo-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="28" height="28" rx="6" fill="#111318"/>
+          <path d="M19 9.5C17.5 8 15.8 7.2 14 7.2C10.2 7.2 7.2 10.2 7.2 14C7.2 17.8 10.2 20.8 14 20.8C15.8 20.8 17.5 20 19 18.5"
+                stroke="#F0F2F5" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+          <circle cx="21.5" cy="7" r="4.5" fill="#E87020"/>
+          <polyline points="19.3,7 21,8.7 24,5.3" stroke="white" stroke-width="1.4"
+                    stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <span><span class="nav-logo-clari">Clari</span><span class="nav-logo-fact">Fact</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html#features">Features</a></li>
+        <li><a href="index.html#how-it-works">How It Works</a></li>
+        <li><a href="check.html" style="color:#378ADD">Try Online</a></li>
+        <li><a href="index.html#faq">FAQ</a></li>
+      </ul>
+      <a href="extension.html" class="nav-cta">↓ Get Extension</a>
+    </div>
+  </nav>
+
+  <div class="check-page">
+
+    <!-- Hero -->
+    <div class="check-eyebrow">
+      <span class="check-pulse"></span>
+      Live · Powered by Nemotron AI
+    </div>
+    <h1 class="check-title">Check any claim,<br/><span>right now.</span></h1>
+    <p class="check-sub">
+      Type or paste anything — a news headline, a quote, a rumour — and ClariFact will
+      search the web, read the top sources, and give you a verdict with evidence.
+      No extension or account needed.
+    </p>
+
+    <!-- Input card -->
+    <div class="check-card">
+      <label class="check-label" for="claim-input">Your claim</label>
+      <textarea
+        id="claim-input"
+        placeholder="e.g. "The Great Wall of China is visible from space." or paste any headline…"
+        maxlength="1000"
+      ></textarea>
+
+      <div class="check-actions">
+        <div class="check-examples">
+          <span class="check-examples-label">Try:</span>
+          <span class="example-pill" data-claim="The Great Wall of China is visible from space">Great Wall from space</span>
+          <span class="example-pill" data-claim="Humans only use 10% of their brain">10% brain myth</span>
+          <span class="example-pill" data-claim="Lightning never strikes the same place twice">Lightning strikes</span>
+        </div>
+        <button id="check-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+          </svg>
+          Check Fact
+        </button>
+      </div>
+      <div class="cold-start-note" id="cold-start-note">
+        ⏱ First check may take ~30 seconds if the server is waking up — please wait.
+      </div>
+    </div>
+
+    <!-- Status bar -->
+    <div id="status-bar">
+      <div class="status-spinner"></div>
+      <span id="status-text">Searching the web…</span>
+    </div>
+
+    <!-- Error -->
+    <div class="check-error" id="check-error"></div>
+
+    <!-- Results -->
+    <div id="result-area">
+
+      <div class="result-claim-echo" id="result-claim-echo"></div>
+
+      <!-- Verdict banner -->
+      <div class="result-verdict" id="result-verdict">
+        <div class="verdict-left">
+          <div class="verdict-icon" id="verdict-icon"></div>
+          <div>
+            <div class="verdict-label">Verdict</div>
+            <div class="verdict-word" id="verdict-word"></div>
+          </div>
+        </div>
+        <div class="verdict-confidence">
+          <div class="confidence-num"><span id="conf-num">—</span><span class="confidence-pct">%</span></div>
+          <div class="confidence-label">confidence</div>
+        </div>
+      </div>
+
+      <!-- Confidence bar -->
+      <div class="conf-track result-verdict" id="conf-track-wrap" style="border:none;padding:0;background:none;margin-bottom:24px;">
+        <div class="conf-fill" id="conf-fill"></div>
+      </div>
+
+      <!-- AI Explanation -->
+      <div class="result-section" id="explanation-section">
+        <div class="result-section-title">What the AI found</div>
+        <div class="result-explanation" id="result-explanation"></div>
+      </div>
+
+      <!-- Key Evidence -->
+      <div class="result-section" id="evidence-section" style="display:none">
+        <div class="result-section-title">Key Evidence</div>
+        <ul class="evidence-list" id="evidence-list"></ul>
+      </div>
+
+      <!-- Caveats -->
+      <div class="result-section" id="caveats-section" style="display:none">
+        <div class="result-section-title">Things to keep in mind</div>
+        <ul class="caveats-list" id="caveats-list"></ul>
+      </div>
+
+      <!-- Sources -->
+      <div class="result-section" id="sources-section">
+        <div class="result-section-title">Sources read</div>
+        <div class="source-list" id="source-list"></div>
+      </div>
+
+      <!-- Copy + disclaimer -->
+      <button class="result-copy-btn" id="result-copy-btn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+        </svg>
+        Copy Report
+      </button>
+
+      <div class="result-disclaimer">
+        ClariFact is a research aid. Always read the source articles before drawing conclusions.
+        Results are based on what is publicly available on the web at time of check.
+      </div>
+
+    </div><!-- /result-area -->
+
+  </div><!-- /check-page -->
+
+  <script>
+    const BACKEND = "https://clarifact.onrender.com";
+    const btn       = document.getElementById("check-btn");
+    const textarea  = document.getElementById("claim-input");
+    const statusBar = document.getElementById("status-bar");
+    const statusTxt = document.getElementById("status-text");
+    const errorDiv  = document.getElementById("check-error");
+    const resultArea= document.getElementById("result-area");
+    const coldNote  = document.getElementById("cold-start-note");
+
+    let lastResult  = null;
+    let coldTimer   = null;
+
+    // ── Example pills ────────────────────────────────────────────
+    document.querySelectorAll(".example-pill").forEach(pill => {
+      pill.addEventListener("click", () => {
+        textarea.value = pill.dataset.claim;
+        textarea.focus();
+      });
+    });
+
+    // ── Main check flow ──────────────────────────────────────────
+    btn.addEventListener("click", runCheck);
+    textarea.addEventListener("keydown", e => {
+      if ((e.ctrlKey || e.metaKey) && e.key === "Enter") runCheck();
+    });
+
+    async function runCheck() {
+      const claim = textarea.value.trim();
+      if (claim.length < 5) {
+        showError("Please enter at least a few words to fact-check.");
+        return;
+      }
+      if (claim.length > 1000) {
+        showError("Claim is too long. Please shorten it to under 1000 characters.");
+        return;
+      }
+
+      setLoading(true);
+      hideError();
+      resultArea.style.display = "none";
+      lastResult = null;
+
+      // Cold-start warning after 8 s
+      coldTimer = setTimeout(() => { coldNote.style.display = "block"; }, 8000);
+
+      try {
+        // Step 1 — Search
+        setStatus("Searching the web…");
+        const searchRes = await post("/api/search", { query: claim, count: 10 });
+        if (searchRes.error) throw new Error(searchRes.error);
+
+        const urls = (searchRes.results || []).map(r => r.url).filter(Boolean).slice(0, 5);
+        if (urls.length === 0) throw new Error("No search results found for this claim.");
+
+        // Step 2 — Scrape
+        setStatus(`Reading ${urls.length} source${urls.length>1?"s":""}…`);
+        const scrapeRes = await post("/api/scrape", { urls });
+        const sources = (scrapeRes.results || []).filter(s => s.text && !s.error);
+
+        if (sources.length === 0) throw new Error("Couldn't read any sources. Try rephrasing the claim.");
+
+        // Step 3 — Analyze
+        setStatus("AI is forming a verdict…");
+        const analyzeRes = await post("/api/analyze", { claim, sources });
+        if (analyzeRes.error) throw new Error(analyzeRes.error);
+
+        lastResult = { claim, analyzeRes, sources };
+        renderResult(claim, analyzeRes, sources);
+
+      } catch (err) {
+        showError("Something went wrong: " + (err.message || "Unknown error. Please try again."));
+      } finally {
+        setLoading(false);
+        clearTimeout(coldTimer);
+        coldNote.style.display = "none";
+      }
+    }
+
+    async function post(path, body) {
+      const res = await fetch(BACKEND + path, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      });
+      return res.json();
+    }
+
+    // ── Render result ─────────────────────────────────────────────
+    function renderResult(claim, ai, sources) {
+      const verdict = (ai.verdict || "INCONCLUSIVE").toUpperCase();
+      const confidence = Math.round(ai.confidence || 0);
+      const cls = verdict === "SUPPORTED" ? "supported"
+                : verdict === "CONTRADICTED" ? "contradicted"
+                : "inconclusive";
+      const icon = verdict === "SUPPORTED" ? "✓"
+                 : verdict === "CONTRADICTED" ? "✕"
+                 : "?";
+
+      // Claim echo
+      document.getElementById("result-claim-echo").innerHTML =
+        `Checking: <strong>"${esc(claim.slice(0, 120))}${claim.length>120?"…":""}"</strong>`;
+
+      // Verdict banner
+      const vEl = document.getElementById("result-verdict");
+      vEl.className = "result-verdict " + cls;
+      document.getElementById("verdict-icon").textContent = icon;
+      document.getElementById("verdict-word").textContent =
+        verdict.charAt(0) + verdict.slice(1).toLowerCase();
+      document.getElementById("conf-num").textContent = confidence;
+
+      // Bar
+      const trackWrap = document.getElementById("conf-track-wrap");
+      trackWrap.className = "conf-track result-verdict " + cls;
+      const fill = document.getElementById("conf-fill");
+      fill.className = "conf-fill";
+      setTimeout(() => { fill.style.width = confidence + "%"; }, 60);
+
+      // Explanation
+      document.getElementById("result-explanation").textContent =
+        ai.explanation || "No explanation available.";
+
+      // Evidence
+      const evSection = document.getElementById("evidence-section");
+      const evList = document.getElementById("evidence-list");
+      if (ai.keyEvidence && ai.keyEvidence.length > 0) {
+        evList.innerHTML = ai.keyEvidence.map(e =>
+          `<li>${esc(e)}</li>`).join("");
+        evSection.style.display = "block";
+      } else {
+        evSection.style.display = "none";
+      }
+
+      // Caveats
+      const cavSection = document.getElementById("caveats-section");
+      const cavList = document.getElementById("caveats-list");
+      if (ai.caveats && ai.caveats.length > 0) {
+        cavList.innerHTML = ai.caveats.map(c =>
+          `<li>${esc(c)}</li>`).join("");
+        cavSection.style.display = "block";
+      } else {
+        cavSection.style.display = "none";
+      }
+
+      // Sources
+      const srcList = document.getElementById("source-list");
+      const goodSources = sources.filter(s => s.text);
+      srcList.innerHTML = goodSources.map((s, i) => {
+        const trust = Math.round((s.trustScore || 0.5) * 100);
+        const excerpt = (s.bestSentence || s.text || "").slice(0, 200);
+        return `
+          <div class="source-card" id="src-${i}">
+            <div class="source-card-header" onclick="toggleSource('src-${i}')">
+              <span class="source-domain">${esc(s.domain || s.url || "Unknown")}</span>
+              <span class="source-trust">Trust ${trust}%</span>
+            </div>
+            <div class="source-card-body">
+              ${excerpt ? `<div class="source-excerpt">"${esc(excerpt)}${excerpt.length>=200?"…":""}"</div>` : ""}
+              <a class="source-link" href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.url)}</a>
+            </div>
+          </div>`;
+      }).join("");
+
+      resultArea.style.display = "block";
+      resultArea.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function toggleSource(id) {
+      document.getElementById(id)?.classList.toggle("expanded");
+    }
+
+    // ── Copy report ───────────────────────────────────────────────
+    document.getElementById("result-copy-btn").addEventListener("click", () => {
+      if (!lastResult) return;
+      const { claim, analyzeRes: ai, sources } = lastResult;
+      const lines = [
+        `CLARIFACT REPORT`,
+        `Generated: ${new Date().toLocaleString()}`,
+        ``,
+        `CLAIM: "${claim}"`,
+        ``,
+        `VERDICT: ${ai.verdict} (${Math.round(ai.confidence)}% confidence)`,
+        ``,
+        `EXPLANATION:`,
+        ai.explanation,
+        ``,
+        ai.keyEvidence?.length > 0 ? `KEY EVIDENCE:\n${ai.keyEvidence.map(e=>`  • ${e}`).join("\n")}` : "",
+        ai.caveats?.length > 0 ? `\nCAVEATS:\n${ai.caveats.map(c=>`  ⚠ ${c}`).join("\n")}` : "",
+        ``,
+        `SOURCES:`,
+        ...sources.filter(s=>s.text).map(s => `  • ${s.domain} — ${s.url}`)
+      ].filter(Boolean).join("\n");
+
+      navigator.clipboard.writeText(lines).then(() => {
+        const btn = document.getElementById("result-copy-btn");
+        btn.textContent = "✓ Copied!";
+        setTimeout(() => { btn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Report`; }, 2000);
+      });
+    });
+
+    // ── Helpers ───────────────────────────────────────────────────
+    function setLoading(on) {
+      btn.disabled = on;
+      btn.textContent = on ? "Checking…" : "Check Fact";
+      if (!on) {
+        btn.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg> Check Fact`;
+      }
+      statusBar.style.display = on ? "flex" : "none";
+    }
+
+    function setStatus(msg) { statusTxt.textContent = msg; }
+
+    function showError(msg) {
+      errorDiv.textContent = msg;
+      errorDiv.style.display = "block";
+    }
+    function hideError() { errorDiv.style.display = "none"; }
+
+    function esc(str) {
+      return String(str ?? "")
+        .replace(/&/g,"&amp;").replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+    }
+  </script>
+
+</body>
+</html>

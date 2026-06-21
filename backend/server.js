@@ -58,14 +58,22 @@ app.use(cors({
     if (!origin) return callback(null, true);
     // Chrome extension origins
     if (origin.startsWith("chrome-extension://")) {
-      // If a specific extension ID is configured, enforce it
       if (allowedExtensionId && !origin.endsWith(allowedExtensionId)) {
         return callback(new Error(`CORS: Extension ID mismatch. Got: ${origin}`));
       }
       return callback(null, true);
     }
-    // Allow localhost for development (e.g., running tests via supertest)
-    if (origin === "http://localhost:3000" || origin === "http://127.0.0.1:3000") {
+    // Hosted website (web checker page)
+    if (origin === "https://clarifact-web.onrender.com") {
+      return callback(null, true);
+    }
+    // Any *.onrender.com subdomain during preview deploys
+    if (origin.endsWith(".onrender.com")) {
+      return callback(null, true);
+    }
+    // Allow localhost for development
+    if (origin === "http://localhost:3000" || origin === "http://127.0.0.1:3000"
+        || origin === "http://localhost:5500" || origin === "http://127.0.0.1:5500") {
       return callback(null, true);
     }
     return callback(new Error(`CORS: Origin not allowed: ${origin}`));
@@ -73,6 +81,7 @@ app.use(cors({
   methods: ["POST", "GET", "OPTIONS"],
   allowedHeaders: ["Content-Type"]
 }));
+
 
 // ── Rate limiting (per real client IP) ───────────────────────────────────────
 // All limiters key by req.ip, which resolves to the real user IP because
