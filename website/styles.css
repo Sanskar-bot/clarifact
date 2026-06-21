@@ -284,22 +284,26 @@ footer {
   max-width: 1100px;
   margin-inline: auto;
   padding-inline: var(--space-lg);
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: var(--space-xl);
-  align-items: start;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-2xl);
+}
+.footer-brand {
+  max-width: 300px;
+  flex-shrink: 0;
 }
 .footer-brand .nav-logo-word { font-size: 0.95rem; }
 .footer-brand p {
   font-size: 0.8rem;
   color: var(--ink-dim);
   margin-top: var(--space-sm);
-  max-width: 340px;
   line-height: 1.6;
 }
 .footer-links {
   display: flex;
-  gap: var(--space-xl);
+  gap: var(--space-2xl);
+  flex-shrink: 0;
 }
 .footer-col h5 {
   font-family: var(--font-mono);
