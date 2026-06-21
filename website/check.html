@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ClariFact — Check a Claim Online</title>
-  <meta name="description" content="Paste any claim and ClariFact will search the web, read the sources, and give you an AI verdict with evidence. No account or extension needed." />
+  <title>ClariFact — Fact Checker</title>
+  <meta name="description" content="Enter any claim, headline, or quote and get an AI-powered fact-check with sources, evidence, and a confidence score. Free, no account needed." />
   <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -351,13 +351,12 @@
     <!-- Hero -->
     <div class="check-eyebrow">
       <span class="check-pulse"></span>
-      Live · Powered by Nemotron AI
+      AI Fact Checker &mdash; Free, No Account Needed
     </div>
-    <h1 class="check-title">Check any claim,<br/><span>right now.</span></h1>
+    <h1 class="check-title">Fact-check<br/><span>anything.</span></h1>
     <p class="check-sub">
-      Type or paste anything — a news headline, a quote, a rumour — and ClariFact will
-      search the web, read the top sources, and give you a verdict with evidence.
-      No extension or account needed.
+      Paste a claim, headline, or quote below. ClariFact searches the web, reads the sources,
+      and gives you a verdict with evidence &mdash; in seconds.
     </p>
 
     <!-- Input card -->
@@ -475,6 +474,16 @@
 
     let lastResult  = null;
     let coldTimer   = null;
+
+    // ── Auto-run from URL param ?claim= (from homepage form) ─────
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const urlClaim = params.get('claim');
+      if (urlClaim && urlClaim.trim().length >= 5) {
+        textarea.value = urlClaim.trim();
+        runCheck();
+      }
+    });
 
     // ── Example pills ────────────────────────────────────────────
     document.querySelectorAll(".example-pill").forEach(pill => {
