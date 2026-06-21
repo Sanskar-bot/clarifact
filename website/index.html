@@ -68,9 +68,9 @@
         <span class="hero-blue">instantly.</span>
       </h1>
       <p class="hero-sub">
-        Select any text on any webpage. ClariFact searches the web, reads the top sources,
-        and uses <strong>Nemotron Nano 3 30B</strong> to give you a structured verdict —
-        complete with confidence score and evidence.
+        Highlight any text on any webpage. ClariFact searches the web, reads the top results,
+        and tells you if the claim is <strong>true, false, or unclear</strong> —
+        with cited sources and evidence, right in your browser.
       </p>
       <div class="hero-actions">
         <a href="extension.html" class="btn-primary">
@@ -181,65 +181,65 @@
   <section id="features" class="section">
     <div class="container">
       <div class="section-label reveal">Features</div>
-      <h2 class="section-title reveal">Everything you need to<br/>stop misinformation.</h2>
-      <p class="section-sub reveal">No subscriptions. No data collection. Runs entirely on your machine.</p>
+      <h2 class="section-title reveal">Everything you need to<br/>stop believing false things.</h2>
+      <p class="section-sub reveal">Free, no account, no setup. Just install and start checking.</p>
 
       <div class="features-grid">
         <div class="feature-card reveal">
           <div class="feature-icon" style="background:rgba(99,102,241,0.12);color:#818cf8;">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
           </div>
-          <h3>Brave Search API</h3>
-          <p>Queries Brave's independent search index (not Google) to get unbiased, real web results for any claim. API key is kept server-side — never exposed.</p>
+          <h3>Searches the Web For You</h3>
+          <p>The moment you highlight text, ClariFact searches the web and finds the most relevant sources — news sites, government pages, Wikipedia, and more.</p>
         </div>
         <div class="feature-card reveal">
           <div class="feature-icon" style="background:rgba(168,85,247,0.12);color:#c084fc;">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
           </div>
-          <h3>Readability.js Scraping</h3>
-          <p>Uses Mozilla's Readability.js to extract clean article text from the top 5 search results — stripping ads, nav, and noise. Runs server-side to bypass CORS.</p>
+          <h3>Actually Reads the Articles</h3>
+          <p>It doesn't just look at headlines — it reads the full article text of each source, so the verdict is based on real content, not titles.</p>
         </div>
         <div class="feature-card reveal">
           <div class="feature-icon" style="background:rgba(34,197,94,0.12);color:#4ade80;">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
           </div>
-          <h3>Claude 3.5 Sonnet AI</h3>
-          <p>Amazon Bedrock powers a grounded AI analysis. Claude reads the scraped sources and returns a verdict, explanation, and key evidence — based only on what it read.</p>
-        </div>
-        <div class="feature-card reveal">
-          <div class="feature-icon" style="background:rgba(245,158,11,0.12);color:#fbbf24;">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-          </div>
-          <h3>compromise.js NLP</h3>
-          <p>Extracts named entities (people, places, organisations, dates) from the claim using compromise.js — all on-device. No cloud NLP service required.</p>
+          <h3>AI Gives a Clear Verdict</h3>
+          <p>An AI model reads all the sources and tells you: <strong>Supported</strong>, <strong>Contradicted</strong>, or <strong>Inconclusive</strong> — with a plain-English explanation of why.</p>
         </div>
         <div class="feature-card reveal">
           <div class="feature-icon" style="background:rgba(239,68,68,0.12);color:#f87171;">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
           </div>
-          <h3>Contradiction Detection</h3>
-          <p>Scans source sentences for negation patterns that directly contradict the claim. Surfaces specific contradicting sentences with their source domain.</p>
+          <h3>Flags What Contradicts the Claim</h3>
+          <p>If any source says the opposite of the claim, ClariFact pulls out that exact sentence and shows you — so you can read it yourself.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon" style="background:rgba(245,158,11,0.12);color:#fbbf24;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <h3>Shows How Confident It Is</h3>
+          <p>A confidence score (0–100%) shows how strongly the sources back up the verdict. High score = many good sources agree. Low score = mixed or weak evidence.</p>
         </div>
         <div class="feature-card reveal">
           <div class="feature-icon" style="background:rgba(6,182,212,0.12);color:#22d3ee;">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
           </div>
-          <h3>Zero Data Storage</h3>
-          <p>The backend binds only to 127.0.0.1 — never reachable from the internet. Every request is stateless. Nothing is logged, stored, or sent to third parties.</p>
+          <h3>Your Data Stays Private</h3>
+          <p>Only the text you highlight is sent for analysis. No browsing history, no page content, no tracking. Results are saved only on your own device.</p>
         </div>
         <div class="feature-card reveal">
-          <div class="feature-icon" style="background:rgba(99,102,241,0.12);color:#818cf8;">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          <div class="feature-icon" style="background:rgba(99,153,34,0.12);color:#8BBF3A;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
           </div>
-          <h3>4-Signal Confidence Score</h3>
-          <p>Combines source count (20%), domain trust (25%), entity match (30%), and text similarity (25%) into a single 0–100% NLP confidence score.</p>
+          <h3>Links to Every Source</h3>
+          <p>Every result shows the actual articles it used — with the relevant quote highlighted. You can click through and read the original yourself.</p>
         </div>
         <div class="feature-card reveal">
           <div class="feature-icon" style="background:rgba(168,85,247,0.12);color:#c084fc;">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
           </div>
-          <h3>50+ Trusted Domains</h3>
-          <p>A curated trust database rates domains from 0 to 1 — NASA, Reuters, and academic journals score near 1.0; unknown blogs score near 0.4. Affects the final score.</p>
+          <h3>Copy &amp; Share the Report</h3>
+          <p>One click copies the full fact-check — claim, verdict, sources, and AI explanation — as plain text. Share it in a chat, email, or document.</p>
         </div>
       </div>
     </div>
@@ -248,8 +248,8 @@
   <!-- ── How It Works ───────────────────────────────────────────────── -->
   <section id="how-it-works" class="section section-dark">
     <div class="container">
-      <div class="section-label reveal">Pipeline</div>
-      <h2 class="section-title reveal">From selection to verdict<br/>in under 5 seconds.</h2>
+      <div class="section-label reveal">How It Works</div>
+      <h2 class="section-title reveal">From highlight to verdict<br/>in under 5 seconds.</h2>
 
       <div class="pipeline">
         <div class="pipeline-step reveal">
@@ -257,8 +257,8 @@
           <div class="pipeline-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2"><path d="M4 6h16M4 10h16M4 14h8"/></svg>
           </div>
-          <h3>Select &amp; Trigger</h3>
-          <p>Highlight any text on any webpage. A floating <strong>Fact-check</strong> button appears. Click it — or right-click and choose Clarifact from the context menu.</p>
+          <h3>You highlight text</h3>
+          <p>Select any sentence or claim on any webpage. A small <strong>Fact-check</strong> button pops up. Click it — or right-click and choose ClariFact.</p>
         </div>
         <div class="pipeline-arrow reveal">→</div>
         <div class="pipeline-step reveal">
@@ -266,8 +266,8 @@
           <div class="pipeline-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
           </div>
-          <h3>Brave Search</h3>
-          <p>The backend proxies a query to Brave's independent search index, retrieves the top 10 results, and deduplicates by domain to ensure source diversity.</p>
+          <h3>We search the web</h3>
+          <p>ClariFact searches the web for the most relevant sources — news articles, Wikipedia, government sites, and more — all related to your claim.</p>
         </div>
         <div class="pipeline-arrow reveal">→</div>
         <div class="pipeline-step reveal">
@@ -275,8 +275,8 @@
           <div class="pipeline-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
           </div>
-          <h3>Parallel Scraping</h3>
-          <p>The top 5 unique sources are fetched and parsed with Readability.js in parallel, extracting clean article text. Paywalled or bot-blocked sources are automatically skipped.</p>
+          <h3>We read the articles</h3>
+          <p>The full text of the top sources is read automatically. Paywalled or blocked sites are skipped. Only the real article content is used.</p>
         </div>
         <div class="pipeline-arrow reveal">→</div>
         <div class="pipeline-step reveal">
@@ -284,8 +284,8 @@
           <div class="pipeline-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
           </div>
-          <h3>Claude 3.5 AI</h3>
-          <p>Source excerpts + the claim are sent to Claude 3.5 Sonnet via Amazon Bedrock. Claude returns a structured JSON verdict grounded exclusively in the scraped sources.</p>
+          <h3>AI forms a verdict</h3>
+          <p>An AI model reads all the source content alongside your claim, and decides: Supported, Contradicted, or Inconclusive — with evidence to back it up.</p>
         </div>
         <div class="pipeline-arrow reveal">→</div>
         <div class="pipeline-step reveal">
@@ -293,8 +293,8 @@
           <div class="pipeline-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
           </div>
-          <h3>NLP + Scoring</h3>
-          <p>On-device: compromise.js extracts entities, TF-cosine finds best-matching sentences, negation scanning detects contradictions. A 4-signal score is computed.</p>
+          <h3>We calculate confidence</h3>
+          <p>A confidence score is calculated based on how many sources agree, how trustworthy they are, and how closely they match the claim.</p>
         </div>
         <div class="pipeline-arrow reveal">→</div>
         <div class="pipeline-step reveal">
@@ -302,8 +302,8 @@
           <div class="pipeline-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
           </div>
-          <h3>Sidebar Result</h3>
-          <p>A beautiful in-page sidebar slides in with the verdict, confidence score, AI explanation, entity tags, source cards, contradictions, and a copyable report.</p>
+          <h3>You see the verdict</h3>
+          <p>A sidebar slides open with the verdict, AI explanation, confidence score, source links, and any contradictions found. Takes about 4 seconds total.</p>
         </div>
       </div>
     </div>
@@ -366,60 +366,31 @@
   </section>
 
 
-  <!-- ── Tech Stack ─────────────────────────────────────────────────── -->
+  <!-- ── Under the Hood ───────────────────────────────────────────── -->
   <section id="tech" class="section section-dark">
     <div class="container">
-      <div class="section-label reveal">Technology</div>
-      <h2 class="section-title reveal">Built on the right tools<br/>for the job.</h2>
+      <div class="section-label reveal">Under the Hood</div>
+      <h2 class="section-title reveal">Three things working<br/>together for you.</h2>
+      <p class="section-sub reveal">You don't need to know any of this to use it — but here's what's happening behind the scenes.</p>
 
-      <div class="tech-grid">
+      <div class="tech-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
         <div class="tech-card reveal">
           <div class="tech-logo">🔍</div>
-          <h4>Tavily Search API</h4>
-          <p>Fast, accurate web search built for AI pipelines. Free tier, 1,000 searches/month.</p>
-          <span class="tech-tag">Backend</span>
-        </div>
-        <div class="tech-card reveal">
-          <div class="tech-logo">📄</div>
-          <h4>Readability.js</h4>
-          <p>Mozilla's battle-tested article extractor. Used by Firefox Reader View.</p>
-          <span class="tech-tag">Backend</span>
-        </div>
-        <div class="tech-card reveal">
-          <div class="tech-logo">⚡</div>
-          <h4>compromise.js</h4>
-          <p>Lightweight on-device NLP. Zero cloud. Extracts people, places, orgs, dates.</p>
-          <span class="tech-tag">Extension</span>
+          <h4>Web Search</h4>
+          <p>ClariFact searches the web using Tavily — a search engine built for AI tools. It finds diverse, relevant sources quickly, not just the most clicked links.</p>
+          <span class="tech-tag">Always on</span>
         </div>
         <div class="tech-card reveal">
           <div class="tech-logo">🤖</div>
-          <h4>Nemotron Nano 3 30B</h4>
-          <p>NVIDIA's model via Amazon Bedrock (ap-south-1). Strict JSON-only grounded analysis.</p>
-          <span class="tech-tag">Backend · AI</span>
+          <h4>AI Analysis</h4>
+          <p>An AI model (Nemotron, by NVIDIA) reads all the source content and your claim together. It only uses what it read — it can't make things up.</p>
+          <span class="tech-tag">Cloud · Free for you</span>
         </div>
         <div class="tech-card reveal">
-          <div class="tech-logo">🟩</div>
-          <h4>Node.js + Express</h4>
-          <p>Hosted on Render. Per-IP rate limited. Open source — self-hostable with your own keys.</p>
-          <span class="tech-tag">Backend · Hosted</span>
-        </div>
-        <div class="tech-card reveal">
-          <div class="tech-logo">🔵</div>
-          <h4>Chrome MV3</h4>
-          <p>Manifest V3 service worker architecture. Context menu + FAB trigger.</p>
-          <span class="tech-tag">Extension</span>
-        </div>
-        <div class="tech-card reveal">
-          <div class="tech-logo">🛡</div>
-          <h4>AWS SDK v3</h4>
-          <p>@aws-sdk/client-bedrock-runtime for IAM auth. Also supports bearer token.</p>
-          <span class="tech-tag">Backend</span>
-        </div>
-        <div class="tech-card reveal">
-          <div class="tech-logo">🧮</div>
-          <h4>TF Cosine Similarity</h4>
-          <p>Term-frequency vectors compute sentence similarity without a model.</p>
-          <span class="tech-tag">Extension · NLP</span>
+          <div class="tech-logo">🌐</div>
+          <h4>Chrome Extension</h4>
+          <p>The extension runs inside your browser. It watches for what you highlight, sends it for analysis, and shows the result — without ever opening a new tab.</p>
+          <span class="tech-tag">Open source · MIT</span>
         </div>
       </div>
     </div>
@@ -458,27 +429,15 @@
           </div>
         </div>
         <div class="faq-item reveal">
-          <button class="faq-q">How does the hosted backend authenticate with AWS?<span class="faq-chevron">▾</span></button>
+          <button class="faq-q">Is the verdict always accurate?<span class="faq-chevron">▾</span></button>
           <div class="faq-a">
-            <p>The hosted backend uses IAM credentials (<code>AWS_ACCESS_KEY_ID</code> + <code>AWS_SECRET_ACCESS_KEY</code>) with SigV4 signing to call Amazon Bedrock. If you self-host, you can also use <code>AWS_BEARER_TOKEN_BEDROCK</code> for bearer token auth — the backend auto-detects which method you've configured. You only need one of the two.</p>
-          </div>
-        </div>
-        <div class="faq-item reveal">
-          <button class="faq-q">What happens if Bedrock is not configured?<span class="faq-chevron">▾</span></button>
-          <div class="faq-a">
-            <p>The extension degrades gracefully. The NLP pipeline (compromise.js + TF cosine + negation detection) always runs. If Bedrock fails or is not configured, the AI Analysis section in the sidebar shows "Not configured" instead of a verdict. The NLP-only result is still displayed in full.</p>
-          </div>
-        </div>
-        <div class="faq-item reveal">
-          <button class="faq-q">Can I add more trusted domains?<span class="faq-chevron">▾</span></button>
-          <div class="faq-a">
-            <p>On the hosted backend, the domain trust list is managed centrally. If you self-host, edit <code>backend/data/trustedDomains.json</code> — add any domain with a trust score between 0 and 1 (e.g. <code>"pubmed.ncbi.nlm.nih.gov": 0.97</code>) and restart the server. No code changes required.</p>
+            <p>ClariFact is a research aid, not a final authority. It tells you what the top web sources say about a claim — and how confidently. For breaking news or niche topics, sources may be limited or conflicting. Always read the linked articles yourself before drawing conclusions.</p>
           </div>
         </div>
         <div class="faq-item reveal">
           <button class="faq-q">Does it work in languages other than English?<span class="faq-chevron">▾</span></button>
           <div class="faq-a">
-            <p>Partially. Tavily Search returns results for any language. Readability.js extracts text in any language. However, compromise.js's entity extraction is English-only, reducing NLP accuracy for non-English claims. Nemotron Nano 3 30B handles many languages for the AI analysis stage. A warning is shown in the sidebar when a non-English claim is detected.</p>
+            <p>Mostly yes. The web search and AI analysis work across many languages. Entity detection (identifying names, places, dates in the claim) is English-optimised, so confidence scores may be slightly lower for non-English claims. A note is shown in the sidebar when this applies.</p>
           </div>
         </div>
       </div>
