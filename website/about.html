@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About ClariFact — What it is, how it works, and who built it</title>
+  <meta name="description" content="ClariFact is a stateless, open-source fact-checking tool. Nothing is stored. Every verdict comes with cited sources. Built by one person, available to anyone."/>
+  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+<!-- ── Navigation ──────────────────────────────────────────────────────── -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="clarifact-logo.svg" alt="ClariFact" width="28" height="28"/>
+      <span class="nav-logo-word">Clari<span>Fact</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="academy.html">Academy</a></li>
+      <li><a href="extension.html">Extension</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <a href="https://github.com/Sanskar-bot/clarifact" target="_blank" rel="noopener" class="nav-gh">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+      GitHub
+    </a>
+    <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="academy.html">Academy</a>
+    <a href="extension.html">Extension</a>
+    <a href="about.html">About</a>
+    <a href="https://github.com/Sanskar-bot/clarifact" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</nav>
+
+<!-- ── About hero ─────────────────────────────────────────────────────────── -->
+<div class="about-hero">
+  <div class="container--narrow">
+    <div class="section-label" style="margin-bottom:var(--space-md)">About ClariFact</div>
+    <h1 style="max-width:600px;">Information moves faster<br/>than verification.</h1>
+    <p style="max-width:540px;margin-top:var(--space-md);font-size:1.05rem;">
+      AI has made fabrication cheap and distribution instant. ClariFact is a small, honest attempt to make verification a little easier — without pretending it can solve the problem alone.
+    </p>
+  </div>
+</div>
+
+<!-- ── Main content ───────────────────────────────────────────────────────── -->
+<section class="section section--first">
+  <div class="container--narrow">
+    <div class="about-grid">
+      <div>
+
+        <!-- What it does -->
+        <div class="about-block" style="margin-bottom:var(--space-2xl);">
+          <div class="section-label" style="margin-bottom:var(--space-md)">What ClariFact does</div>
+          <p>Paste a claim. ClariFact searches the web, reads the top results in full, scores each source for credibility and relevance, then passes the evidence to an AI that returns a structured verdict: Supported, Contradicted, or Inconclusive — with the reasoning visible.</p>
+          <p>The verdict is not the end of the process — it's the start. Every result shows you exactly which sources were read and what they said. You're expected to check those sources yourself. The tool handles the retrieval; the judgement stays with you.</p>
+          <p>The full four-step pipeline is explained on the <a href="index.html#how-it-works">homepage</a>.</p>
+        </div>
+
+        <!-- Privacy -->
+        <div class="about-block" style="margin-bottom:var(--space-2xl);">
+          <div class="section-label" style="margin-bottom:var(--space-md)">Privacy — specific and explicit</div>
+          <p><strong>Nothing is stored.</strong> The backend is fully stateless. When you submit a claim, the server processes it, returns a result, and discards the data. There is no database. No logs are kept of what you searched. No user accounts exist because there's no user data to attach an account to.</p>
+          <p><strong>Only the claim text is sent to the server.</strong> If you're using the website checker, nothing about your browser, device, or browsing history is transmitted. If you're using the extension, only the text you've explicitly selected and chosen to check is sent — not the rest of the page, not your browsing history.</p>
+          <p><strong>The AI does not learn from your queries.</strong> Requests to Nvidia's Nemotron model are inference-only — no fine-tuning or training happens from submitted claims.</p>
+          <p>Don't take our word for it — the backend source code is open: <a href="https://github.com/Sanskar-bot/clarifact" target="_blank" rel="noopener">github.com/Sanskar-bot/clarifact</a>.</p>
+        </div>
+
+        <!-- Who built it -->
+        <div class="about-block" style="margin-bottom:var(--space-2xl);">
+          <div class="section-label" style="margin-bottom:var(--space-md)">Who built it</div>
+          <p>ClariFact is a solo, independent open-source project. It isn't a company, doesn't have investors, and isn't trying to grow into a business. It was built because the problem felt real and the tooling to address it has become genuinely accessible.</p>
+          <p>Being solo and open source is a trust signal, not a disclaimer — it means the code is readable, the project has no business incentive to collect data or sell access, and any issues can be raised and fixed publicly.</p>
+          <p>Source code, issues, and contributions: <a href="https://github.com/Sanskar-bot/clarifact" target="_blank" rel="noopener">GitHub</a>.</p>
+        </div>
+
+        <!-- Contact -->
+        <div class="about-block">
+          <div class="section-label" style="margin-bottom:var(--space-md)">Feedback &amp; contact</div>
+          <p>Found a bug? Have a suggestion? Spotted a case where the verdict was clearly wrong? Open a GitHub issue — it's the best way to make sure it gets seen and addressed.</p>
+          <p><a href="https://github.com/Sanskar-bot/clarifact/issues" target="_blank" rel="noopener">Open an issue on GitHub →</a></p>
+        </div>
+
+      </div>
+
+      <!-- Sidebar: tech stack -->
+      <div>
+        <div class="about-block" style="background:var(--bg-panel);border:1px solid var(--bg-border);border-radius:var(--radius-md);padding:var(--space-lg);position:sticky;top:calc(var(--nav-h) + var(--space-lg));">
+          <div class="section-label" style="margin-bottom:var(--space-md)">Tech stack</div>
+          <p style="font-size:0.8rem;margin-bottom:var(--space-md);">For the technically curious — not a sales pitch.</p>
+          <table class="tech-table">
+            <tr><td>Runtime</td><td>Node.js / Express</td></tr>
+            <tr><td>Search</td><td>Tavily Search API, Wikipedia fallback</td></tr>
+            <tr><td>Scraping</td><td>Readability.js (Mozilla)</td></tr>
+            <tr><td>NLP scoring</td><td>TF-IDF cosine similarity, entity matching, negation detection — all local, no external API</td></tr>
+            <tr><td>AI model</td><td>Nvidia Nemotron Nano 3 30B via AWS Bedrock</td></tr>
+            <tr><td>Frontend</td><td>Plain HTML / CSS / JS — no framework, no build step</td></tr>
+            <tr><td>Hosting</td><td>Render (backend) + Render static (frontend)</td></tr>
+            <tr><td>Extension</td><td>Chrome Manifest V3, plain JS</td></tr>
+            <tr><td>Licence</td><td>MIT</td></tr>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ─────────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="nav-logo" style="margin-bottom:10px;display:inline-flex;">
+        <img src="clarifact-logo.svg" alt="" width="22" height="22"/>
+        <span class="nav-logo-word" style="font-size:0.95rem;">Clari<span>Fact</span></span>
+      </a>
+      <p>An open-source fact-checking tool. Stateless backend — nothing stored. Sources cited every time.</p>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <h5>Tool</h5>
+        <a href="index.html">Fact Checker</a>
+        <a href="extension.html">Chrome Extension</a>
+      </div>
+      <div class="footer-col">
+        <h5>Learn</h5>
+        <a href="academy.html">Academy</a>
+        <a href="about.html">About</a>
+        <a href="https://github.com/Sanskar-bot/clarifact" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 ClariFact. Open source, MIT licence.</p>
+    <p class="footer-disclaimer">Verdicts are AI-generated and may be wrong. Always check the cited sources before drawing conclusions.</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

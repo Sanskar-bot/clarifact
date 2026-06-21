@@ -1,501 +1,360 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ClariFact — AI Fact Checker</title>
-  <meta name="description" content="Paste any claim, headline, or quote. ClariFact searches the web, reads the sources, and gives you a verdict with evidence in seconds. Free, no account needed." />
-  <link rel="icon" type="image/png" href="favicon.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <meta name="description" content="Paste any claim, headline, or quote. ClariFact searches the web, reads the sources, and gives you a verdict with evidence in seconds. Free, no account."/>
+  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
 
-  <!-- ── Navigation ────────────────────────────────────────────────── -->
-  <nav id="navbar">
-    <div class="nav-inner">
-      <a href="#" class="nav-logo">
-        <!-- ClariFact C-mark icon -->
-        <img src="clarifact-logo.svg" alt="ClariFact" width="32" height="32" style="display:block;"/>
-        <span><span class="nav-logo-clari">Clari</span><span class="nav-logo-fact">Fact</span></span>
-      </a>
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="#how-it-works">How It Works</a></li>
-        <li><a href="#faq">FAQ</a></li>
-        <li><a href="https://github.com/Sanskar-bot/clarifact" target="_blank" rel="noopener">GitHub</a></li>
-      </ul>
-      <a href="check.html" class="nav-cta">Fact Check Now →</a>
-      <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Open menu">
-        <span></span><span></span><span></span>
-      </button>
+<!-- ── Navigation ──────────────────────────────────────────────────────── -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="clarifact-logo.svg" alt="ClariFact" width="28" height="28"/>
+      <span class="nav-logo-word">Clari<span>Fact</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="academy.html">Academy</a></li>
+      <li><a href="extension.html">Extension</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <a href="https://github.com/Sanskar-bot/clarifact" target="_blank" rel="noopener" class="nav-gh">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+      GitHub
+    </a>
+    <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="academy.html">Academy</a>
+    <a href="extension.html">Extension</a>
+    <a href="about.html">About</a>
+    <a href="https://github.com/Sanskar-bot/clarifact" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</nav>
+
+<!-- ── Hero / Checker ────────────────────────────────────────────────────── -->
+<section id="hero">
+  <div class="hero-inner">
+
+    <div class="hero-eyebrow">
+      <span class="hero-eyebrow-dot"></span>
+      Free · Open Source · No Account
     </div>
-    <div class="nav-mobile-menu" id="mobileMenu">
-      <a href="#features">Features</a>
-      <a href="#how-it-works">How It Works</a>
-      <a href="#setup">Install</a>
-      <a href="#tech">Tech Stack</a>
-      <a href="#faq">FAQ</a>
-      <a href="extension.html">Extension</a>
-    </div>
-  </nav>
 
+    <h1 class="hero-headline">
+      Paste a claim.<br/><em>Get a verdict.</em>
+    </h1>
+    <p class="hero-sub">
+      ClariFact searches the web, reads the sources, and tells you — in seconds —
+      whether a claim is supported, contradicted, or unclear.
+    </p>
 
-  <!-- ── Hero ─────────────────────────────────────────────────── -->
-  <section id="hero">
-    <div class="hero-bg-orb orb-1"></div>
-    <div class="hero-bg-orb orb-2"></div>
-    <div class="hero-bg-orb orb-3"></div>
-    <div class="particles" id="particles"></div>
-
-    <div style="max-width:780px;margin:0 auto;text-align:center;padding:110px 24px 64px;">
-      <div class="hero-badge">
-        <span class="hero-badge-dot"></span>
-        Free &amp; Open Source &middot; No Account &middot; Instant Results
+    <!-- Working checker — no redirect -->
+    <div class="checker-card" id="checker">
+      <div class="checker-header">
+        <span class="checker-header-dot"></span>
+        <span>ClariFact Checker</span>
       </div>
-      <h1 class="hero-title">
-        Is it true?
-        <br/><span class="hero-blue">Find out in seconds.</span>
-      </h1>
-      <p class="hero-sub" style="max-width:560px;margin:0 auto 32px;">
-        Paste any claim, headline, or quote. ClariFact searches the web, reads the sources,
-        and tells you if it’s <strong>supported, contradicted, or unclear</strong> — with evidence.
-      </p>
-
-      <!-- Hero Fact-Check Input -->
-      <form id="hero-form" action="check.html" method="GET"
-            style="display:flex;flex-direction:column;gap:12px;max-width:640px;margin:0 auto 28px;">
-        <div style="position:relative;">
+      <div class="checker-body">
+        <form id="check-form">
           <textarea
-            id="hero-claim"
+            id="claim-textarea"
             name="claim"
             rows="3"
             maxlength="1000"
-            placeholder='e.g. &quot;The Great Wall of China is visible from space&quot;'
-            style="width:100%;background:#1C2026;border:1px solid rgba(255,255,255,0.13);
-                   border-radius:10px;padding:16px 18px;color:#F0F2F5;
-                   font-family:'Inter',sans-serif;font-size:15px;line-height:1.6;
-                   resize:none;outline:none;box-sizing:border-box;
-                   transition:border-color 0.15s;"
-            onfocus="this.style.borderColor='rgba(55,138,221,0.55)'"
-            onblur="this.style.borderColor='rgba(255,255,255,0.13)'"
+            aria-label="Enter a claim to fact-check"
           ></textarea>
-        </div>
-        <button type="submit" id="hero-check-btn"
-          style="align-self:flex-end;display:inline-flex;align-items:center;gap:9px;
-                 padding:13px 28px;background:#378ADD;color:#fff;border:none;
-                 border-radius:8px;font-family:'Inter',sans-serif;font-size:15px;
-                 font-weight:600;cursor:pointer;transition:background 0.15s;"
-          onmouseover="this.style.background='#2B70C0'"
-          onmouseout="this.style.background='#378ADD'">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-          </svg>
-          Fact Check
-        </button>
-      </form>
 
-      <!-- Quick examples -->
-      <div style="display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:32px;">
-        <span style="font-size:12px;color:#6B7280;">Try:</span>
-        <button onclick="fillClaim('Humans only use 10% of their brain')" class="hero-pill">Humans use 10% of their brain</button>
-        <button onclick="fillClaim('Lightning never strikes the same place twice')" class="hero-pill">Lightning never strikes twice</button>
-        <button onclick="fillClaim('Neil Armstrong walked on the Moon on July 20, 1969')" class="hero-pill">Moon landing 1969</button>
-      </div>
-
-      <div class="hero-stats">
-        <div class="stat"><span class="stat-val">5</span><span class="stat-label">Sources read</span></div>
-        <div class="stat-divider"></div>
-        <div class="stat"><span class="stat-val">~4s</span><span class="stat-label">Average verdict</span></div>
-        <div class="stat-divider"></div>
-        <div class="stat"><span class="stat-val">Free</span><span class="stat-label">No account</span></div>
-        <div class="stat-divider"></div>
-        <div class="stat"><span class="stat-val">AI</span><span class="stat-label">Powered</span></div>
-      </div>
-
-      <!-- Extension note -->
-      <p style="margin-top:24px;font-size:12.5px;color:#4B5563;">
-        📦 Want to fact-check while browsing?
-        <a href="extension.html" style="color:#6B7280;text-decoration:underline;">
-          Get the Chrome extension
-        </a> — highlight text on any page, get an instant result.
-      </p>
-    </div>
-  </section>  <!-- /hero -->
-
-  <style>
-    .hero-pill {
-      font-size: 12px; color: #9AA1AC;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.09);
-      border-radius: 20px; padding: 4px 12px;
-      cursor: pointer; font-family: 'Inter', sans-serif;
-      transition: border-color 0.15s, color 0.15s;
-    }
-    .hero-pill:hover { border-color: rgba(55,138,221,0.35); color: #B5D4F4; }
-    #hero { text-align: center; }
-    @media (max-width: 700px) {
-      #hero { text-align: center; }
-      #hero-form button { align-self: stretch; justify-content: center; }
-    }
-  </style>
-
-  <script>
-    function fillClaim(text) {
-      const ta = document.getElementById('hero-claim');
-      if (ta) { ta.value = text; ta.focus(); }
-    }
-    // Prevent empty submit
-    document.getElementById('hero-form').addEventListener('submit', function(e) {
-      const val = document.getElementById('hero-claim').value.trim();
-      if (val.length < 5) { e.preventDefault(); document.getElementById('hero-claim').focus(); }
-    });
-  </script>
-
-  <!-- ── Verdict types demo ─────────────────────────────────────────── -->
-  <section class="verdict-strip">
-    <div class="container">
-      <p class="verdict-strip-label">Three possible verdicts — always grounded in real sources</p>
-      <div class="verdict-cards">
-        <div class="verdict-card supported">
-          <div class="verdict-icon">✓</div>
-          <div class="verdict-name">SUPPORTED</div>
-          <div class="verdict-desc">Multiple reliable sources confirm the claim</div>
-        </div>
-        <div class="verdict-card inconclusive">
-          <div class="verdict-icon">?</div>
-          <div class="verdict-name">INCONCLUSIVE</div>
-          <div class="verdict-desc">Evidence is mixed or sources disagree</div>
-        </div>
-        <div class="verdict-card contradicted">
-          <div class="verdict-icon">✕</div>
-          <div class="verdict-name">CONTRADICTED</div>
-          <div class="verdict-desc">Sources clearly dispute the claim</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── Features ───────────────────────────────────────────────────── -->
-  <section id="features" class="section">
-    <div class="container">
-      <div class="section-label reveal">Features</div>
-      <h2 class="section-title reveal">Everything you need to<br/>stop believing false things.</h2>
-      <p class="section-sub reveal">Free, no account, no setup. Just install and start checking.</p>
-
-      <div class="features-grid">
-        <div class="feature-card reveal">
-          <div class="feature-icon" style="background:rgba(99,102,241,0.12);color:#818cf8;">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-          </div>
-          <h3>Searches the Web For You</h3>
-          <p>The moment you highlight text, ClariFact searches the web and finds the most relevant sources — news sites, government pages, Wikipedia, and more.</p>
-        </div>
-        <div class="feature-card reveal">
-          <div class="feature-icon" style="background:rgba(168,85,247,0.12);color:#c084fc;">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          </div>
-          <h3>Actually Reads the Articles</h3>
-          <p>It doesn't just look at headlines — it reads the full article text of each source, so the verdict is based on real content, not titles.</p>
-        </div>
-        <div class="feature-card reveal">
-          <div class="feature-icon" style="background:rgba(34,197,94,0.12);color:#4ade80;">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-          </div>
-          <h3>AI Gives a Clear Verdict</h3>
-          <p>An AI model reads all the sources and tells you: <strong>Supported</strong>, <strong>Contradicted</strong>, or <strong>Inconclusive</strong> — with a plain-English explanation of why.</p>
-        </div>
-        <div class="feature-card reveal">
-          <div class="feature-icon" style="background:rgba(239,68,68,0.12);color:#f87171;">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-          </div>
-          <h3>Flags What Contradicts the Claim</h3>
-          <p>If any source says the opposite of the claim, ClariFact pulls out that exact sentence and shows you — so you can read it yourself.</p>
-        </div>
-        <div class="feature-card reveal">
-          <div class="feature-icon" style="background:rgba(245,158,11,0.12);color:#fbbf24;">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-          </div>
-          <h3>Shows How Confident It Is</h3>
-          <p>A confidence score (0–100%) shows how strongly the sources back up the verdict. High score = many good sources agree. Low score = mixed or weak evidence.</p>
-        </div>
-        <div class="feature-card reveal">
-          <div class="feature-icon" style="background:rgba(6,182,212,0.12);color:#22d3ee;">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          </div>
-          <h3>Your Data Stays Private</h3>
-          <p>Only the text you highlight is sent for analysis. No browsing history, no page content, no tracking. Results are saved only on your own device.</p>
-        </div>
-        <div class="feature-card reveal">
-          <div class="feature-icon" style="background:rgba(99,153,34,0.12);color:#8BBF3A;">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-          </div>
-          <h3>Links to Every Source</h3>
-          <p>Every result shows the actual articles it used — with the relevant quote highlighted. You can click through and read the original yourself.</p>
-        </div>
-        <div class="feature-card reveal">
-          <div class="feature-icon" style="background:rgba(168,85,247,0.12);color:#c084fc;">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-          </div>
-          <h3>Copy &amp; Share the Report</h3>
-          <p>One click copies the full fact-check — claim, verdict, sources, and AI explanation — as plain text. Share it in a chat, email, or document.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── How It Works ───────────────────────────────────────────────── -->
-  <section id="how-it-works" class="section section-dark">
-    <div class="container">
-      <div class="section-label reveal">How It Works</div>
-      <h2 class="section-title reveal">From highlight to verdict<br/>in under 5 seconds.</h2>
-
-      <div class="pipeline">
-        <div class="pipeline-step reveal">
-          <div class="pipeline-num">01</div>
-          <div class="pipeline-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2"><path d="M4 6h16M4 10h16M4 14h8"/></svg>
-          </div>
-          <h3>You highlight text</h3>
-          <p>Select any sentence or claim on any webpage. A small <strong>Fact-check</strong> button pops up. Click it — or right-click and choose ClariFact.</p>
-        </div>
-        <div class="pipeline-arrow reveal">→</div>
-        <div class="pipeline-step reveal">
-          <div class="pipeline-num">02</div>
-          <div class="pipeline-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-          </div>
-          <h3>We search the web</h3>
-          <p>ClariFact searches the web for the most relevant sources — news articles, Wikipedia, government sites, and more — all related to your claim.</p>
-        </div>
-        <div class="pipeline-arrow reveal">→</div>
-        <div class="pipeline-step reveal">
-          <div class="pipeline-num">03</div>
-          <div class="pipeline-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
-          </div>
-          <h3>We read the articles</h3>
-          <p>The full text of the top sources is read automatically. Paywalled or blocked sites are skipped. Only the real article content is used.</p>
-        </div>
-        <div class="pipeline-arrow reveal">→</div>
-        <div class="pipeline-step reveal">
-          <div class="pipeline-num">04</div>
-          <div class="pipeline-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-          </div>
-          <h3>AI forms a verdict</h3>
-          <p>An AI model reads all the source content alongside your claim, and decides: Supported, Contradicted, or Inconclusive — with evidence to back it up.</p>
-        </div>
-        <div class="pipeline-arrow reveal">→</div>
-        <div class="pipeline-step reveal">
-          <div class="pipeline-num">05</div>
-          <div class="pipeline-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-          </div>
-          <h3>We calculate confidence</h3>
-          <p>A confidence score is calculated based on how many sources agree, how trustworthy they are, and how closely they match the claim.</p>
-        </div>
-        <div class="pipeline-arrow reveal">→</div>
-        <div class="pipeline-step reveal">
-          <div class="pipeline-num">06</div>
-          <div class="pipeline-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-          </div>
-          <h3>You see the verdict</h3>
-          <p>A sidebar slides open with the verdict, AI explanation, confidence score, source links, and any contradictions found. Takes about 4 seconds total.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── Install Guide ───────────────────────────────────────────────── -->
-  <section id="setup" class="section">
-    <div class="container">
-      <div class="section-label reveal">Get Started</div>
-      <h2 class="section-title reveal">Installed in<br/>30 seconds.</h2>
-      <p class="section-sub reveal">No accounts. No API keys. Just download and start fact-checking.</p>
-
-      <div class="steps-list" style="max-width:680px;margin-top:48px">
-
-        <!-- Step 1 -->
-        <div class="step-item">
-          <div class="step-num">1</div>
-          <div class="step-body">
-            <h4>Download the extension</h4>
-            <p>Click the button below to get the ClariFact extension as a ZIP file. No build tools or Node.js required.</p>
-            <a href="extension.html" class="btn-primary" style="display:inline-flex;align-items:center;gap:8px;margin-top:14px;font-size:14px;padding:10px 18px">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              Download clarifact-extension-v1.1.0.zip
-            </a>
-            <p style="margin-top:10px;font-size:12.5px;color:#6B7280">ZIP &middot; 1.3 MB &middot; No installer required</p>
-          </div>
-        </div>
-
-        <!-- Step 2 -->
-        <div class="step-item">
-          <div class="step-num">2</div>
-          <div class="step-body">
-            <h4>Load it in Chrome</h4>
-            <p>Extract the ZIP, then:</p>
-            <ol style="margin:12px 0 0 18px;line-height:2;font-size:14px">
-              <li>Go to <code>chrome://extensions</code> in the address bar</li>
-              <li>Toggle <strong>Developer mode</strong> ON (top-right corner)</li>
-              <li>Click <strong>Load unpacked</strong> &rarr; select the extracted folder (the one containing <code>manifest.json</code>)</li>
-            </ol>
-            <div class="info-box" style="margin-top:14px">
-              Need more detail? See the full <a href="extension.html#installation">installation guide &rarr;</a>
+          <div class="checker-actions">
+            <div class="checker-examples">
+              <span class="checker-examples-label">e.g.</span>
+              <button type="button" class="example-pill" data-claim="The Great Wall of China is visible from space">Great Wall from space</button>
+              <button type="button" class="example-pill" data-claim="Humans only use 10% of their brain">10% brain</button>
+              <button type="button" class="example-pill" data-claim="Lightning never strikes the same place twice">Lightning</button>
             </div>
+            <button type="submit" id="check-btn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+              Check this
+            </button>
+          </div>
+        </form>
+
+        <div class="checker-error" id="check-error"></div>
+      </div>
+
+      <!-- Progress -->
+      <div id="progress-area">
+        <div class="progress-steps">
+          <div class="progress-step" id="step-0">
+            <div class="step-icon"><span class="step-spinner"></span></div>
+            <span class="step-label">Searching the web…</span>
+          </div>
+          <div class="progress-step" id="step-1">
+            <div class="step-icon"><span class="step-spinner"></span></div>
+            <span class="step-label">Reading sources…</span>
+          </div>
+          <div class="progress-step" id="step-2">
+            <div class="step-icon"><span class="step-spinner"></span></div>
+            <span class="step-label">Scoring evidence…</span>
+          </div>
+          <div class="progress-step" id="step-3">
+            <div class="step-icon"><span class="step-spinner"></span></div>
+            <span class="step-label">Asking Nemotron for a verdict…</span>
           </div>
         </div>
+        <p id="cold-note" style="display:none;font-size:0.75rem;color:var(--ink-dim);margin-top:10px;font-family:var(--font-mono);">
+          ⏱ Server may be waking up — first check can take ~30 s. Please wait.
+        </p>
+      </div>
 
-        <!-- Step 3 -->
-        <div class="step-item">
-          <div class="step-num">3</div>
-          <div class="step-body">
-            <h4>Select any text and click Fact-check</h4>
-            <p>Navigate to any webpage, highlight a claim, and click the <strong>Fact-check</strong> button that appears. The hosted backend handles search and AI analysis automatically — you'll see a full verdict in the sidebar within seconds.</p>
-            <div class="info-box success" style="margin-top:14px">
-              <strong>&checkmark; Nothing to configure.</strong> The backend runs 24/7 on a server I maintain, rate-limited per IP. Prefer to self-host with your own keys? Full source is on <a href="https://github.com/Sanskar-bot/clarifact" target="_blank" rel="noopener">GitHub</a>.
-            </div>
-          </div>
-        </div>
-
-      </div><!-- /steps-list -->
+      <!-- Result renders here -->
+      <div id="result-area"></div>
     </div>
-  </section>
 
+  </div>
+</section>
 
-  <!-- ── Under the Hood ───────────────────────────────────────────── -->
-  <section id="tech" class="section section-dark">
-    <div class="container">
-      <div class="section-label reveal">Under the Hood</div>
-      <h2 class="section-title reveal">Three things working<br/>together for you.</h2>
-      <p class="section-sub reveal">You don't need to know any of this to use it — but here's what's happening behind the scenes.</p>
+<!-- ── Trust strip ────────────────────────────────────────────────────────── -->
+<div class="trust-strip">
+  <div class="trust-strip-inner">
+    <div class="trust-item">
+      <span class="trust-icon">✓</span>
+      No account needed
+    </div>
+    <div class="trust-divider"></div>
+    <div class="trust-item">
+      <span class="trust-icon">✓</span>
+      Nothing is stored
+    </div>
+    <div class="trust-divider"></div>
+    <div class="trust-item">
+      <span class="trust-icon">✓</span>
+      Sources cited every time
+    </div>
+    <div class="trust-divider"></div>
+    <div class="trust-item">
+      <span class="trust-icon">✓</span>
+      Open source on GitHub
+    </div>
+  </div>
+</div>
 
-      <div class="tech-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
-        <div class="tech-card reveal">
-          <div class="tech-logo">🔍</div>
-          <h4>Web Search</h4>
-          <p>ClariFact searches the web using Tavily — a search engine built for AI tools. It finds diverse, relevant sources quickly, not just the most clicked links.</p>
-          <span class="tech-tag">Always on</span>
-        </div>
-        <div class="tech-card reveal">
-          <div class="tech-logo">🤖</div>
-          <h4>AI Analysis</h4>
-          <p>An AI model (Nemotron, by NVIDIA) reads all the source content and your claim together. It only uses what it read — it can't make things up.</p>
-          <span class="tech-tag">Cloud · Free for you</span>
-        </div>
-        <div class="tech-card reveal">
-          <div class="tech-logo">🌐</div>
-          <h4>Chrome Extension</h4>
-          <p>The extension runs inside your browser. It watches for what you highlight, sends it for analysis, and shows the result — without ever opening a new tab.</p>
-          <span class="tech-tag">Open source · MIT</span>
+<!-- ── How it works ───────────────────────────────────────────────────────── -->
+<section class="section" id="how-it-works">
+  <div class="container">
+    <div class="section-label reveal">How it works</div>
+    <h2 class="section-heading reveal">Four steps, under five seconds.</h2>
+    <p class="section-sub reveal">
+      Every check runs the same pipeline — search, read, score, judge. No black box.
+    </p>
+
+    <div class="steps-grid">
+      <div class="step-card reveal">
+        <div class="step-num"></div>
+        <h3>Search</h3>
+        <p>We query the web for sources related to your claim — news articles, government pages, Wikipedia, and more.</p>
+      </div>
+      <div class="step-card reveal">
+        <div class="step-num"></div>
+        <h3>Read</h3>
+        <p>The top results are fetched and their full article text extracted. Headlines and summaries aren't enough — we read the whole thing.</p>
+      </div>
+      <div class="step-card reveal">
+        <div class="step-num"></div>
+        <h3>Score</h3>
+        <p>Sources are scored for relevance and credibility. Government and academic sources rank higher than unknown blogs. A confidence score is calculated from the evidence.</p>
+      </div>
+      <div class="step-card reveal">
+        <div class="step-num"></div>
+        <h3>Verdict</h3>
+        <p>Nemotron (Nvidia's AI, running on AWS) reads the scored evidence and returns a structured verdict: Supported, Contradicted, or Inconclusive — with the reasoning shown.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Source trust ───────────────────────────────────────────────────────── -->
+<section class="section section--dark" id="source-trust">
+  <div class="container">
+    <div class="section-label reveal">Source credibility</div>
+    <h2 class="section-heading reveal">Not all sources are equal.</h2>
+    <p class="section-sub reveal">
+      ClariFact weights evidence by source credibility — so a .gov filing and a random opinion blog don't count the same.
+    </p>
+
+    <div class="trust-tiers">
+      <div class="trust-tier reveal">
+        <div class="trust-tier-score mono">TRUST 90–100%</div>
+        <h4>Highest tier</h4>
+        <p>Government sites (.gov), court records, peer-reviewed journals, established international wire services (Reuters, AP).</p>
+      </div>
+      <div class="trust-tier reveal">
+        <div class="trust-tier-score mono">TRUST 70–89%</div>
+        <h4>High tier</h4>
+        <p>Major national newspapers, public broadcasters (BBC, NPR), Wikipedia (for established facts), academic institutions.</p>
+      </div>
+      <div class="trust-tier reveal">
+        <div class="trust-tier-score mono">TRUST 50–69%</div>
+        <h4>Mid tier</h4>
+        <p>Regional news outlets, known specialty publications, large web encyclopedias — useful but weighted down.</p>
+      </div>
+      <div class="trust-tier reveal">
+        <div class="trust-tier-score mono">TRUST &lt;50%</div>
+        <h4>Lower tier</h4>
+        <p>Unknown blogs, social media content, personal sites — still included if they're the only source, but clearly weighted lower in the final score.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Extension card ─────────────────────────────────────────────────────── -->
+<section class="section" id="extension">
+  <div class="container--narrow">
+    <div style="background:var(--bg-panel);border:1px solid var(--bg-border-mid);border-radius:var(--radius-md);padding:var(--space-2xl);display:flex;gap:var(--space-xl);align-items:center;flex-wrap:wrap;" class="reveal">
+      <div style="flex:1;min-width:220px;">
+        <div class="section-label" style="margin-bottom:var(--space-md)">Chrome Extension</div>
+        <h2 style="font-size:1.5rem;margin-bottom:var(--space-md);">Fact-check without leaving the page.</h2>
+        <p style="font-size:0.9rem;margin-bottom:var(--space-lg);">
+          Install the extension, highlight any text on any webpage, right-click → ClariFact.
+          The verdict appears in a sidebar — no copy-pasting, no new tabs.
+        </p>
+        <a href="extension.html" class="btn-stamp">Learn more →</a>
+      </div>
+      <div style="flex-shrink:0;opacity:0.7;">
+        <div style="font-family:var(--font-mono);font-size:0.75rem;color:var(--accent-evidence);text-align:center;letter-spacing:0.06em;">HIGHLIGHT → RIGHT-CLICK</div>
+        <div style="margin-top:8px;background:var(--bg-panel-raised);border:1px solid var(--bg-border);border-radius:var(--radius);padding:8px 16px;font-size:0.85rem;color:var(--ink-muted);">
+          ✦ ClariFact: Check this claim
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ── FAQ ────────────────────────────────────────────────────────── -->
-  <section id="faq" class="section">
-    <div class="container faq-container">
-      <div class="section-label reveal">FAQ</div>
-      <h2 class="section-title reveal">Common questions.</h2>
+<!-- ── Academy teaser ─────────────────────────────────────────────────────── -->
+<section class="section section--dark" id="academy">
+  <div class="container">
+    <div class="section-label reveal">Academy</div>
+    <h2 class="section-heading reveal">Learn to spot what the tool catches.</h2>
+    <p class="section-sub reveal">Short, practical guides on misinformation, deepfakes, and verification.</p>
 
-      <div class="faq-list">
-        <div class="faq-item reveal">
-          <button class="faq-q">Does this send my browsing data anywhere?<span class="faq-chevron">▾</span></button>
-          <div class="faq-a">
-            <p>When you trigger a fact-check, the <strong>selected claim text</strong> and a list of source URLs are sent to the ClariFact hosted backend (on Render). The backend calls Tavily Search and Nemotron AI (via AWS Bedrock) to analyse the claim.</p>
-            <p style="margin-top:10px"><strong>What is NOT sent:</strong> your browsing history, cookies, full page HTML, or anything outside the text you highlighted. There are no user accounts and no persistent logs of your queries.</p>
-          </div>
-        </div>
-        <div class="faq-item reveal">
-          <button class="faq-q">Does it work on every website?<span class="faq-chevron">▾</span></button>
-          <div class="faq-a">
-            <p>It works on most websites. Chrome restricts content scripts from running on <code>chrome://</code> pages, the Chrome Web Store, and certain internal pages. Hard-paywalled sources (WSJ, FT) are automatically skipped during scraping. JavaScript-rendered SPAs may return incomplete text since the backend fetches raw HTML.</p>
-          </div>
-        </div>
-        <div class="faq-item reveal">
-          <button class="faq-q">How much does it cost to use?<span class="faq-chevron">▾</span></button>
-          <div class="faq-a">
-            <p><strong>Free.</strong> The hosted backend absorbs the Tavily and AWS Bedrock API costs. Per-IP rate limiting keeps usage fair for everyone. If you'd prefer to run your own backend with your own keys, the full source code is on <a href="https://github.com/Sanskar-bot/clarifact" target="_blank" rel="noopener">GitHub</a>.</p>
-          </div>
-        </div>
-        <div class="faq-item reveal">
-          <button class="faq-q">Do I need to install or run anything other than the extension?<span class="faq-chevron">▾</span></button>
-          <div class="faq-a">
-            <p>No. The backend runs 24/7 on Render's cloud infrastructure — just install the extension and it connects automatically. The popup shows a green dot when the backend is reachable and a red dot with a retry button if it's temporarily unreachable (e.g. during a cold start on the free tier, which can take ~30 seconds).</p>
-          </div>
-        </div>
-        <div class="faq-item reveal">
-          <button class="faq-q">Is the verdict always accurate?<span class="faq-chevron">▾</span></button>
-          <div class="faq-a">
-            <p>ClariFact is a research aid, not a final authority. It tells you what the top web sources say about a claim — and how confidently. For breaking news or niche topics, sources may be limited or conflicting. Always read the linked articles yourself before drawing conclusions.</p>
-          </div>
-        </div>
-        <div class="faq-item reveal">
-          <button class="faq-q">Does it work in languages other than English?<span class="faq-chevron">▾</span></button>
-          <div class="faq-a">
-            <p>Mostly yes. The web search and AI analysis work across many languages. Entity detection (identifying names, places, dates in the claim) is English-optimised, so confidence scores may be slightly lower for non-English claims. A note is shown in the sidebar when this applies.</p>
-          </div>
-        </div>
+    <div class="academy-teasers">
+      <a href="academy.html#mis-dis-mal" class="academy-teaser reveal">
+        <div class="academy-teaser-tag">Module 01</div>
+        <h3>Mis, Dis, and Malinformation</h3>
+        <p>The vocabulary that matters — and why the difference between them changes what you should do about it.</p>
+      </a>
+      <a href="academy.html#deepfakes" class="academy-teaser reveal">
+        <div class="academy-teaser-tag">Module 02</div>
+        <h3>How Deepfakes Actually Work</h3>
+        <p>Plain-language explanation of face-swapping and voice-cloning — and why "it looked real" is no longer a defence.</p>
+      </a>
+      <a href="academy.html#checklist" class="academy-teaser reveal">
+        <div class="academy-teaser-tag">Module 05</div>
+        <h3>Before You Share: A Checklist</h3>
+        <p>Five things to verify before passing something on. Each item links to the checker so you can test it right now.</p>
+      </a>
+    </div>
+
+    <div class="text-center mt-xl">
+      <a href="academy.html" class="pill-btn">View all modules →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ────────────────────────────────────────────────────────────────── -->
+<section class="section" id="faq">
+  <div class="container--narrow">
+    <div class="section-label reveal">FAQ</div>
+    <h2 class="section-heading reveal">Common questions.</h2>
+
+    <div class="faq-list mt-xl">
+      <div class="faq-item">
+        <button class="faq-q">Is the verdict always accurate?<span class="faq-chevron">▾</span></button>
+        <div class="faq-a"><p>No — and we want to be clear about that. ClariFact is a research aid, not an authority. It tells you what the top publicly available sources say about a claim, and how consistently they say it. For breaking news, niche topics, or anything where sources are limited or contradictory, the confidence score will be low. Always read the linked articles before drawing conclusions.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Does anything get stored?<span class="faq-chevron">▾</span></button>
+        <div class="faq-a"><p>No. The backend is fully stateless — every request is independent, nothing is written to a database, and no logs are kept. Only the text you paste is sent to the server; no browsing history or page content is ever transmitted. You can verify this yourself: the backend source code is open on GitHub.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">How is this different from just asking an AI?<span class="faq-chevron">▾</span></button>
+        <div class="faq-a"><p>Standard LLMs answer from their training data, which has a cutoff date and may contain errors or biases. ClariFact searches the web live, fetches and reads current sources, and instructs the AI to reason only from what it found — not from prior knowledge. Every verdict comes with the sources it was based on, so you can check the AI's work.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">What does the confidence score mean?<span class="faq-chevron">▾</span></button>
+        <div class="faq-a"><p>It's a 0–100% score combining: how many sources were found, how credible those sources are (gov/academic rank higher), how closely the source text matches the claim's key entities, and how consistent the sources are with each other. A high score means many trustworthy sources agree. A low score means evidence is thin, mixed, or from less reliable sources.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Does it work in languages other than English?<span class="faq-chevron">▾</span></button>
+        <div class="faq-a"><p>Mostly yes. Web search and AI analysis work across many languages. Entity matching (identifying names, places, dates) is English-optimised, so confidence scores may be slightly lower for non-English claims. A note appears in results when this applies.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Is ClariFact free?<span class="faq-chevron">▾</span></button>
+        <div class="faq-a"><p>Yes. There's no subscription, no account, and no paywall. The project is funded by the owner's own time and hosting costs. To keep it free, there's a rate limit of 10 AI-powered checks per hour per IP address. The extension is also free to use.</p></div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ── CTA ────────────────────────────────────────────────────────── -->
-  <section class="cta-section">
-    <div class="cta-orb"></div>
-    <div class="container cta-inner">
-      <h2 class="cta-title">Stop guessing.<br/>Start fact-checking.</h2>
-      <p class="cta-sub">Free, open-source, and zero setup. Just install and fact-check.</p>
-      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-        <a href="extension.html" class="btn-primary btn-large">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:2px">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
-          </svg>
-          Download Extension
-        </a>
-        <a href="https://github.com/Sanskar-bot/clarifact" target="_blank" rel="noopener" class="btn-ghost btn-large">View on GitHub</a>
+<!-- ── Footer ─────────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="nav-logo" style="margin-bottom:10px;display:inline-flex;">
+        <img src="clarifact-logo.svg" alt="" width="22" height="22"/>
+        <span class="nav-logo-word" style="font-size:0.95rem;">Clari<span>Fact</span></span>
+      </a>
+      <p>An open-source fact-checking tool. Stateless backend — nothing stored. Sources cited every time.</p>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <h5>Tool</h5>
+        <a href="index.html">Fact Checker</a>
+        <a href="extension.html">Chrome Extension</a>
+        <a href="check.html">Shareable Check</a>
+      </div>
+      <div class="footer-col">
+        <h5>Learn</h5>
+        <a href="academy.html">Academy</a>
+        <a href="about.html">About</a>
+        <a href="https://github.com/Sanskar-bot/clarifact" target="_blank" rel="noopener">GitHub</a>
       </div>
     </div>
-  </section>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 ClariFact. Open source, MIT licence.</p>
+    <p class="footer-disclaimer">Verdicts are AI-generated and may be wrong. Always check the cited sources before drawing conclusions.</p>
+  </div>
+</footer>
 
-  <!-- ── Footer ─────────────────────────────────────────────────────── -->
-  <footer>
-    <div class="container footer-inner">
-      <div class="footer-brand">
-        <svg width="22" height="22" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect width="28" height="28" rx="6" fill="#111318"/>
-          <path d="M19 9.5C17.5 8 15.8 7.2 14 7.2C10.2 7.2 7.2 10.2 7.2 14C7.2 17.8 10.2 20.8 14 20.8C15.8 20.8 17.5 20 19 18.5"
-                stroke="#F0F2F5" stroke-width="2.6" stroke-linecap="round" fill="none"/>
-          <circle cx="21.5" cy="7" r="4.5" fill="#E87020"/>
-          <polyline points="19.3,7 21,8.7 24,5.3" stroke="white" stroke-width="1.4"
-                    stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        </svg>
-        <div>
-          <div class="footer-brand-name">
-            <span class="footer-clari">Clari</span><span class="footer-fact">Fact</span>
-          </div>
-          <div class="footer-tagline">AI Fact Checker · MIT License</div>
-        </div>
-      </div>
-      <ul class="footer-links">
-        <li><a href="#features">Features</a></li>
-        <li><a href="#how-it-works">How It Works</a></li>
-        <li><a href="extension.html">Download Extension</a></li>
-        <li><a href="#setup">Backend Setup</a></li>
-        <li><a href="#faq">FAQ</a></li>
-        <li><a href="https://github.com/Sanskar-bot/clarifact" target="_blank" rel="noopener">GitHub</a></li>
-      </ul>
-    </div>
-    <div class="footer-bottom">
-      <p>Built with ❤ · MIT License · Open source · Hosted on Render</p>
-    </div>
-  </footer>
+<script src="script.js"></script>
+<script>
+  initChecker({
+    formId:      "check-form",
+    textareaId:  "claim-textarea",
+    submitBtnId: "check-btn",
+    progressId:  "progress-area",
+    resultId:    "result-area",
+    errorId:     "check-error"
+  });
 
-  <script src="script.js"></script>
+  // Auto-run if ?claim= param present (from shared links)
+  const urlClaim = new URLSearchParams(location.search).get("claim");
+  if (urlClaim && urlClaim.trim().length >= 5) {
+    document.getElementById("claim-textarea").value = urlClaim.trim();
+    document.getElementById("check-form").requestSubmit();
+  }
+</script>
 </body>
 </html>
