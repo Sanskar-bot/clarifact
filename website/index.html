@@ -47,10 +47,17 @@
       <a href="#faq">FAQ</a>
       <a href="extension.html">Extension</a>
     </div>
-    <a href="extension.html" class="nav-cta">↓ Download Extension</a>
   </nav>
 
-  <!-- ── Hero ───────────────────────────────────────────────    <div class="hero-content" style="max-width:780px;margin:0 auto;text-align:center;">
+
+  <!-- ── Hero ─────────────────────────────────────────────────── -->
+  <section id="hero">
+    <div class="hero-bg-orb orb-1"></div>
+    <div class="hero-bg-orb orb-2"></div>
+    <div class="hero-bg-orb orb-3"></div>
+    <div class="particles" id="particles"></div>
+
+    <div style="max-width:780px;margin:0 auto;text-align:center;padding:110px 24px 64px;">
       <div class="hero-badge">
         <span class="hero-badge-dot"></span>
         Free &amp; Open Source &middot; No Account &middot; Instant Results
@@ -123,7 +130,7 @@
         </a> — highlight text on any page, get an instant result.
       </p>
     </div>
-  </section>
+  </section>  <!-- /hero -->
 
   <style>
     .hero-pill {
@@ -135,7 +142,7 @@
       transition: border-color 0.15s, color 0.15s;
     }
     .hero-pill:hover { border-color: rgba(55,138,221,0.35); color: #B5D4F4; }
-    #hero { text-align: left; }
+    #hero { text-align: center; }
     @media (max-width: 700px) {
       #hero { text-align: center; }
       #hero-form button { align-self: stretch; justify-content: center; }
@@ -153,7 +160,6 @@
       if (val.length < 5) { e.preventDefault(); document.getElementById('hero-claim').focus(); }
     });
   </script>
-  </section>
 
   <!-- ── Verdict types demo ─────────────────────────────────────────── -->
   <section class="verdict-strip">
