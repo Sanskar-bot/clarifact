@@ -285,22 +285,23 @@ function renderVerdict(container, { claim, ai, sources }) {
     <div class="result-inner">
       <div class="result-claim-echo">Checking: <strong>"${esc(claimShort)}"</strong></div>
 
-      <!-- Verdict banner with stamp -->
+      <!-- Verdict banner with stamp as center flex item -->
       <div class="verdict-banner ${cls}" id="verdict-banner">
         <div class="verdict-left">
           <div class="verdict-tag">Verdict</div>
           <div class="verdict-word">${word}</div>
         </div>
-        <div class="verdict-right">
-          <div class="conf-num"><span id="conf-val">0</span><span class="conf-pct">%</span></div>
-          <div class="conf-tag">confidence</div>
-        </div>
 
-        <!-- Stamp -->
-        <div class="stamp-wrap" style="top:-16px;right:16px;">
+        <!-- Stamp — sits between verdict and confidence, no overlap -->
+        <div class="stamp-wrap">
           <div class="stamp stamp--${cls}" id="result-stamp">
             <div class="stamp-text">${verdict}<br/>CLARIFACT</div>
           </div>
+        </div>
+
+        <div class="verdict-right">
+          <div class="conf-num"><span id="conf-val">0</span><span class="conf-pct">%</span></div>
+          <div class="conf-tag">confidence</div>
         </div>
       </div>
 
