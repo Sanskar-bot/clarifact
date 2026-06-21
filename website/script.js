@@ -201,11 +201,13 @@ async function runCheck(claim, { submitBtn, progress, resultEl, errorEl, onResul
     const urls = (searchRes.results || []).map(r => r.url).filter(Boolean).slice(0, 5);
     if (urls.length === 0) throw new Error("No results found for this claim — try rephrasing it more specifically.");
 
-    // Step 2 — Scrape
+    // Step 2 — Scrape (one call per URL — backend takes { url } not { urls })
     setStep(1, "active");
     if (steps[1]) steps[1].querySelector(".step-label").textContent = `Reading ${urls.length} source${urls.length > 1 ? "s" : ""}…`;
-    const scrapeRes = await apiPost("/api/scrape", { urls });
-    const sources = (scrapeRes.results || []).filter(s => s.text && !s.error);
+    const scrapeResults = await Promise.all(
+      urls.map(url => apiPost("/api/scrape", { url }).catch(() => ({ error: true })))
+    );
+    const sources = scrapeResults.filter(s => s.text && !s.error);
     if (sources.length === 0) throw new Error("Couldn't read any of the sources found. Try rephrasing the claim.");
     setStep(1, "done");
 
